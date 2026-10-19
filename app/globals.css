@@ -1,0 +1,2559 @@
+/*
+ * AccessLoop design tokens and base styles. THE one file for visual design decisions.
+ * Read components/ui/README.md before changing anything here.
+ *
+ * - Colour tokens live in the four blocks marked "@tokens ...". scripts/check-contrast.ts parses exactly
+ *   those blocks (hex values only) and tests/contrast.test.ts fails `npm test` if a pair drops below its
+ *   minimum. Every key in "staff:light" must also be in "staff:dark" (the checker enforces it).
+ * - Two personalities: the default (:root) is the REPORTER side (warm paper, big type); an element with
+ *   data-personality="staff" (StaffShell) switches to the crisp staff side.
+ * - Themes follow the system (prefers-color-scheme). There is deliberately no toggle.
+ * - Components never use raw colours: Tailwind's default palette is reset below, so only token
+ *   utilities exist (bg-surface, text-ink, border-border-strong, ...).
+ */
+@import "tailwindcss" source(none);
+@source "../app";
+@source "../components";
+@source "../lib";
+
+/* ------------------------------------------------------------------ colour tokens */
+
+/* @tokens base:light */
+:root,
+[data-personality="reporter"] {
+  --bg: #f6f3ed;
+  --surface: #fffdf9;
+  --surface-raised: #ffffff;
+  --surface-sunken: #ece7dd;
+  --ink: #1b2033;
+  --ink-muted: #444a5c;
+  --border: #ddd6c8;
+  --border-strong: #77715f;
+  --primary: #2d3a8c;
+  --primary-hover: #222c6e;
+  --on-primary: #ffffff;
+  --primary-soft: #e6e8f5;
+  --link: #2d3a8c;
+  --link-hover: #1d2560;
+  --accent: #e3a11f;
+  --accent-soft: #fbedc8;
+  --accent-ink: #6b4300;
+  --ring-current: #9a6200;
+  --info: #1d4d8a;
+  --info-bg: #e4edf8;
+  --info-border: #9cb8de;
+  --success: #1b663b;
+  --success-bg: #e1f1e6;
+  --success-border: #94c7a6;
+  --warning: #724300;
+  --warning-bg: #fbefd3;
+  --warning-border: #ddb061;
+  --danger: #a0241e;
+  --danger-bg: #fae5e2;
+  --danger-border: #e3a098;
+  --danger-hover: #861c17;
+  --on-danger: #ffffff;
+  --status-new-fg: #1d4d8a;
+  --status-new-bg: #e3ecf8;
+  --status-triaged-fg: #533797;
+  --status-triaged-bg: #ece6f7;
+  --status-assigned-fg: #0c5960;
+  --status-assigned-bg: #dbeeef;
+  --status-retest-open-fg: #724300;
+  --status-retest-open-bg: #fbebc6;
+  --status-verified-fg: #ffffff;
+  --status-verified-bg: #1b663b;
+  --status-fixed-unverified-fg: #4a5711;
+  --status-fixed-unverified-bg: #ebefd3;
+  --status-closed-fg: #444a5c;
+  --status-closed-bg: #e8e5df;
+  --focus: #3a2bc2;
+  --focus-halo: #ffd966;
+  --redact-bg: #ffe08a;
+  --redact-ink: #1b2033;
+  --redact-border: #9a6200;
+  --selection: #ffe08a;
+  --chrome-bg: #f6f3ed;
+  --chrome-ink: #1b2033;
+  --chrome-muted: #444a5c;
+  --chrome-border: #ddd6c8;
+  --chrome-focus: #3a2bc2;
+  --chrome-focus-halo: #ffd966;
+  /* Dashboard chart marks (components/ui/charts): checked with the dataviz palette checks (lightness band, colour-
+     blind separation) and by scripts/check-contrast.ts (3:1 on cards). Text in a chart never wears these. */
+  --chart-1: #4656c0;
+  --chart-verified: #1f7a47;
+}
+
+/* @tokens staff:light */
+[data-personality="staff"] {
+  --bg: #eceef2;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f3f4f7;
+  --ink: #151a2a;
+  --ink-muted: #424959;
+  --border: #d9dde5;
+  --border-strong: #717989;
+  --chrome-bg: #161c2e;
+  --chrome-ink: #f2f3f7;
+  --chrome-muted: #b8bed0;
+  --chrome-border: #2c3450;
+  --chrome-focus: #ffcf5c;
+  --chrome-focus-halo: #161c2e;
+}
+
+@media (prefers-color-scheme: dark) {
+  /* @tokens base:dark */
+  :root,
+  [data-personality="reporter"] {
+    --bg: #1b1916;
+    --surface: #23201c;
+    --surface-raised: #2b2823;
+    --surface-sunken: #151311;
+    --ink: #f3eee5;
+    --ink-muted: #cbc3b5;
+    --border: #3b362f;
+    --border-strong: #8e8677;
+    --primary: #b3bdff;
+    --primary-hover: #cbd2ff;
+    --on-primary: #141936;
+    --primary-soft: #272c4a;
+    --link: #b9c2ff;
+    --link-hover: #d3d9ff;
+    --accent: #f2be4e;
+    --accent-soft: #392d12;
+    --accent-ink: #f5cb70;
+    --ring-current: #f2be4e;
+    --info: #a3c4f1;
+    --info-bg: #172536;
+    --info-border: #3d5a80;
+    --success: #93d5a9;
+    --success-bg: #14281c;
+    --success-border: #3c6b4c;
+    --warning: #f1c46e;
+    --warning-bg: #33260e;
+    --warning-border: #7a5a1c;
+    --danger: #ffa89f;
+    --danger-bg: #3a1916;
+    --danger-border: #874038;
+    --danger-hover: #ffc2bb;
+    --on-danger: #3a0c08;
+    --status-new-fg: #a9c8f4;
+    --status-new-bg: #172536;
+    --status-triaged-fg: #cdbaf4;
+    --status-triaged-bg: #251d3a;
+    --status-assigned-fg: #88d3d8;
+    --status-assigned-bg: #0f2a2d;
+    --status-retest-open-fg: #f1c46e;
+    --status-retest-open-bg: #33260e;
+    --status-verified-fg: #0b2414;
+    --status-verified-bg: #7dd39b;
+    --status-fixed-unverified-fg: #cbd78c;
+    --status-fixed-unverified-bg: #252a12;
+    --status-closed-fg: #cbc3b5;
+    --status-closed-bg: #2d2a25;
+    --focus: #ffcf5c;
+    --focus-halo: #15182b;
+    --redact-bg: #5a4300;
+    --redact-ink: #fff3cf;
+    --redact-border: #e0b13a;
+    --selection: #5a4300;
+    --chrome-bg: #1b1916;
+    --chrome-ink: #f3eee5;
+    --chrome-muted: #cbc3b5;
+    --chrome-border: #3b362f;
+    --chrome-focus: #ffcf5c;
+    --chrome-focus-halo: #15182b;
+    --chart-1: #7484ec;
+    --chart-verified: #3fa565;
+  }
+
+  /* @tokens staff:dark */
+  [data-personality="staff"] {
+    --bg: #0f131b;
+    --surface: #161b25;
+    --surface-raised: #1c2230;
+    --surface-sunken: #121620;
+    --ink: #e8ebf1;
+    --ink-muted: #aab2c1;
+    --border: #283041;
+    --border-strong: #727c8f;
+    /* The ink top bar sits a step ABOVE the dark page (it was darker than --bg and read as a hairline only). */
+    --chrome-bg: #161c2e;
+    --chrome-ink: #e8ebf1;
+    --chrome-muted: #aab2c1;
+    --chrome-border: #2c3450;
+    --chrome-focus: #ffcf5c;
+    --chrome-focus-halo: #161c2e;
+  }
+}
+
+/* ------------------------------------------------------------------ non-colour tokens */
+
+:root {
+  /* Elevation: tinted with the ink colour, used only on raised surfaces (never on every card). */
+  --elev-1: 0 1px 2px rgb(27 32 51 / 0.06), 0 1px 3px rgb(27 32 51 / 0.05);
+  --elev-2: 0 1px 2px rgb(27 32 51 / 0.05), 0 6px 16px -4px rgb(27 32 51 / 0.12);
+  --elev-3: 0 2px 4px rgb(27 32 51 / 0.06), 0 18px 40px -10px rgb(27 32 51 / 0.24);
+  /* The soft shadow at the edge of a sideways-scrolling table where more columns are (decorative). */
+  --scroll-edge: rgb(27 32 51 / 0.16);
+
+  /* Motion. Everything that moves sits under prefers-reduced-motion: no-preference. */
+  --dur-instant: 80ms;
+  --dur-quick: 160ms;
+  --dur-moderate: 260ms;
+  --dur-slow: 480ms;
+  --dur-loop: 900ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-loop: cubic-bezier(0.7, 0, 0.2, 1);
+
+  /* Publication tokens for the generated progress report (Phase 4). */
+  --report-measure: 66ch;
+  --report-body-size: 1.125rem;
+  --report-body-leading: 1.65;
+  --report-h1-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
+  --report-h2-size: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+
+  /* Sticky staff header height (only sticky from 64rem up; see scroll-padding below): the two-row staff header
+     (top row 3.75rem + the tabs 2.75rem + hairlines). StickyHeaderOffset replaces it with the measured height. */
+  --header-h: 6.625rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --elev-1: 0 1px 2px rgb(0 0 0 / 0.45);
+    --elev-2: 0 1px 2px rgb(0 0 0 / 0.5), 0 8px 20px -6px rgb(0 0 0 / 0.55);
+    --elev-3: 0 2px 6px rgb(0 0 0 / 0.5), 0 20px 44px -10px rgb(0 0 0 / 0.7);
+    --scroll-edge: rgb(0 0 0 / 0.6);
+  }
+}
+
+/* Personality: type scale, control sizes, rhythm. :root = reporter (the default for public pages). */
+:root,
+[data-personality="reporter"] {
+  /* Size pass (2026-10-19): one step smaller everywhere, keeping CLAUDE.md's 18px body floor. */
+  --body-size: 1.125rem; /* 18px: the reporter body floor (CLAUDE.md "18 px+ body") */
+  --body-leading: 1.6;
+  --small-size: 1rem; /* 16px hints and secondary lines */
+  --lead-size: clamp(1.1875rem, 1.1rem + 0.35vw, 1.3125rem); /* 19-21px */
+  --h1-size: clamp(1.875rem, 1.55rem + 1.5vw, 2.625rem); /* 30-42px */
+  --h2-size: clamp(1.4375rem, 1.3rem + 0.6vw, 1.75rem); /* 23-28px */
+  --h3-size: 1.25rem;
+  --h4-size: 1.125rem;
+  --card-title-size: var(--h3-size); /* a Card's h2 title */
+  --control-h: 3rem; /* 48px (the target-size floor is 44px) */
+  --control-h-lg: 3.25rem; /* 52px */
+  --control-px: 1.25rem;
+  --control-font: 1.125rem;
+  --check-size: 1.5rem;
+  --choice-border-w: 2px;
+  /* A question inside a step (a legend or a field label that is not the step's heading): a step above the bold
+     answers under it ("Can we ask you to check the fix later?" over "Yes" / "No"). */
+  --question-size: 1.25rem;
+  --measure: 62ch;
+  --stack: 1.75rem;
+  --stack-lg: 3rem;
+  --card-pad: clamp(1.125rem, 0.85rem + 1.2vw, 1.75rem);
+}
+
+[data-personality="staff"] {
+  --body-size: 1rem; /* 16px */
+  --body-leading: 1.5;
+  --small-size: 0.875rem;
+  --lead-size: 1.125rem;
+  --h1-size: clamp(1.5rem, 1.35rem + 0.7vw, 1.875rem); /* 24-30px */
+  --h2-size: 1.25rem;
+  --h3-size: 1.125rem;
+  --h4-size: 1rem;
+  /* Staff card titles a step above the 16px bold field labels and the .al-subhead sub-headings, so section, task
+     and field read apart ("Next step" / "Log the fix" / "What did you fix?"). */
+  --card-title-size: 1.125rem;
+  --control-h: 2.75rem; /* 44px: never smaller (target size) */
+  --control-h-lg: 3rem;
+  --control-px: 1rem;
+  --control-font: 1rem;
+  --check-size: 1.25rem;
+  --choice-border-w: 1px;
+  --question-size: 1rem; /* staff labels stay at the body size, bold */
+  --measure: 72ch;
+  --stack: 1.25rem;
+  --stack-lg: 2.25rem;
+  --card-pad: 1.25rem;
+}
+
+/* ------------------------------------------------------------------ Tailwind theme (utilities) */
+
+@theme inline {
+  --color-*: initial;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+  --color-primary-soft: var(--primary-soft);
+  --color-link: var(--link);
+  --color-link-hover: var(--link-hover);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
+  --color-info: var(--info);
+  --color-info-bg: var(--info-bg);
+  --color-info-border: var(--info-border);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-success-border: var(--success-border);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-warning-border: var(--warning-border);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-danger-border: var(--danger-border);
+  --color-danger-hover: var(--danger-hover);
+  --color-on-danger: var(--on-danger);
+  --color-focus: var(--focus);
+  --color-chrome-bg: var(--chrome-bg);
+  --color-chrome-ink: var(--chrome-ink);
+  --color-chrome-muted: var(--chrome-muted);
+  --color-chrome-border: var(--chrome-border);
+  --color-status-new-fg: var(--status-new-fg);
+  --color-status-new-bg: var(--status-new-bg);
+  --color-status-triaged-fg: var(--status-triaged-fg);
+  --color-status-triaged-bg: var(--status-triaged-bg);
+  --color-status-assigned-fg: var(--status-assigned-fg);
+  --color-status-assigned-bg: var(--status-assigned-bg);
+  --color-status-retest-open-fg: var(--status-retest-open-fg);
+  --color-status-retest-open-bg: var(--status-retest-open-bg);
+  --color-status-verified-fg: var(--status-verified-fg);
+  --color-status-verified-bg: var(--status-verified-bg);
+  --color-status-fixed-unverified-fg: var(--status-fixed-unverified-fg);
+  --color-status-fixed-unverified-bg: var(--status-fixed-unverified-bg);
+  --color-status-closed-fg: var(--status-closed-fg);
+  --color-status-closed-bg: var(--status-closed-bg);
+
+  --font-*: initial;
+  --font-sans: var(--font-atkinson), "Atkinson Hyperlegible Next", system-ui, "Segoe UI", Arial, sans-serif;
+  --font-display: var(--font-besley), "Besley", Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-atkinson-mono), "Atkinson Hyperlegible Mono", ui-monospace, Consolas, monospace;
+
+  --text-*: initial;
+  --text-small: var(--small-size);
+  --text-small--line-height: 1.5;
+  --text-body: var(--body-size);
+  --text-body--line-height: var(--body-leading);
+  --text-lead: var(--lead-size);
+  --text-lead--line-height: 1.5;
+  --text-h4: var(--h4-size);
+  --text-h4--line-height: 1.3;
+  --text-card-title: var(--card-title-size);
+  --text-card-title--line-height: 1.25;
+  --text-h3: var(--h3-size);
+  --text-h3--line-height: 1.25;
+  --text-h2: var(--h2-size);
+  --text-h2--line-height: 1.2;
+  --text-h1: var(--h1-size);
+  --text-h1--line-height: 1.12;
+  --text-display: clamp(2.25rem, 1.5rem + 3vw, 3.5rem); /* 36-56px landing headline */
+  --text-display--line-height: 1.06;
+  --text-stat: clamp(2rem, 1.7rem + 1.2vw, 2.625rem);
+  --text-stat--line-height: 1;
+  --text-code: clamp(1.375rem, 1rem + 1.8vw, 2.125rem);
+  --text-code--line-height: 1.2;
+  /* The receipt code below sm: 19 characters at about 0.68em each fit one line from about 360px up (it wraps
+     at its hyphens below that); text-code at 390px (about 26px) broke it in two with a hanging hyphen. */
+  --text-code-narrow: 1.3rem;
+  --text-code-narrow--line-height: 1.2;
+  /* Fixed UI sizes for chrome that must look identical on every page (header, help link). */
+  --text-ui-sm: 0.875rem;
+  --text-ui-sm--line-height: 1.4;
+  --text-ui: 1rem;
+  --text-ui--line-height: 1.4;
+  --text-ui-lg: 1.125rem;
+  --text-ui-lg--line-height: 1.4;
+
+  --radius-*: initial;
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-pill: 999px;
+
+  --shadow-*: initial;
+  --shadow-1: var(--elev-1);
+  --shadow-2: var(--elev-2);
+  --shadow-3: var(--elev-3);
+}
+
+/* ------------------------------------------------------------------ base */
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+  }
+
+  html {
+    background: var(--bg);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* Focus is never hidden under a sticky header (WCAG 2.4.11). */
+    scroll-padding-top: 1.5rem;
+  }
+
+  @media (min-width: 64rem) {
+    html:has([data-sticky-header]) {
+      scroll-padding-top: calc(var(--header-h) + 1.5rem);
+    }
+  }
+
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  body,
+  [data-personality] {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--body-size);
+    line-height: var(--body-leading);
+  }
+
+  body {
+    min-height: 100dvh;
+    font-synthesis: none;
+    overflow-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-variant-numeric: lining-nums;
+  }
+
+  h1,
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 650;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+
+  h1 {
+    font-size: var(--h1-size);
+    line-height: 1.12;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: var(--h2-size);
+    line-height: 1.2;
+  }
+
+  h3,
+  h4 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    line-height: 1.3;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+
+  h3 {
+    font-size: var(--h3-size);
+  }
+
+  h4 {
+    font-size: var(--h4-size);
+  }
+
+  p,
+  li,
+  dd {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: var(--link);
+    text-decoration-line: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.22em;
+    text-decoration-skip-ink: auto;
+  }
+
+  a:hover {
+    color: var(--link-hover);
+    text-decoration-thickness: 0.14em;
+  }
+
+  strong,
+  b {
+    font-weight: 700;
+  }
+
+  code,
+  kbd,
+  samp {
+    font-family: var(--font-mono);
+    font-size: 0.95em;
+  }
+
+  ::selection {
+    background: var(--selection);
+    color: var(--ink);
+  }
+
+  /* The focus ring: a 3px ring in the focus colour, 2px off the element, wrapped in a contrasting halo
+     (the halo fills the 2px gap and 2px outside the ring), so it reads on any background. */
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 7px var(--focus-halo);
+  }
+
+  /* Programmatic focus targets (tabindex -1): no ring and no halo by default; h1-h3 (page and step headings)
+     get the thinner 2px ring below; <main>, the skip link's target, shows none. ErrorSummary keeps a full 3px
+     ring through its own focus-visible utilities, and so does any focus target that holds a Notice (the message
+     focus moves to when something could not be done: /check's "We could not check your code", the report form's
+     preview and send errors, ActionFeedback's result line), so a keyboard user sees where focus went. */
+  [tabindex="-1"]:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  [tabindex="-1"]:has(> .al-notice):focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  /* Besley's descenders hang below a tight heading line box, so the ring ran through the "y" and "p" of "We got
+     your report". A focus-target heading holds its descenders in its own box (always, so nothing shifts when it
+     takes focus), and the ring sits a calm 6px outside that. */
+  :is(h1, h2, h3)[tabindex="-1"] {
+    padding-bottom: 0.15em;
+  }
+
+  h1[tabindex="-1"]:focus-visible,
+  h2[tabindex="-1"]:focus-visible,
+  h3[tabindex="-1"]:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 6px;
+    border-radius: var(--radius-sm);
+  }
+
+  main[tabindex="-1"]:focus-visible {
+    outline: none;
+  }
+
+  /* Native controls pick the brand colour; the native look keeps forced-colors mode correct. */
+  input[type="checkbox"],
+  input[type="radio"] {
+    accent-color: var(--primary);
+  }
+
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  table {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ------------------------------------------------------------------ component styles shared by several primitives */
+
+@layer components {
+  /* Text inputs, textareas and selects (components/ui/Field.tsx, Select.tsx). */
+  .al-control {
+    display: block;
+    width: 100%;
+    min-height: var(--control-h);
+    padding: 0.5rem 0.875rem;
+    font: inherit;
+    font-size: var(--control-font);
+    line-height: 1.4;
+    color: var(--ink);
+    background-color: var(--surface-raised);
+    border: 2px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.05);
+  }
+
+  .al-control:hover {
+    border-color: var(--ink-muted);
+  }
+
+  .al-control[aria-invalid="true"] {
+    border-color: var(--danger);
+    box-shadow: inset 0 0 0 1px var(--danger);
+  }
+
+  /* The base layer's focus halo is a box-shadow, and the two rules above (this layer wins over base) replace
+     it, so a focused control re-adds it next to its own inset shadow. Forced colors: the unlayered
+     `:focus-visible { box-shadow: none }` still wins. */
+  .al-control:focus-visible {
+    box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.05), 0 0 0 7px var(--focus-halo);
+  }
+
+  .al-control[aria-invalid="true"]:focus-visible {
+    box-shadow: inset 0 0 0 1px var(--danger), 0 0 0 7px var(--focus-halo);
+  }
+
+  /* A date input's calendar button is a Tab stop inside the input (the browser's own shadow DOM). While it has
+     focus the input no longer matches :focus-visible, so the ring vanished and only a faint box around the icon
+     was left. :focus-within keeps the same ring on the whole field (a text field shows its ring on any focus). */
+  .al-control[type="date"]:focus-within {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+    box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.05), 0 0 0 7px var(--focus-halo);
+  }
+
+  .al-control[type="date"][aria-invalid="true"]:focus-within {
+    box-shadow: inset 0 0 0 1px var(--danger), 0 0 0 7px var(--focus-halo);
+  }
+
+  textarea.al-control {
+    min-height: calc(var(--control-h) * 3);
+    padding-block: 0.75rem;
+    resize: vertical;
+  }
+
+  select.al-control {
+    appearance: none;
+    padding-right: 3rem;
+    cursor: pointer;
+  }
+
+  .al-control:disabled {
+    background-color: var(--surface-sunken);
+    cursor: not-allowed;
+  }
+
+  /* Whole-row radio and checkbox options (Checkbox.tsx, RadioGroup.tsx). The label's ::after covers
+     the row, so a click anywhere on the row (hint included) toggles the input. */
+  .al-choice {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--check-size) minmax(0, 1fr);
+    column-gap: 0.875rem;
+    align-items: start;
+    min-height: var(--control-h);
+    padding: 0.75rem 1rem;
+    background: var(--surface-raised);
+    border: var(--choice-border-w) solid var(--border-strong);
+    border-radius: var(--radius-md);
+  }
+
+  .al-choice:hover {
+    border-color: var(--ink-muted);
+  }
+
+  .al-choice:has(input:checked) {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    box-shadow: inset 0 0 0 1px var(--primary);
+  }
+
+  .al-choice > input {
+    grid-row: 1 / span 2;
+    width: var(--check-size);
+    height: var(--check-size);
+    margin: calc((1lh - var(--check-size)) / 2) 0 0;
+    cursor: pointer;
+    /* Above the label's row-wide ::after, so a click ON the input reaches the input itself
+       (otherwise the label intercepts it, and tools like Playwright's check() can't click it). */
+    position: relative;
+    z-index: 1;
+  }
+
+  .al-choice > label {
+    grid-column: 2;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .al-choice > label::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .al-choice > .al-choice-hint {
+    grid-column: 2;
+    color: var(--ink-muted);
+    font-size: var(--small-size);
+  }
+
+  .al-choice > input:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .al-choice:has(> input:focus-visible) {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 7px var(--focus-halo);
+  }
+
+  .al-choice:has(> input:disabled) {
+    opacity: 0.7;
+  }
+
+  /* Content revealed under a selected option (no JS needed). */
+  .al-conditional {
+    display: none;
+    margin: 0.5rem 0 0 calc(var(--check-size) / 2 + 1rem - 2px);
+    padding: 0.75rem 0 0.5rem 1.5rem;
+    border-left: 4px solid var(--border-strong);
+  }
+
+  .al-choice-item:has(> .al-choice > input:checked) > .al-conditional {
+    display: block;
+  }
+
+  /* A link that is the only thing in a table cell (case refs) gets a 44px tall target. */
+  /* A sub-heading inside a staff card (the task in "Next step", the parts of a report or of the redaction review):
+     set apart from the card title above and the bold field labels below by style, not only by size. Small caps are
+     glyphs only, so screen readers still get the words as written (text-transform: uppercase can be spelled out). */
+  .al-subhead {
+    font-family: var(--font-sans);
+    font-size: var(--body-size);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.05em;
+    font-variant-caps: all-small-caps;
+    color: var(--ink-muted);
+  }
+
+  /* A question that is not the step's heading: RadioGroup and CheckboxGroup legends, Field labels. Reporter side a
+     step above the bold answer rows; staff side the body size. */
+  .al-question {
+    font-size: var(--question-size);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .al-table-scroll :is(th, td) > a:only-child {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    white-space: nowrap;
+  }
+
+  /* A table wider than its region shows a soft shadow on the side where more columns are, so a phone user sees
+     that it scrolls (decorative; the region is also focusable and labelled). The two "local" covers move with the
+     content and hide the shadow at each end; the two "scroll" shadows stay at the region's edges. Bg-surface (a
+     utility) still sets the colour underneath. */
+  .al-table-scroll {
+    background:
+      linear-gradient(to right, var(--surface) 40%, transparent) left center / 2rem 100% no-repeat local,
+      linear-gradient(to left, var(--surface) 40%, transparent) right center / 2rem 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%, var(--scroll-edge), transparent) left center / 0.75rem 100% no-repeat scroll,
+      radial-gradient(farthest-side at 100% 50%, var(--scroll-edge), transparent) right center / 0.75rem 100% no-repeat scroll,
+      var(--surface);
+  }
+
+  /* Hit area of at least 44x44px around a visually small control (footnote buttons). */
+  .al-hit-44 {
+    position: relative;
+  }
+
+  .al-hit-44::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    transform: translate(-50%, -50%);
+  }
+
+  /* Skip link: hidden until focused, then a clear tab at the top-left. */
+  .al-skip {
+    position: absolute;
+    left: 1rem;
+    top: -10rem;
+    z-index: 100;
+    padding: 0.75rem 1.25rem;
+    background: var(--surface-raised);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    font-weight: 700;
+    border: 2px solid var(--ink);
+    border-radius: var(--radius-md);
+    box-shadow: var(--elev-3);
+  }
+
+  .al-skip:focus {
+    top: 1rem;
+  }
+
+  /* Redaction highlight: colour + dashed underline + the [TYPE] token text, never colour alone. */
+  .al-redact {
+    background: var(--redact-bg);
+    color: var(--redact-ink);
+    border-bottom: 2px dashed var(--redact-border);
+    border-radius: 0.2em;
+    padding: 0 0.15em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* The loop ring (components/ui/LoopRing.tsx). */
+  .al-ring-track {
+    fill: none;
+    stroke: var(--border);
+  }
+
+  .al-ring-seg {
+    fill: none;
+    stroke-linecap: round;
+  }
+
+  .al-ring-seg[data-state="done"] {
+    stroke: var(--primary);
+  }
+
+  .al-ring-seg[data-state="current"] {
+    stroke: var(--ring-current);
+  }
+
+  /* Not reached yet: a thin solid arc (a dotted one read as a loading spinner). */
+  .al-ring-seg[data-state="upcoming"] {
+    stroke: var(--border-strong);
+  }
+
+  .al-ring-value {
+    fill: none;
+    stroke: var(--primary);
+    stroke-linecap: round;
+  }
+
+  .al-ring-closer,
+  .al-ring[data-closed] .al-ring-value {
+    fill: none;
+    stroke: var(--success);
+    stroke-linecap: round;
+  }
+
+  .al-ring-check {
+    fill: none;
+    stroke: var(--success);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .al-logo-ring {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+  }
+
+  .al-logo-dot {
+    fill: var(--accent);
+  }
+
+  /* The landing page's hero disc: a soft tint behind the loop. Sunken on warm paper; raised in dark mode, where
+     the sunken tone is darker than the page and the disc read as a hole. */
+  .al-hero-disc {
+    fill: var(--surface-sunken);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .al-hero-disc {
+      fill: var(--surface-raised);
+    }
+  }
+
+  /* Loop timeline connectors (Timeline.tsx). */
+  .al-loop-step::before {
+    content: "";
+    position: absolute;
+    background: var(--border-strong);
+  }
+
+  .al-loop-step[data-state="done"]::before {
+    background: var(--primary);
+  }
+
+  /* Dashboard charts (components/ui/charts, docs/domain.md §10). Marks wear the chart tokens; text wears text
+     tokens; gridlines are solid hairlines one step off the surface. */
+  .al-chart-svg {
+    display: block;
+    height: auto;
+    overflow: visible;
+    font-family: var(--font-sans);
+  }
+
+  .al-chart-svg .al-mark {
+    fill: var(--chart-1);
+  }
+
+  .al-chart-svg .al-mark[data-tone="verified"] {
+    fill: var(--chart-verified);
+  }
+
+  .al-chart-svg .al-mark[data-tone="muted"] {
+    fill: var(--border-strong);
+  }
+
+  .al-chart-svg .al-mark[data-clickable] {
+    cursor: pointer;
+  }
+
+  .al-chart-svg .al-mark[data-clickable]:hover {
+    opacity: 0.82;
+  }
+
+  .al-chart-band {
+    fill: var(--chart-1);
+    opacity: 0.12;
+  }
+
+  .al-chart-grid {
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .al-chart-axis {
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+
+  .al-chart-axis-fill {
+    fill: var(--border-strong);
+  }
+
+  .al-chart-label {
+    fill: var(--ink);
+  }
+
+  .al-chart-tick {
+    fill: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .al-chart-value {
+    fill: var(--ink);
+    font-weight: 700;
+  }
+
+  /* The chart pattern: below md the table IS the chart (the picture and its toggle are not shown). From md up the
+     table is visually hidden (still read by screen readers) until "Show as table" is pressed, or until keyboard
+     focus enters it, so a focused link inside it is never invisible. */
+  @media (max-width: 47.99rem) {
+    .al-chart-plot,
+    .al-chart-toggle {
+      display: none !important;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .al-chart:not([data-table-shown]) .al-chart-data:not(:focus-within) {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .al-chart[data-table-shown] .al-chart-plot {
+      display: none;
+    }
+  }
+
+  /* SegmentedControl: native radios drawn as one row of segments. The input covers its segment (opacity 0), so a
+     click anywhere on the segment is a click on the radio; the label shows the state. */
+  .al-segment-input {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  /* Colours live here, not in utilities: a utility (layer "utilities") would beat the chosen state below. */
+  .al-segment-label {
+    color: var(--ink);
+  }
+
+  .al-segment:hover .al-segment-label {
+    background: var(--surface-sunken);
+  }
+
+  .al-segment:has(.al-segment-input:checked) .al-segment-label {
+    background: var(--primary);
+    color: var(--on-primary);
+    box-shadow: var(--elev-1);
+  }
+
+  .al-segment:has(.al-segment-input:focus-visible) .al-segment-label {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 7px var(--focus-halo);
+    position: relative;
+    z-index: 2;
+  }
+
+  .al-segment-reveal {
+    display: none;
+  }
+
+  .al-segmented:has(.al-segment-input[data-reveals]:checked) .al-segment-reveal {
+    display: block;
+  }
+
+  /* Keys beside the headline ring's parts (decorative: the words say what each part is). */
+  .al-key {
+    display: inline-block;
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 999px;
+  }
+
+  .al-key[data-tone="arc"] {
+    background: var(--primary);
+  }
+
+  .al-headline[data-closed] .al-key[data-tone="arc"] {
+    background: var(--success);
+  }
+
+  .al-key[data-tone="track"] {
+    background: var(--border);
+    box-shadow: inset 0 0 0 1.5px var(--border-strong);
+  }
+
+  .al-key[data-tone="apart"] {
+    border: 2px dashed var(--border-strong);
+  }
+
+  /* The deadline line: the icon disc turns to the warning tone when the date is close or past (the words say it). */
+  .al-deadline[data-urgency="soon"] .al-deadline-icon,
+  .al-deadline[data-urgency="past"] .al-deadline-icon {
+    background: var(--warning-bg);
+    color: var(--warning);
+  }
+
+  /* The receipt code in two groups of eight (CodeDisplay `halves`): a CSS line break between the groups, so the
+     element's text stays exactly the code (a <br> would put a line break into it). */
+  .al-code-break::before {
+    content: "\A";
+    white-space: pre;
+  }
+
+  /* ... and the hyphen between the two groups: kept in the text, clipped out of sight. An inline-block, not sr-only:
+     an absolutely positioned element is a block, and innerText would put line breaks around it. One pixel wide and
+     pulled back by a pixel, not zero wide: WebKit leaves a zero-width box's text out of innerText (and so out of a
+     copied selection), found by the WebKit e2e run (Phase 7 T4.7). The mono hyphen's first pixel is blank. */
+  .al-code-joint {
+    display: inline-block;
+    width: 1px;
+    margin-right: -1px;
+    overflow: hidden;
+    vertical-align: bottom;
+  }
+}
+
+/* ------------------------------------------------------------------ motion (only when nobody asked for less) */
+
+@media (prefers-reduced-motion: no-preference) {
+  .al-ring[data-animate-close] .al-ring-closer {
+    stroke-dasharray: 100 100;
+    animation: al-loop-close var(--dur-loop) var(--ease-loop) both;
+  }
+
+  .al-ring[data-animate-close] .al-ring-check {
+    stroke-dasharray: 100 100;
+    animation: al-loop-close var(--dur-slow) var(--ease-out) var(--dur-loop) both;
+  }
+
+  [data-celebrate] {
+    animation: al-arrive var(--dur-slow) var(--ease-out) both;
+  }
+
+  /* The dashboard's headline ring draws its value once, on load (no "to": it ends at the element's own dasharray). */
+  .al-ring[data-animate-draw] .al-ring-value {
+    animation: al-ring-draw var(--dur-loop) var(--ease-loop) 120ms both;
+  }
+
+  .al-transition {
+    transition:
+      background-color var(--dur-quick) var(--ease-out),
+      border-color var(--dur-quick) var(--ease-out),
+      color var(--dur-quick) var(--ease-out),
+      transform var(--dur-instant) var(--ease-out);
+  }
+}
+
+@keyframes al-loop-close {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes al-ring-draw {
+  from {
+    stroke-dasharray: 0 100;
+  }
+}
+
+@keyframes al-arrive {
+  0% {
+    transform: scale(0.94);
+    opacity: 0.6;
+  }
+  60% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Safety net: anything that still animates stops when the person asks for reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------------------ forced colors (Windows contrast themes) */
+
+@media (forced-colors: active) {
+  /* The chosen frame (below) and the focus ring are both Highlight here: the ring comes after the frame, so a chosen
+     row that has focus shows the full 3px ring 2px off it, like any focused row (same specificity, so order wins). */
+  .al-choice:has(input:checked) {
+    border-color: Highlight;
+    outline: 2px solid Highlight;
+  }
+
+  :focus-visible,
+  .al-choice:has(> input:focus-visible),
+  .al-control[type="date"]:focus-within {
+    outline: 3px solid Highlight;
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+
+  .al-control,
+  .al-choice,
+  .al-badge,
+  .al-chip,
+  .al-card,
+  .al-notice,
+  .al-code,
+  .al-stepbar > span {
+    border-color: CanvasText;
+  }
+
+  .al-btn {
+    border-color: ButtonText;
+  }
+
+  /* A pressed choice (aria-pressed) keeps a visible frame when its tinted background is gone; with focus it wears the
+     focus ring instead (the frame's selector is the more specific one, so the ring is restated for it). */
+  .al-btn[aria-pressed="true"] {
+    border-color: Highlight;
+    outline: 2px solid Highlight;
+  }
+
+  .al-btn[aria-pressed="true"]:focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  .al-redact {
+    background: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+    border-bottom-color: CanvasText;
+  }
+
+  .al-ring-track,
+  .al-ring-seg[data-state="upcoming"],
+  .al-ring-seg[data-state="current"],
+  .al-logo-ring {
+    stroke: CanvasText;
+  }
+
+  .al-ring-seg[data-state="done"],
+  .al-ring-value,
+  .al-ring-closer,
+  .al-ring-check {
+    stroke: Highlight;
+  }
+
+  .al-logo-dot {
+    fill: Highlight;
+  }
+
+  .al-stepbar > span[data-done] {
+    background: Highlight;
+    forced-color-adjust: none;
+  }
+
+  .al-loop-step::before,
+  .al-loop-step[data-state="done"]::before {
+    background: CanvasText;
+    forced-color-adjust: none;
+  }
+
+  /* The staff nav's current-tab bar (a background) would be forced to Canvas and vanish ("page", or "true" for
+     the tab whose section the page belongs to). */
+  .al-staff-nav a[aria-current]::after {
+    background: Highlight;
+    forced-color-adjust: none;
+  }
+
+  .al-skip {
+    border-color: CanvasText;
+  }
+
+  /* Charts: two system colours for the two series (CanvasText, Highlight), GrayText for "not classified". */
+  .al-chart-svg .al-mark,
+  .al-chart-band {
+    fill: CanvasText;
+  }
+
+  .al-chart-svg .al-mark[data-tone="verified"] {
+    fill: Highlight;
+  }
+
+  .al-chart-svg .al-mark[data-tone="muted"],
+  .al-chart-axis-fill {
+    fill: GrayText;
+  }
+
+  .al-chart-grid,
+  .al-chart-axis {
+    stroke: GrayText;
+  }
+
+  .al-chart-label,
+  .al-chart-value,
+  .al-chart-tick {
+    fill: CanvasText;
+  }
+
+  .al-key[data-tone="arc"],
+  .al-headline[data-closed] .al-key[data-tone="arc"] {
+    background: Highlight;
+    forced-color-adjust: none;
+  }
+
+  .al-key[data-tone="track"] {
+    background: Canvas;
+    box-shadow: inset 0 0 0 1.5px CanvasText;
+    forced-color-adjust: none;
+  }
+
+  .al-key[data-tone="apart"] {
+    border-color: CanvasText;
+  }
+
+  /* The chosen segment keeps a visible frame when its fill is gone. */
+  .al-segments {
+    border-color: CanvasText;
+  }
+
+  .al-segment:has(.al-segment-input:checked) .al-segment-label {
+    background: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+  }
+
+  .al-segment:has(.al-segment-input:focus-visible) .al-segment-label {
+    outline-color: Highlight;
+    box-shadow: none;
+  }
+}
+
+/* ------------------------------------------------------------------ the progress report (Phase 4)
+ * The report pages (/app/reports/[id], /p/[orgSlug]/reports/[id]) as a finished publication: one raised sheet,
+ * publication type (--report-*), a spine down each section, sentences with footnote sources that open as cards in
+ * the margin when the column is wide (a container query on .al-report) and under the sentence when it is narrow.
+ * Signature moment 2: [data-building] (a draft just built) fills the sections in order while the checklist rings
+ * close, using only transform, clip-path and decorative SVG strokes (never text colour or opacity: axe may measure
+ * contrast mid-animation). Nothing moves under reduced motion; the final state is the static one.
+ */
+@layer components {
+  .al-report-layout {
+    display: grid;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  @media (min-width: 64rem) {
+    .al-report-layout {
+      grid-template-columns: minmax(0, 1fr) minmax(18rem, 21rem);
+      gap: 2.5rem;
+    }
+  }
+
+  .al-report-rail {
+    display: grid;
+    gap: 1.5rem;
+    min-width: 0;
+  }
+
+  /* The sheet: the one raised surface of a report page. */
+  .al-sheet {
+    min-width: 0;
+    padding: clamp(1.25rem, 0.6rem + 3vw, 2.75rem);
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--elev-2);
+  }
+
+  .al-report-cover {
+    margin-bottom: clamp(1.75rem, 1.25rem + 2vw, 2.75rem);
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .al-report-cover h1 {
+    font-size: var(--report-h1-size);
+    line-height: 1.08;
+    letter-spacing: -0.018em;
+  }
+
+  .al-report-draft-note {
+    max-width: var(--report-measure);
+    margin: -0.5rem 0 2rem;
+    font-size: var(--small-size);
+    color: var(--ink-muted);
+  }
+
+  .al-report {
+    container-type: inline-size;
+    display: grid;
+    gap: clamp(2.25rem, 1.75rem + 1.5vw, 3.25rem);
+    font-size: var(--report-body-size);
+    line-height: var(--report-body-leading);
+  }
+
+  .al-report-section {
+    position: relative;
+    display: grid;
+    gap: 1rem;
+    min-width: 0;
+    padding-left: clamp(1rem, 0.6rem + 1vw, 1.5rem);
+  }
+
+  /* The spine: a decorative rule down the section (it draws itself on a just-built draft). */
+  .al-report-section::before {
+    content: "";
+    position: absolute;
+    top: 0.4rem;
+    bottom: 0;
+    left: 0;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--border-strong);
+    transform-origin: top;
+  }
+
+  .al-report-section-head {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .al-report-section h2 {
+    font-size: var(--report-h2-size);
+    line-height: 1.15;
+  }
+
+  .al-report-cite {
+    font-size: var(--small-size);
+    color: var(--ink-muted);
+  }
+
+  .al-report-h3 {
+    margin-top: 0.75rem;
+    font-size: var(--h3-size);
+  }
+
+  .al-report-p,
+  .al-sourced-text,
+  .al-lead-text p {
+    max-width: var(--report-measure);
+    overflow-wrap: anywhere;
+  }
+
+  .al-lead-text {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .al-report-list {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding-left: 1.25em;
+    list-style: disc;
+  }
+
+  .al-report-list > li::marker {
+    color: var(--ink-muted);
+  }
+
+  /* A part the lead still has to write (draft only), and the lead's text box. */
+  .al-lead-placeholder,
+  .al-lead-editor {
+    max-width: var(--report-measure);
+    padding: 0.875rem 1rem;
+    background: var(--surface-sunken);
+    border: 2px dashed var(--border-strong);
+    border-radius: var(--radius-md);
+  }
+
+  .al-lead-placeholder {
+    font-size: var(--small-size);
+  }
+
+  .al-lead-editor {
+    padding: 1rem;
+    border-width: 1px;
+  }
+
+  /* A generated sentence and its sources (components/ui/SourceNote.tsx). */
+  .al-sourced {
+    display: grid;
+    gap: 0.5rem;
+    align-items: start;
+  }
+
+  .al-sourced-text {
+    border-radius: var(--radius-xs);
+  }
+
+  /* The sentence whose sources are open is marked (and keeps a frame in forced-colors mode). */
+  .al-sourced[data-open] > .al-sourced-text {
+    background: var(--primary-soft);
+    box-shadow: 0 0 0 0.35rem var(--primary-soft);
+    outline: 2px solid transparent;
+    outline-offset: 0.35rem;
+  }
+
+  .al-sourced-blocked {
+    font-weight: 700;
+    color: var(--danger);
+  }
+
+  .al-sourced-note {
+    display: grid;
+    justify-items: start;
+    min-width: 0;
+  }
+
+  .al-footnote {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.75rem;
+    padding: 0.25rem 0.75rem;
+    font-size: var(--small-size);
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: left;
+    color: var(--link);
+    background: var(--surface-raised);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+  }
+
+  .al-footnote:hover {
+    color: var(--link-hover);
+    border-color: var(--link);
+  }
+
+  .al-footnote[aria-expanded="true"] {
+    color: var(--ink);
+    background: var(--primary-soft);
+    border-color: var(--primary);
+  }
+
+  .al-source-card {
+    justify-self: stretch;
+    margin-top: 0.5rem;
+    padding: 0.875rem 1rem 1rem;
+    font-size: var(--small-size);
+    line-height: 1.45;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--elev-1);
+  }
+
+  .al-source-list {
+    display: grid;
+    gap: 0.625rem;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .al-source-list-scroll {
+    max-height: min(22rem, 60vh);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 0.375rem;
+  }
+
+  .al-source {
+    display: grid;
+    gap: 0.125rem;
+    padding-top: 0.625rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .al-source:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .al-source-ref {
+    justify-self: start;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  a.al-source-ref {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    white-space: pre;
+  }
+
+  .al-source-open {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    letter-spacing: normal;
+  }
+
+  .al-source-summary {
+    color: var(--ink);
+  }
+
+  .al-source-status {
+    color: var(--ink-muted);
+  }
+
+  .al-print-sources,
+  .al-print-only {
+    display: none;
+  }
+
+  /* Wide report column: the button and its card sit in the margin beside the sentence, joined by a dotted thread. */
+  @container (min-width: 50rem) {
+    .al-sourced {
+      grid-template-columns: minmax(0, var(--report-measure)) minmax(15rem, 22rem);
+      column-gap: 2rem;
+    }
+
+    .al-sourced-text {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .al-sourced-note {
+      position: relative;
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+
+    .al-sourced[data-open] .al-sourced-note::before {
+      content: "";
+      position: absolute;
+      top: 1.35rem;
+      right: 100%;
+      width: 2rem;
+      border-top: 2px dotted var(--primary);
+    }
+  }
+
+  /* The "Report checks" list (components/report/ReportChecks.tsx) and its rings (components/ui/CheckRing.tsx). */
+  .al-checks {
+    padding: var(--card-pad);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+
+  .al-checks-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-top: 0.875rem;
+    font-size: var(--lead-size);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--danger);
+  }
+
+  .al-checks-summary[data-ok] {
+    color: var(--success);
+  }
+
+  .al-checks-summary .al-check-ring {
+    width: 1.625rem;
+    height: 1.625rem;
+  }
+
+  .al-checklist {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0.625rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .al-check {
+    display: grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr);
+    column-gap: 0.625rem;
+    align-items: start;
+  }
+
+  .al-check > .al-check-ring {
+    margin-top: 0.125rem;
+  }
+
+  .al-check-text {
+    display: grid;
+    gap: 0.125rem;
+    min-width: 0;
+  }
+
+  .al-check-label {
+    overflow-wrap: anywhere;
+  }
+
+  .al-check-meta {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 0.625rem;
+    font-size: var(--small-size);
+    color: var(--ink-muted);
+  }
+
+  .al-check-state {
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .al-check[data-state="passed"] .al-check-state {
+    color: var(--success);
+  }
+
+  .al-check[data-state="missing"] .al-check-state {
+    color: var(--danger);
+  }
+
+  .al-check-ring {
+    flex: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    overflow: visible;
+  }
+
+  .al-check-ring-inline {
+    width: 1.1em;
+    height: 1.1em;
+  }
+
+  .al-check-ring-track,
+  .al-check-ring-mark {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.25;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .al-check-ring[data-state="passed"] {
+    color: var(--success);
+  }
+
+  .al-check-ring[data-state="missing"] {
+    color: var(--danger);
+  }
+
+  .al-check-ring[data-state="to_write"] {
+    color: var(--ink-muted);
+  }
+
+  /* Still to write: the loop is open, with the amber dot waiting in its gap (the brand mark's motif). */
+  .al-check-ring[data-state="to_write"] .al-check-ring-track {
+    stroke-dasharray: 85 15;
+    stroke-dashoffset: 5;
+  }
+
+  .al-check-ring-dot {
+    fill: var(--accent);
+  }
+
+  .al-report-footer {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* The steps of "How the draft is built" (a real sequence, so numbered). */
+  .al-steps {
+    counter-reset: al-step;
+  }
+
+  .al-step {
+    position: relative;
+    padding-left: 2.375rem;
+    counter-increment: al-step;
+  }
+
+  .al-step::before {
+    content: counter(al-step);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 1.625rem;
+    height: 1.625rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-building] .al-report-section {
+    animation: al-section-in var(--dur-slow) var(--ease-out) backwards;
+    animation-delay: calc(var(--i, 0) * 100ms);
+  }
+
+  [data-building] .al-report-section::before {
+    animation: al-rule-draw var(--dur-moderate) var(--ease-out) backwards;
+    animation-delay: calc(var(--i, 0) * 100ms + 140ms);
+  }
+
+  [data-building] .al-check .al-check-ring:not([data-state="to_write"]) .al-check-ring-track {
+    stroke-dasharray: 100;
+    animation: al-loop-close var(--dur-moderate) var(--ease-out) backwards;
+    animation-delay: calc(var(--i, 0) * 100ms + 220ms);
+  }
+
+  [data-building] .al-check .al-check-ring-mark {
+    stroke-dasharray: 100;
+    animation: al-loop-close var(--dur-quick) var(--ease-out) backwards;
+    animation-delay: calc(var(--i, 0) * 100ms + 480ms);
+  }
+
+  /* A source card answers its button: it slides in from the margin (or drops in under a narrow sentence). */
+  .al-source-card {
+    animation: al-card-drop var(--dur-quick) var(--ease-out);
+  }
+
+  @container (min-width: 50rem) {
+    .al-source-card {
+      animation-name: al-card-side;
+    }
+  }
+}
+
+@keyframes al-section-in {
+  from {
+    transform: translateY(0.75rem);
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    transform: translateY(0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes al-rule-draw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes al-card-drop {
+  from {
+    transform: translateY(-0.25rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes al-card-side {
+  from {
+    transform: translateX(0.5rem);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (forced-colors: active) {
+  .al-check-ring-track,
+  .al-check-ring-mark {
+    stroke: CanvasText;
+  }
+
+  .al-check-ring-dot {
+    fill: CanvasText;
+  }
+
+  .al-report-section::before {
+    background: CanvasText;
+    forced-color-adjust: none;
+  }
+
+  .al-sheet,
+  .al-checks,
+  .al-source-card,
+  .al-lead-placeholder,
+  .al-lead-editor,
+  .al-footnote {
+    border-color: CanvasText;
+  }
+
+  .al-footnote[aria-expanded="true"] {
+    outline: 2px solid Highlight;
+  }
+
+  /* An open footnote that has focus (Enter keeps focus on it) wears the focus ring, not only the open frame. */
+  .al-footnote[aria-expanded="true"]:focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  .al-sourced[data-open] .al-sourced-note::before {
+    border-top-color: CanvasText;
+  }
+}
+
+@media print {
+  .al-report-layout {
+    display: block;
+  }
+
+  .al-sheet {
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .al-report-section {
+    padding-left: 0;
+  }
+
+  .al-report-section::before,
+  .al-report-cite,
+  .al-sourced-note,
+  .al-lead-editor button {
+    display: none !important;
+  }
+
+  .al-report-section h2,
+  .al-report-h3 {
+    break-after: avoid;
+  }
+
+  .al-sourced {
+    display: block;
+  }
+
+  .al-sourced[data-open] > .al-sourced-text {
+    background: none;
+    box-shadow: none;
+  }
+
+  .al-print-sources,
+  .al-print-only {
+    display: block;
+    font-size: 9pt;
+    color: #000;
+  }
+}
+
+/* ------------------------------------------------------------------ the evidence check (Phase 4, /verify)
+ * /verify/[reportId] (components/report/EvidenceCheck.tsx, components/ui/EvidenceChain.tsx). Signature moment 3: each
+ * case's history is a chain of linked hash chips from a genesis dot; the record the report froze is ringed, later
+ * records are dashed, a broken link turns red (thick dashed connector, broken-link icon, "Broken here") and the
+ * records after it are muted. The drawing is aria-hidden; the "Records" table's text carries the facts. The links
+ * draw in once from the left and the verdict's ring closes (transform and SVG strokes only, never text colour or
+ * opacity); nothing moves under reduced motion. Forced colours keep every state in dashes, icons and words.
+ */
+@layer components {
+  .al-verdict {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 1rem 1.25rem;
+    padding: var(--card-pad);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 6px solid var(--danger);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--elev-1);
+  }
+
+  .al-verdict[data-ok] {
+    border-left-color: var(--success);
+  }
+
+  .al-verdict-ring {
+    width: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    height: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    color: var(--danger);
+  }
+
+  .al-verdict[data-ok] .al-verdict-ring {
+    color: var(--success);
+  }
+
+  .al-verdict-line {
+    max-width: 48ch;
+    font-family: var(--font-display);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--danger);
+    overflow-wrap: anywhere;
+  }
+
+  .al-verdict[data-ok] .al-verdict-line {
+    color: var(--success);
+  }
+
+  .al-verdict-head {
+    display: block;
+  }
+
+  .al-verdict-rest {
+    display: block;
+    margin-top: 0.25rem;
+    font-family: var(--font-sans);
+    font-size: var(--lead-size);
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  .al-evidence-checks {
+    gap: 0;
+    margin: 0;
+  }
+
+  .al-evidence-check {
+    padding: 1rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .al-evidence-check:first-child {
+    border-top: 0;
+    padding-top: 0.25rem;
+  }
+
+  .al-evidence-check > .al-check-ring,
+  .al-evidence-check > .al-evidence-info {
+    margin-top: 0.15rem;
+  }
+
+  .al-evidence-check .al-check-text p {
+    max-width: 72ch;
+  }
+
+  .al-check[data-state="info"] .al-check-state {
+    color: var(--ink);
+  }
+
+  .al-evidence-info {
+    color: var(--info);
+  }
+
+  .al-fingerprints {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 0.5rem 0.875rem;
+  }
+
+  .al-fingerprint {
+    display: grid;
+    justify-items: start;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+
+  .al-fingerprint-label {
+    font-size: var(--small-size);
+    color: var(--ink-muted);
+  }
+
+  .al-fingerprint-sign {
+    padding-bottom: 0.1rem;
+    font-family: var(--font-mono);
+    font-size: 1.375rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--success);
+  }
+
+  .al-fingerprints:not([data-ok]) .al-fingerprint-sign {
+    color: var(--danger);
+  }
+
+  /* The "Records" table. */
+  .al-evidence-case {
+    min-width: 13rem;
+  }
+
+  .al-evidence-cell {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .al-evidence-cell > .al-check-ring,
+  .al-evidence-cell > .al-evidence-info {
+    margin-top: 0.15em;
+  }
+
+  .al-evidence-chain-cell {
+    max-width: 36rem;
+  }
+
+  /* Wide screens: at least four links per line beside "Records intact" (table cells ignore min-width). */
+  .al-evidence-chain {
+    min-width: 20rem;
+  }
+
+  .al-evidence-why {
+    max-width: 40ch;
+    margin-top: 0.375rem;
+    font-size: var(--small-size);
+    color: var(--danger);
+  }
+
+  /* The chain itself: one grid per link ([joint][chip] over [ ][tags]), wrapping as the cell narrows. */
+  .al-chain {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    row-gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .al-chain-link {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-areas:
+      "joint chip"
+      ". tags";
+    align-items: center;
+  }
+
+  .al-chain-joint {
+    grid-area: joint;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    width: 0.875rem;
+    color: var(--danger);
+  }
+
+  .al-chain-joint::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    margin-top: -1px;
+    border-top: 2px solid var(--border-strong);
+    transform-origin: left center;
+  }
+
+  /* The genesis dot (hash_0 = 64 zeros) starts the first link. */
+  .al-chain-link:first-child .al-chain-joint {
+    width: 1.375rem;
+  }
+
+  .al-chain-link:first-child .al-chain-joint::before {
+    left: 0.5rem;
+  }
+
+  .al-chain-link:first-child .al-chain-joint::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0.625rem;
+    height: 0.625rem;
+    margin-top: -0.3125rem;
+    background: var(--surface);
+    border: 2px solid var(--border-strong);
+    border-radius: 50%;
+  }
+
+  .al-chain-chip {
+    grid-area: chip;
+  }
+
+  .al-chain-link[data-head] .al-chain-chip {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .al-chain-link[data-after] .al-chain-joint::before {
+    border-top-style: dashed;
+  }
+
+  .al-chain-link[data-state="unchecked"] .al-chain-joint::before {
+    border-top-style: dotted;
+  }
+
+  .al-chain-link[data-state="broken"] .al-chain-joint {
+    width: 2.75rem;
+  }
+
+  .al-chain-link[data-state="broken"] .al-chain-joint::before {
+    margin-top: -1.5px;
+    border-top: 3px dashed var(--danger);
+  }
+
+  .al-chain-joint .al-icon {
+    position: relative;
+    box-sizing: content-box;
+    padding: 0.125rem;
+    background: var(--surface);
+    border-radius: 50%;
+  }
+
+  .al-chain-tags {
+    grid-area: tags;
+    display: grid;
+    justify-items: center;
+    margin-top: 0.25rem;
+  }
+
+  .al-chain-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.25;
+    white-space: nowrap;
+    color: var(--primary);
+  }
+
+  .al-chain-tag[data-tone="danger"] {
+    color: var(--danger);
+  }
+
+  .al-chain-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.75rem 1.5rem;
+    font-size: var(--small-size);
+    color: var(--ink-muted);
+  }
+
+  .al-chain-legend > p {
+    flex: 1 1 20rem;
+    max-width: 72ch;
+  }
+}
+
+/* Chain chips are a step smaller than a HashChip elsewhere (unlayered, so it wins over the chip utilities). */
+.al-chain .al-chip {
+  padding: 0.0625rem 0.375rem;
+  font-size: 0.8125rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .al-chain-joint::before {
+    animation: al-link-draw var(--dur-moderate) var(--ease-out) backwards;
+    animation-delay: calc(var(--i, 0) * 45ms);
+  }
+
+  .al-verdict .al-check-ring-track {
+    stroke-dasharray: 100;
+    animation: al-loop-close var(--dur-loop) var(--ease-loop) backwards;
+  }
+
+  .al-verdict .al-check-ring-mark {
+    stroke-dasharray: 100;
+    animation: al-loop-close var(--dur-slow) var(--ease-out) var(--dur-loop) backwards;
+  }
+}
+
+@keyframes al-link-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (forced-colors: active) {
+  .al-verdict {
+    border-color: CanvasText;
+  }
+
+  .al-chain-joint::before,
+  .al-chain-link[data-state="broken"] .al-chain-joint::before {
+    border-top-color: CanvasText;
+  }
+
+  .al-chain-link:first-child .al-chain-joint::after {
+    border-color: CanvasText;
+  }
+
+  .al-chain-link[data-head] .al-chain-chip {
+    outline-color: Highlight;
+  }
+}
+
+/* ------------------------------------------------------------------ location poster (Phase 7 T4.5) */
+
+/* One location's poster (app/(staff)/app/settings/locations/[id]/poster). The screen previews the printed page, so
+   the poster is paper and ink in every theme: it sets the light reporter values of the tokens it uses (the same
+   pairs tests/contrast.test.ts checks on white) instead of following the theme. The QR code (.al-qr) is black on
+   white everywhere, forced-colors mode included: a phone can only read dark modules on a light ground. In print the
+   poster is alone on one portrait page (the staff header, footer and controls are data-print-hide). */
+@layer components {
+  .al-poster {
+    --ink: #1b2033;
+    --ink-muted: #444a5c;
+    --border: #ddd6c8;
+    --border-strong: #77715f;
+    --accent: #e3a11f;
+    --primary: #2d3a8c;
+    container-type: inline-size;
+    display: grid;
+    gap: clamp(1.25rem, 4cqi, 2rem);
+    max-width: 50rem;
+    margin-inline: auto;
+    padding: clamp(1.25rem, 6cqi, 3.5rem);
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-2);
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    line-height: 1.5;
+  }
+
+  .al-poster p {
+    margin: 0;
+  }
+
+  .al-poster-org {
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  .al-poster-intro {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .al-poster .al-poster-title {
+    margin: 0;
+    max-width: 17ch;
+    font-family: var(--font-display);
+    font-size: clamp(2.125rem, 8cqi, 4rem);
+    font-weight: 700;
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+
+  .al-poster-lead {
+    max-width: 36ch;
+    font-size: clamp(1.125rem, 2.9cqi, 1.5rem);
+    line-height: 1.4;
+    text-wrap: pretty;
+  }
+
+  /* "This poster is for": the one amber mark, so the place reads first after the question. */
+  .al-poster-place {
+    display: grid;
+    gap: 0.125rem;
+    padding-left: 1.125rem;
+    border-left: 0.5rem solid var(--accent);
+  }
+
+  .al-poster-place-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink-muted);
+  }
+
+  .al-poster-place-name {
+    font-size: clamp(1.625rem, 5cqi, 2.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+
+  .al-poster-place-detail {
+    font-size: clamp(1.125rem, 2.9cqi, 1.375rem);
+    overflow-wrap: anywhere;
+  }
+
+  .al-poster-body {
+    display: grid;
+    gap: 1.5rem 2.25rem;
+    align-items: center;
+  }
+
+  @container (min-width: 34rem) {
+    .al-poster-body {
+      grid-template-columns: minmax(0, 19rem) minmax(0, 1fr);
+    }
+  }
+
+  .al-poster-code {
+    width: 100%;
+    max-width: 19rem;
+    padding: 0.25rem;
+    border: 2px solid var(--ink);
+    border-radius: var(--radius-md);
+    background: #fff;
+  }
+
+  .al-poster-steps {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: clamp(1.125rem, 2.7cqi, 1.3125rem);
+    line-height: 1.4;
+  }
+
+  .al-poster-steps > li {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    align-items: start;
+    gap: 0.875rem;
+  }
+
+  .al-poster-step-n {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 2px solid var(--ink);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .al-poster-url {
+    display: grid;
+    gap: 0.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-strong);
+  }
+
+  .al-poster-url-label {
+    font-weight: 700;
+  }
+
+  .al-poster-url-text {
+    font-family: var(--font-mono);
+    font-size: 1.0625rem;
+    overflow-wrap: anywhere;
+  }
+
+  .al-poster-other {
+    display: grid;
+    gap: 0.375rem;
+    font-size: 1rem;
+  }
+
+  .al-poster-contacts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 2rem;
+  }
+
+  .al-qr {
+    forced-color-adjust: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .al-poster {
+    border-color: CanvasText;
+  }
+
+  .al-poster-place {
+    border-left-color: CanvasText;
+  }
+
+  /* The code keeps its own black on white (forced-color-adjust: none); its frame stays visible in any theme. */
+  .al-poster-code {
+    forced-color-adjust: none;
+    border-color: #000;
+    background: #fff;
+  }
+}
+
+/* A poster prints on a page of its own, portrait, whatever paper the printer has (Letter or A4). */
+@page poster {
+  size: portrait;
+  margin: 0.5in;
+}
+
+@media print {
+  body:has(.al-poster) main > div {
+    padding: 0;
+    max-width: none;
+  }
+
+  .al-poster {
+    page: poster;
+    max-width: none;
+    gap: 0.24in;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 13pt;
+    break-inside: avoid;
+  }
+
+  .al-poster-org {
+    font-size: 15pt;
+  }
+
+  .al-poster-intro {
+    gap: 0.14in;
+  }
+
+  .al-poster .al-poster-title {
+    font-size: 44pt;
+  }
+
+  .al-poster-lead {
+    font-size: 17pt;
+  }
+
+  .al-poster-place-name {
+    font-size: 26pt;
+  }
+
+  .al-poster-place-detail {
+    font-size: 15pt;
+  }
+
+  .al-poster-body {
+    grid-template-columns: 3.4in minmax(0, 1fr);
+    gap: 0.3in;
+  }
+
+  .al-poster-code {
+    max-width: none;
+  }
+
+  .al-poster-steps {
+    font-size: 15pt;
+  }
+
+  .al-poster-url-text {
+    font-size: 13pt;
+  }
+
+  .al-poster-other {
+    font-size: 12pt;
+  }
+}
+
+/* ------------------------------------------------------------------ print (the report adds its own in Phase 4) */
+
+@media print {
+  .al-skip,
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  html,
+  body,
+  [data-personality] {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  a {
+    color: #000 !important;
+  }
+
+  /* The printed receipt (Phase 7 T4.4): the code, the reference and how to check, without the buttons
+     (data-print-hide) or shadows; the dashed ticket edge stays, in black. */
+  .al-code {
+    border-color: #000 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+    break-inside: avoid;
+  }
+
+  .al-code .text-ink-muted {
+    color: #000 !important;
+  }
+}
