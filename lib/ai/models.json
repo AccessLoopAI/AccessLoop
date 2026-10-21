@@ -1,0 +1,13 @@
+{
+  "_doc": "Default Anthropic model IDs for the api backend (docs/domain.md §6). The only place outside the environment that names model IDs: a non-empty MODEL_STRUCTURE / MODEL_PII / MODEL_REPORT always wins. Keep in sync with .env.example (tests/ai-api.test.ts checks). The claude-cli backend uses CLAUDE_CLI_MODEL (an alias, default sonnet) instead.",
+  "structure": { "env": "MODEL_STRUCTURE", "default": "claude-sonnet-5-5" },
+  "flagPii": { "env": "MODEL_PII", "default": "claude-haiku-5-5" },
+  "phraseClaims": { "env": "MODEL_REPORT", "default": "claude-sonnet-5-5" },
+  "families": {
+    "_doc": "What each known model accepts in an api request (lib/ai/backends/api.ts apiRequestShape; docs/decisions.md 2026-10-20 'api request shape'). Checked against Anthropic's documentation on 2026-10-20: the Opus 5.5 / Sonnet 5.5 / Haiku 5.5 migration guides and the API errors page ('Forced tool use not supported' names Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1; Haiku 5.5 accepts a forced tool_choice but only temperature 1; Sonnet 5.5 rejects a non-default temperature; Haiku 4.5 rejects effort), and the structured-outputs page (strict tools on these models). forcedToolChoice: tool_choice type tool is accepted. sampling: a temperature may be sent. effort: output_config.effort is accepted (so the per-function default effort is sent). strictTools: strict: true on the tool is accepted. A model not listed here gets the plain shape: tool_choice auto, no temperature, no default effort, no strict; the AI_API_* knobs a human sets are sent as set. A dated ID (e.g. claude-haiku-4-5-20251001) matches its family.",
+    "claude-opus-5-5": { "name": "Claude Opus 5.5", "forcedToolChoice": false, "sampling": false, "effort": true, "strictTools": true },
+    "claude-sonnet-5-5": { "name": "Claude Sonnet 5.5", "forcedToolChoice": false, "sampling": false, "effort": true, "strictTools": true },
+    "claude-haiku-5-5": { "name": "Claude Haiku 5.5", "forcedToolChoice": true, "sampling": false, "effort": true, "strictTools": true },
+    "claude-haiku-4-5": { "name": "Claude Haiku 4.5", "forcedToolChoice": true, "sampling": true, "effort": false, "strictTools": true }
+  }
+}
