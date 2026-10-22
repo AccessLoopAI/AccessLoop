@@ -1,0 +1,20 @@
+{
+  "_doc": "FAKE_LLM=1 answers for similarBarriers() (lib/ai/similar.ts, docs/domain.md §6.2). A topic applies when one of its `keywords` is a case-insensitive substring of THIS case's public summary; then every candidate whose summary holds one of the same topic's keywords is a match, with the topic's `reason`. Candidates keep their order (newest first), each listed once (the first topic that fits wins), at most 5. The answer then goes through the same check as a model's: every ref must be one of the candidates. Topics follow the seed and the e2e scenarios (doors, ramps, chat, labels, hearing loops); A more specific topic comes before a broader one (hearing loop before counter). Add topics, never rewrite one.",
+  "topics": [
+    { "keywords": ["door"], "reason": "Both are about a door at an entrance that does not open as it should." },
+    { "keywords": ["ramp", "handrail"], "reason": "Both are about the ramp at an entrance." },
+    { "keywords": ["elevator", "lift"], "reason": "Both are about an elevator that was out of service." },
+    { "keywords": ["parking"], "reason": "Both are about an accessible parking space." },
+    { "keywords": ["hearing loop"], "reason": "Both are about a hearing loop that did not work." },
+    { "keywords": ["counter"], "reason": "Both are about a service counter that is hard to use." },
+    { "keywords": ["chat"], "reason": "Both are about the support chat closing before people could finish." },
+    { "keywords": ["label"], "reason": "Both are about controls or fields that screen readers can't name." },
+    { "keywords": ["captcha"], "reason": "Both are about a sign-in check that only works by sight." },
+    { "keywords": ["caption"], "reason": "Both are about videos without captions." },
+    { "keywords": ["relay"], "reason": "Both are about calls made through a relay service." },
+    { "keywords": ["large print"], "reason": "Both are about documents not offered in large print." },
+    { "keywords": ["kiosk"], "reason": "Both are about self-serve kiosks with no audio or tactile option." },
+    { "keywords": ["service animal", "guide dog"], "reason": "Both are about service animals being turned away." },
+    { "keywords": ["extra time", "timer", "time limit"], "reason": "Both are about a time limit that could not be extended." }
+  ]
+}
