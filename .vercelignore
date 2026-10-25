@@ -1,0 +1,16 @@
+# Files `npx vercel deploy` must never upload (there's no git, so this is the only filter).
+.env
+.env.*
+!.env.example
+.vercel
+node_modules
+.next
+playwright-report
+test-results
+coverage
+eval/holdout/*
+!eval/holdout/README.md
+*.zip
+.data
+# The Expo reporter app is not part of the Next deploy (its own package.json; mobile/README.md).
+mobile
