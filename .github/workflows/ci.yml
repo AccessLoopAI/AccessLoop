@@ -1,0 +1,96 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Typecheck, lint, unit tests, db smoke, build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run typecheck
+
+      - run: npm run lint
+
+      - run: npm test
+
+      - name: Database security smoke test (in-memory PGlite on 127.0.0.1:5544)
+        run: npm run db:smoke
+
+      - name: Production build with a placeholder database URL
+        run: npm run build
+        env:
+          # Never reached during the build. The real values come from the host's environment at run time.
+          DATABASE_URL: postgres://ci:ci@127.0.0.1:5432/ci
+          NEXT_TELEMETRY_DISABLED: "1"
+
+  e2e:
+    name: End-to-end (Playwright, Chromium + WebKit)
+    needs: checks
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'e2e')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: The runner must not be root (embedded Postgres refuses root)
+        run: |
+          if [ "$(id -u)" = "0" ]; then echo "This job must run as a non-root user." >&2; exit 1; fi
+
+      - name: The en_US.UTF-8 locale embedded Postgres needs
+        run: |
+          if ! locale -a | grep -qiE '^en_US\.utf-?8$'; then
+            sudo locale-gen en_US.UTF-8
+            sudo update-locale
+          fi
+
+      - run: npm ci
+
+      - name: Playwright browsers (Chromium and WebKit, with their system libraries)
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Local setup (throwaway .env.local, embedded Postgres, migrations, security SQL, seed)
+        run: npm run local:setup
+
+      - name: End-to-end suite (all five demo steps, axe, keyboard, reflow, forced colours)
+        run: npm run e2e
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+
+      - name: Keep the Playwright report when something failed
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
