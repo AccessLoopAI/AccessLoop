@@ -1,0 +1,32 @@
+name: Bug report
+description: Report a problem with AccessLoop
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: What did you do before the problem occurred?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, operating system, or app version.
+    validations:
+      required: false
