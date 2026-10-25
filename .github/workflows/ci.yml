@@ -31,6 +31,13 @@ jobs:
 
       - run: npm ci
 
+      - name: Audit root open-source dependencies
+        run: npm audit --audit-level=critical
+
+      - name: Audit mobile open-source dependencies
+        run: npm audit --audit-level=critical
+        working-directory: mobile
+
       - run: npm run typecheck
 
       - run: npm run lint
