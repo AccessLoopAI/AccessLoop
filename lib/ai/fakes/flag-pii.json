@@ -1,0 +1,8 @@
+{
+  "_doc": "FAKE_LLM=1 responses for flagPii(). Every entry whose `match` is a case-sensitive substring of the masked text contributes its items. Items are exact substrings (see lib/redaction/patterns.ts spansFromValues).",
+  "entries": [
+    { "match": "Daniel Okafor", "items": [{ "text": "Daniel Okafor", "type": "PERSON", "reason": "reporter's name" }] },
+    { "match": "Priya Raman", "items": [{ "text": "Priya Raman", "type": "STAFF_NAME", "reason": "named staff member" }] },
+    { "match": "Sam Example", "items": [{ "text": "Sam Example", "type": "PERSON", "reason": "reporter's name" }] }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "_doc": "FAKE_LLM=1 responses for structure(). First entry whose `match` is a case-insensitive substring of the masked text wins; else `fallback`. Keep in sync with e2e/demo.spec.ts SCENARIO and eval fixtures.",
+  "entries": [
+    {
+      "match": "door button",
+      "output": {
+        "summary": "The automatic door button at a branch entrance has been broken for three weeks, so you couldn't get in with your wheelchair.",
+        "priorityAreas": [{ "area": "built_environment", "confidence": 0.93 }],
+        "uncertain": []
+      }
+    },
+    {
+      "match": "date picker",
+      "output": {
+        "summary": "You couldn't choose a date on the online booking page with a keyboard or screen reader, so you couldn't book.",
+        "priorityAreas": [{ "area": "ict", "confidence": 0.95 }],
+        "uncertain": []
+      }
+    },
+    {
+      "match": "relay",
+      "output": {
+        "summary": "Phone agents hung up when you called through a relay service.",
+        "priorityAreas": [{ "area": "communication_other", "confidence": 0.8 }, { "area": "programs_services", "confidence": 0.4 }],
+        "uncertain": []
+      }
+    }
+  ],
+  "fallback": {
+    "summary": "You reported something that got in your way. (Simulated AI: this demo has no real summary for these words.)",
+    "priorityAreas": [{ "area": "programs_services", "confidence": 0.3 }],
+    "uncertain": ["priorityArea"]
+  }
+}
