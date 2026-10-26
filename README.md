@@ -11,6 +11,89 @@ AccessLoop helps you meet your obligations under the Accessible Canada Act. It d
 
 > **Status (October 21, 2026): a local prototype, built for Build North 2026.** It runs on one computer with no accounts. The AI is simulated (ready-made answers, `FAKE_LLM=1`). Email is written to an Outbox page, not sent. The three organizations in the demo data are made up. Nothing is hosted yet, and there are no real AI numbers yet: the team's own Claude Code CLI is found on the build machine but not signed in, and there is no API key. Phase 7 (from prototype to shippable product) has built everything that works without accounts; what is left needs accounts and people ([Going live](#going-live-not-done-yet)). See [Limits and roadmap](#limits-and-roadmap).
 
+**Contents:** [Quick start](#quick-start) · [Demo at a glance](#demo-at-a-glance) · [The problem](#the-problem) · [What it does](#what-it-does) · [Run it locally](#run-it-locally) · [Mobile app](#mobile-app-expo) · [How to test](#how-to-test) · [Architecture](#architecture) · [AI and evaluation](#ai-and-evaluation) · [Accessibility](#accessibility) · [Privacy and security](#privacy-and-security) · [Limits and roadmap](#limits-and-roadmap) · [Team](#team)
+
+## Quick start
+
+You need **Node.js 22** (see `.nvmrc`) and free ports **3000** and **54329**. No Docker, accounts or API keys.
+
+```bash
+git clone https://github.com/AccessLoopAI/AccessLoop.git
+cd AccessLoop
+npm install
+npm run local        # sets up Postgres, migrates, seeds, then serves http://localhost:3000
+```
+
+On its first run, `npm run local` prints a line like `BAR-0014 (retest_open) receipt code: XXXX-XXXX-XXXX-XXXX`. Copy that code: it is stored only as a hash and can't be shown again.
+
+See the loop close in about a minute:
+
+1. Open **http://localhost:3000/r/{that code}**, choose **"Yes, it works now"** and press **"Send answer"**. BAR-0014 is now "Verified by reporter".
+2. Open **http://localhost:3000/sign-in** and press **"Sign in as Alex Rivera (Maple Harbour Bank)"**. The dashboard counts the new verified fix.
+3. Open **Reports**, press **"New report"**, set the period to 2026-01-01 to 2026-12-31 and press **"Generate draft"**. Every sentence has a "Sources for this sentence" button, and **"Verify evidence chain"** runs the evidence check.
+
+Press Ctrl+C to stop the app and the database. `npm run local:reset` starts again with fresh demo data and a new code. For the full five-step demo, starting from a new report, see [Try the demo](#try-the-demo-about-5-minutes).
+
+| Want to… | Run |
+|---|---|
+| Start again with fresh demo data | `npm run local:reset`, then `npm run local` |
+| Run the checks CI runs | `npm run typecheck`, `npm run lint`, `npm test`, `npm run db:smoke` |
+| Run the end-to-end suite | `npx playwright install chromium webkit` once, then `npm run e2e` (stop `npm run local` first) |
+| Try the reporter app | `cd mobile`, `npm install`, `npx expo start --web` (with `npm run local` running; see [Mobile app](#mobile-app-expo)) |
+
+On Linux, run it as a normal user, not root (the bundled Postgres refuses to start as root), with the `en_US.UTF-8` locale installed.
+
+## Demo at a glance
+
+The live demo follows one barrier from report to a verified fix, then into the progress report. It is the same path as the acceptance test, `e2e/demo.spec.ts`.
+
+```mermaid
+sequenceDiagram
+  autonumber
+  actor R as Reporter (no account)
+  participant F as Report form<br/>/o/maple-harbour/report
+  participant AL as AccessLoop<br/>(redaction, AI, hash chain)
+  actor L as Lead<br/>Alex Rivera
+  actor O as Owner<br/>Facilities team
+  actor P as Anyone
+
+  R->>F: Describes the barrier in four short steps
+  F->>AL: Fixed patterns mask phone numbers and IDs, then the AI looks for names
+  AL-->>R: AI summary next to their own words, then a receipt code and BAR-00xx
+  L->>AL: Approves the redaction, picks the area, writes a public summary
+  L->>O: Assigns the case
+  O->>AL: Logs the fix
+  AL-->>R: Asks the reporter to check the fix (an Outbox email locally)
+  R->>AL: /r/{code}: "Yes, it works now"
+  AL-->>L: Status becomes "Verified by reporter" (only the reporter can set it)
+  L->>AL: Generates, checks, signs off and publishes the progress report
+  P->>AL: /verify/{reportId}: five checks re-run the hash chains behind every sentence
+```
+
+Each case moves through these statuses. Only `transition()` in `lib/state-machine.ts` changes them, and every change adds a record to the case's hash chain:
+
+```mermaid
+stateDiagram-v2
+  direction LR
+  [*] --> new: report sent
+  new --> triaged: lead approves redaction and triages
+  triaged --> assigned: lead assigns an owner
+  assigned --> retest_open: fix logged, reporter agreed to check
+  assigned --> fixed_unverified: fix logged, no re-test
+  retest_open --> verified: "Yes, it works now"
+  retest_open --> assigned: "Partly" or "No" (at most 2 rounds)
+  retest_open --> fixed_unverified: can't check, opted out or expired
+  fixed_unverified --> assigned: lead reopens
+  verified --> assigned: lead reopens
+  new --> closed: duplicate, spam, out of scope
+  triaged --> closed
+  assigned --> closed: duplicate or no action possible
+  closed --> triaged: lead reopens
+  verified --> [*]
+```
+
+Full rules and guards: `docs/domain.md` §3.
+
 ## The problem
 
 Under the Accessible Canada Act (ACA), federally regulated organizations, such as federal departments, banks, telecom and broadcasting companies and federal transportation providers, must set up a process for receiving feedback about barriers and for dealing with it (ACA s. 70(1), with the same wording in ss. 43, 48 and 57). The Act counts as a barrier anything that hinders the full and equal participation in society of people with an impairment or a functional limitation, whether it is physical, architectural, technological or attitudinal, based on information or communications, or the result of a policy or a practice (ACA s. 2). So AccessLoop takes every kind of barrier, not just websites.
@@ -90,7 +173,7 @@ The staff home page answers one question: is our feedback loop closing, and are 
 
 ### What you need
 
-- **Node.js 22** with npm. Tested with Node 22.18 on Windows 11. The bundled Postgres also has builds for macOS and Linux, but we have not tried them yet.
+- **Node.js 22** with npm. Tested with Node 22.18 on Windows 11, and on Ubuntu 24.04 in CI (the full e2e suite included). The bundled Postgres also has builds for macOS, but we have not tried it there yet.
 - Free ports **3000** (the app) and **54329** (the database).
 - No Docker, no accounts, no API keys.
 
@@ -488,7 +571,7 @@ Most steps are configuration changes; the Clerk sign-in still needs code. Local 
 ### What has not been verified
 
 - **No real AI model has been called**, through the API or the CLI, so there is no real summary, name check, report wording or eval number. Every AI answer in this build is simulated.
-- **Nothing has run on a hosted service:** no deployment, no Supabase, no Clerk, no real email, no load check against a public URL, no `db:remote-smoke` against a hosted database. The CI workflow (`.github/workflows/ci.yml`) has not run on GitHub yet.
+- **Nothing has run on a hosted service:** no deployment, no Supabase, no Clerk, no real email, no load check against a public URL, no `db:remote-smoke` against a hosted database. GitHub Actions is the only thing that runs elsewhere: the CI workflow (`.github/workflows/ci.yml`) runs typecheck, lint, unit tests, `db:smoke`, the build and the full e2e suite on Ubuntu 24.04 (239 e2e tests passed on October 25, 2026). CodeQL and dependency review are set up but skip while the repository is private, because the organization's plan has no GitHub Advanced Security.
 - **No people have tested it:** no sessions with disabled testers; no NVDA, JAWS, VoiceOver or TalkBack; no Safari or Firefox (WebKit and Chromium only, in Playwright); no real phone; the Expo app only as its web build.
 - **Data from published reports:** the 11 benchmark rows (`data/benchmark/feedback-sections.csv`) and the 68 silver-label statements are drafts no person has verified yet, so the benchmark card stays hidden and the silver set does not run.
 - **No outside review:** no security review, penetration test or accessibility audit. `docs/acr.md` is a self-assessed draft.
