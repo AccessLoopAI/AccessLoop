@@ -542,7 +542,7 @@ Most steps are configuration changes; the Clerk sign-in still needs code. Local 
 
 ## License and credits
 
-- **License:** none yet: there is no license file in the repository. [Team: choose one before the repository is made public.]
+- **License:** MIT, in [`LICENSE`](../LICENSE). The five team members agreed on it on October 26, 2026.
 - **Fonts:** Atkinson Hyperlegible Next (© 2020–2024 The Atkinson Hyperlegible Next Project Authors), Atkinson Hyperlegible Mono (© 2020–2024 The Atkinson Hyperlegible Mono Project Authors) and Besley (© 2020 The Besley Project Authors), all under the SIL Open Font License 1.1. The font files and their licence texts are in `app/fonts/`, so the build works offline.
 - **Icons:** lucide-react (ISC licence). Other dependencies keep their own licences.
 - **Legal text** is quoted from the Justice Laws website (retrieved October 18, 2026). See `docs/domain.md` §1.
