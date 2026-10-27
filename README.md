@@ -108,4 +108,4 @@ Next.js 16 (App Router, TypeScript) · Tailwind CSS · Postgres with row-level s
 | Sepehr Ashrafzadeh ([@SepehrAsh](https://github.com/SepehrAsh)) | Reporter experience and reports |
 | Amirreza Radjou ([@amirradjou](https://github.com/amirradjou)) | Database operations and mobile UI |
 
-Built with help from Claude Code. The team made the product decisions ([disclosures](docs/overview.md#disclosures)). No license has been chosen yet. Fonts are under the SIL Open Font License, in `app/fonts/`.
+Built with help from Claude Code. The team made the product decisions ([disclosures](docs/overview.md#disclosures)). The code is under the [MIT License](LICENSE). Fonts are under the SIL Open Font License, in `app/fonts/`.
