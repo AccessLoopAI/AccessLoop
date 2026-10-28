@@ -6,8 +6,9 @@ on:
     branches:
       - main
   workflow_dispatch:
+  # Weekly, Mondays 03:00 UTC, so the end-to-end suite still runs when nothing is pushed to main.
   schedule:
-    - cron: "0 3 * * *"
+    - cron: "0 3 * * 1"
 
 permissions:
   contents: read
