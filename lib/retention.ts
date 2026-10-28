@@ -1,4 +1,4 @@
-// Retention of the private copy (docs/phase7-prompt.md T3 item 13; docs/domain.md §1.3 ACR s.19, §9; docs/decisions.md
+// Retention of the private copy (docs/archive/phase7-prompt.md T3 item 13; docs/domain.md §1.3 ACR s.19, §9; docs/decisions.md
 // 2026-10-20). Run by `npm run db:retention` (scripts/retention.ts) as the database OWNER, never by the app (its role
 // can't do this: no grant is needed beyond what case_private's policies already allow a lead transaction).
 //

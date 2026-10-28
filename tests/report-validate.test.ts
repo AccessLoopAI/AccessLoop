@@ -1,4 +1,4 @@
-// The sentence validator's Phase 7 rules (lib/report/validate.ts; docs/phase7-prompt.md T1 item 6), checked BEFORE
+// The sentence validator's Phase 7 rules (lib/report/validate.ts; docs/archive/phase7-prompt.md T1 item 6), checked BEFORE
 // real AI rewords anything: numbers in the template's order, at most 1.3 times the template's words, and no banned
 // word the template does not have. The first three cases are the sentences the review saw accepted (validate.ts
 // before Phase 7): an added "fully compliant", "every barrier ... removed", and two numbers swapped.

@@ -1,4 +1,4 @@
-// What the daily job does for one case today (app/api/cron/daily; docs/phase7-prompt.md T3 item 12; docs/domain.md
+// What the daily job does for one case today (app/api/cron/daily; docs/archive/phase7-prompt.md T3 item 12; docs/domain.md
 // §3 re-test ethics, §10). Pure: a case row's few fields plus its events in, a plan out. lib/cron/run.ts loads the
 // cases, then carries out each part in its own short transaction with the case row locked, planning that case again
 // on its fresh state there; the frozen state machine and the email rules (lib/email/case-emails.ts) check once more.

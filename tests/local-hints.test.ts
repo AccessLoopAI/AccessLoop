@@ -1,5 +1,5 @@
 // scripts/local-hints.ts: the plain fix printed by scripts/local-run.ts when local Postgres can't start on a
-// minimal Linux machine (docs/phase7-prompt.md T3 item 16; docs/decisions.md 2026-10-20).
+// minimal Linux machine (docs/archive/phase7-prompt.md T3 item 16; docs/decisions.md 2026-10-20).
 import { describe, expect, it } from "vitest";
 import { INIT_MESSAGE, LOCALE_MESSAGE, ROOT_MESSAGE, hasEnUsUtf8, localFailureHint } from "../scripts/local-hints";
 

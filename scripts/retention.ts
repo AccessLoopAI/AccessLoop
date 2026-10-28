@@ -1,4 +1,4 @@
-// `npm run db:retention` (docs/phase7-prompt.md T3 item 13; lib/retention.ts has the rules):
+// `npm run db:retention` (docs/archive/phase7-prompt.md T3 item 13; lib/retention.ts has the rules):
 //   1. after a case's keep-until date (received + 7 years, ACR s.19): wipe its private copy (original words, email,
 //      contact details) and record it on the case's log;
 //   2. 30 days after a case was verified or closed: remove the reporter's email and contact details, and record it.

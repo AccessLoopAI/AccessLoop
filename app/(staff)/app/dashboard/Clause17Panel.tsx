@@ -1,4 +1,4 @@
-// The CAN-ASC-5.2.1 clause 17 panel (docs/phase7-prompt.md T6 item 5): the four steps the clause names, receive,
+// The CAN-ASC-5.2.1 clause 17 panel (docs/archive/phase7-prompt.md T6 item 5): the four steps the clause names, receive,
 // acknowledge, address and respond, each with the count lib/metrics already has for the period (lib/standards/
 // clause17.ts picks them) and a link to exactly those cases. One short quoted line, cited. It shows what the records
 // say for each step and never says the organization meets the standard ("compliant" is never written).

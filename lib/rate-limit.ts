@@ -1,4 +1,4 @@
-// Rate limits and spend limits for the public routes (CLAUDE.md "Security rules", domain §9; docs/phase7-prompt.md
+// Rate limits and spend limits for the public routes (CLAUDE.md "Security rules", domain §9; docs/archive/phase7-prompt.md
 // T3 item 7), on the `rate_limits` table. Server-only. `rate_limits` is NOT tenant-scoped, so it is used with `db`
 // (never inside withOrg); its RLS policy lets the app role read and write it with no org context (D7(b)).
 //

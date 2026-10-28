@@ -1,4 +1,4 @@
-// The silver-label eval set (docs/phase7-prompt.md T6 item 2; lib/eval/silver.ts; eval/README.md): the agent-written
+// The silver-label eval set (docs/archive/phase7-prompt.md T6 item 2; lib/eval/silver.ts; eval/README.md): the agent-written
 // DRAFT file's shape and honesty, and `npm run eval -- --set silver`, which refuses the draft unless `--draft-check`
 // says the run only checks the harness (then it saves nothing). Fake backend only, never a real model.
 import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";

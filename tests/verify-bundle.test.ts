@@ -1,4 +1,4 @@
-// The offline checker tools/verify-bundle.mjs (docs/domain.md §8; docs/phase7-prompt.md T5 item 4), pure: a bundle
+// The offline checker tools/verify-bundle.mjs (docs/domain.md §8; docs/archive/phase7-prompt.md T5 item 4), pure: a bundle
 // built by lib/report/bundle.ts from synthetic chains and signed with the local derived key passes all five checks;
 // its canonicalJson is the frozen one; keys come from the published list (SPKI or JWK); each kind of damage to the
 // file fails the right check; an unknown kind of fact is listed, never failed; a submission closed as not

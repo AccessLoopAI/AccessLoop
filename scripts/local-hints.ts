@@ -1,4 +1,4 @@
-// What to tell a person whose local Postgres would not start (docs/phase7-prompt.md T3 item 16), for
+// What to tell a person whose local Postgres would not start (docs/archive/phase7-prompt.md T3 item 16), for
 // scripts/local-run.ts. Pure: the caller passes the output it saw, the platform and the installed locales.
 //
 // Two failures on a minimal Linux machine, both from embedded-postgres (node_modules/embedded-postgres):

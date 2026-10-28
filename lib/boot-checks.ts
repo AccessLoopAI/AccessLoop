@@ -1,4 +1,4 @@
-// What instrumentation.ts register() checks before the app serves anything (docs/phase7-prompt.md T3 items 1-2):
+// What instrumentation.ts register() checks before the app serves anything (docs/archive/phase7-prompt.md T3 items 1-2):
 //   1. the environment (lib/env.ts): every required setting present and well-formed, no value ever printed;
 //   2. the database role the app connects as (DATABASE_URL): neither a superuser nor BYPASSRLS, or row-level
 //      security would not protect any tenant (lib/db-role.ts). A database that can't be reached also stops the start:

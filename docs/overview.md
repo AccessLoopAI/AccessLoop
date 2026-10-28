@@ -461,7 +461,7 @@ Automated tools find some accessibility problems, not all of them. That is why t
 
 ### Cut on purpose (roadmap)
 
-These were cut from the build on purpose (docs/phase7-prompt.md, "Scope cuts"), and are roadmap, not features:
+These were cut from the build on purpose (docs/archive/phase7-prompt.md, "Scope cuts"), and are roadmap, not features:
 
 - **Photo upload** (with EXIF stripping): the form takes words only, so no image is ever stored or sent to an AI.
 - **SMS or phone re-test:** the re-test is answered on the web (`/r/{code}`, `/check`, a one-round email link) or in the Expo app.
@@ -472,7 +472,7 @@ These were cut from the build on purpose (docs/phase7-prompt.md, "Scope cuts"), 
 
 Also out of scope (`docs/domain.md` §11): automated phone or mail intake (staff log it by hand today); grouping duplicate reports automatically (a lead can close a case as a duplicate of another); mapping to CAN-ASC-5.2.1 or EN 301 549 beyond the clause 17 panel on the dashboard; payments (the re-test offer is a line of text); BC and AODA rule sets; a full report editor (today: text boxes for plan areas and Consultations); sending the regulator notice (AccessLoop shows the 48-hour ACR s. 16 reminder and the signed fingerprint to include); a staff side in the Expo app; and the optional `/api/metrics` endpoint.
 
-**Proposed and not approved for now** (docs/phase7-prompt.md "Human decisions"): a verdict a lead records on the reporter's behalf after a phone call (D5); a key ID and case-bound associated data for the encryption key (D9); Sentry error tracking (N3); and an org-level "AI off" setting for organizations that need Canadian-only processing (it needs a schema change; today each reporter can opt out, and `AI_GLOBAL_HOURLY_LIMIT=0` turns the public form's AI off for a whole deployment).
+**Proposed and not approved for now** (docs/archive/phase7-prompt.md "Human decisions"): a verdict a lead records on the reporter's behalf after a phone call (D5); a key ID and case-bound associated data for the encryption key (D9); Sentry error tracking (N3); and an org-level "AI off" setting for organizations that need Canadian-only processing (it needs a schema change; today each reporter can opt out, and `AI_GLOBAL_HOURLY_LIMIT=0` turns the public form's AI off for a whole deployment).
 
 ### Going live (not done yet)
 

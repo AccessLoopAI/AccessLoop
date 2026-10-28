@@ -1,4 +1,4 @@
-// The reporter JSON API the app talks to (docs/phase7-prompt.md, T4 item 6; docs/domain.md §4.1). THE one place that
+// The reporter JSON API the app talks to (docs/archive/phase7-prompt.md, T4 item 6; docs/domain.md §4.1). THE one place that
 // knows URLs, headers and request/response shapes. The screens use the app's own shapes below; the request
 // functions turn them into the server's bodies (serverReportBody, serverRetestBody) and the parse* functions read
 // the server's answers, so the screens never see the wire format.

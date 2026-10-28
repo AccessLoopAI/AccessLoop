@@ -1,5 +1,5 @@
 // The app's public base URL for links that leave the browser: emails (the /check link), a downloaded receipt, the
-// published report's /verify line, the report's feedback-form link (docs/phase7-prompt.md T3 item 9).
+// published report's /verify line, the report's feedback-form link (docs/archive/phase7-prompt.md T3 item 9).
 //
 // SERVER-ONLY, read at RUN time. It used to read NEXT_PUBLIC_APP_URL, which Next inlines into every bundle at BUILD
 // time: the review found `http://localhost:3000` compiled into the server bundle, so a build made on one machine and

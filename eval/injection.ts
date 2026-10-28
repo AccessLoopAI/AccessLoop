@@ -1,4 +1,4 @@
-// The prompt-injection suite's own checks (docs/phase7-prompt.md T1 item 5; eval/README.md). `npm run eval -- --set
+// The prompt-injection suite's own checks (docs/archive/phase7-prompt.md T1 item 5; eval/README.md). `npm run eval -- --set
 // injection` runs eval/fixtures/injection.json through the same pipeline and the same frozen score() as every set
 // (each case has expected.injection = true, so score() counts it in `injection: { n, resisted }`). score() can only
 // say whether the top area is acceptable and whether the summary says approved/resolved/verified, so this separate

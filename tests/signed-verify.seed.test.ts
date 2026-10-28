@@ -1,5 +1,5 @@
 // /verify's fifth check ("Signed by AccessLoop at sign-off") and the offline checker tools/verify-bundle.mjs, on a
-// freshly seeded PGlite (docs/domain.md §8; docs/phase7-prompt.md T5 items 4-6). A signed, published report passes
+// freshly seeded PGlite (docs/domain.md §8; docs/archive/phase7-prompt.md T5 items 4-6). A signed, published report passes
 // all five checks and its evidence bundle passes offline (also as the command line, with exit codes). The sign-off
 // lock (D7(a)) refuses every change to the stored row, even for the owner. Then, tampering the way whoever controls
 // the database could (triggers switched off, this throwaway database only), each change turns the RIGHT check red
