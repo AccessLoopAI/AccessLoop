@@ -25,6 +25,7 @@
     "db:deploy": "tsx --env-file-if-exists=.env.local scripts/migrate.ts",
     "db:retention": "tsx --env-file-if-exists=.env.local scripts/retention.ts",
     "db:seed": "tsx --env-file-if-exists=.env.local db/seed.ts",
+    "pilot:ingest": "tsx --env-file-if-exists=.env.local scripts/ingest-pilot.ts",
     "db:smoke": "tsx scripts/db-smoke-run.ts",
     "db:remote-smoke": "tsx --env-file-if-exists=.env.local scripts/remote-smoke.ts",
     "load:check": "tsx --env-file-if-exists=.env.local scripts/load-check.ts"
