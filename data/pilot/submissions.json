@@ -1,0 +1,457 @@
+{
+  "_doc": "Pilot tenant: made-up submissions for the made-up organization Northbound Rail & Ferry (docs/decisions.md 2026-10-28). No person sent any of these. Each one takes a barrier THEME from a public source (a published Feedback section, a Canadian Transportation Agency accessibility decision or a Statistics Canada survey release) and says it again in our own words: no passage is copied, no figure is taken over, nobody in a decision is named, and no real organization is a tenant. Names, phone numbers and addresses inside the texts are made up, so the redaction has something to find. `npm run pilot:ingest` runs each one through the same intake code as the web form or staff intake (whatever AI backend .env.local selects), then plays its planned steps through transition(). Submission N becomes case BAR-000N of the org, so keep the file order.",
+  "org": {
+    "slug": "northbound",
+    "name": "Northbound Rail & Ferry",
+    "about": "A made-up federally regulated passenger railway and ferry operator with stations, terminals, trains, ferries, a website and an app, so the pilot can hold the kinds of barriers transport passengers and staff report."
+  },
+  "sources": [
+    {
+      "id": "cta-29-at-r-2017",
+      "org": "Canadian Transportation Agency",
+      "year": "2017",
+      "title": "Decision No. 29-AT-R-2017 (storing two scooters on a passenger train)",
+      "url": "https://otc-cta.gc.ca/eng/ruling/29-at-r-2017",
+      "status": "read",
+      "used": "Rail themes: only one tie-down space per train, staff who did not know how to fold or secure a scooter, and a mobility aid damaged in a narrow baggage area. Nobody in the decision is named here."
+    },
+    {
+      "id": "cta-367-at-w-2000",
+      "org": "Canadian Transportation Agency",
+      "year": "2000",
+      "title": "Decision No. 367-AT-W-2000 (no TTY reservation line for a ferry service)",
+      "url": "https://otc-cta.gc.ca/eng/ruling/367-at-w-2000",
+      "status": "read",
+      "used": "Ferry theme: a person who is Deaf could not book by phone because there was no text or TTY reservation line, and the number was missing from advertising."
+    },
+    {
+      "id": "statcan-travel-2025",
+      "org": "Statistics Canada",
+      "year": "2025",
+      "title": "Accessibility related barriers to travel among persons with disabilities or long-term conditions (The Daily, May 27, 2025)",
+      "url": "https://www150.statcan.gc.ca/n1/daily-quotidien/250527/dq250527b-eng.htm",
+      "status": "read",
+      "used": "The barrier types travellers report at terminals and on board: floor plans, self-serve kiosks, unclear instructions from staff, seats and fixtures, and on-board screens and Wi-Fi."
+    },
+    {
+      "id": "statcan-public-spaces-2022",
+      "org": "Statistics Canada",
+      "year": "2024",
+      "title": "Barriers to Accessibility in Canada: Public Spaces, 2022 (The Daily, December 3, 2024)",
+      "url": "https://www150.statcan.gc.ca/n1/daily-quotidien/241203/dq241203a-eng.htm",
+      "status": "read",
+      "used": "The public-space barrier types people meet most: icy walkways, wait lines and walkways in general."
+    },
+    {
+      "id": "statcan-communication-2022",
+      "org": "Statistics Canada",
+      "year": "2025",
+      "title": "Barriers to accessibility related to communication: Findings from the 2022 Canadian Survey on Disability",
+      "url": "https://www150.statcan.gc.ca/n1/pub/89-654-x/89-654-x2025003-eng.htm",
+      "status": "read",
+      "used": "Communication barrier types: information that is hard to understand, and information not offered in a format people can use."
+    }
+  ],
+  "submissions": [
+    {
+      "id": "P01", "source": "cta-29-at-r-2017", "theme": "Two scooter users can't travel together on one train",
+      "receivedOn": "2026-01-12", "channel": "web", "locationKind": "place", "locationDetail": "The 7:40 train to the coast",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "transportation",
+      "text": "My partner and I both use scooters. Your trains have one spot to tie down a scooter, so one of us always has to fold theirs and send it to the baggage area. We want to travel together like everyone else.",
+      "publicSummary": "Trains had space to secure only one scooter, so two scooter users could not travel together.",
+      "owner": "fleet", "steps": [[41, "fix"], [55, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P02", "source": "cta-29-at-r-2017", "theme": "Train staff did not know how to secure a scooter",
+      "receivedOn": "2026-01-19", "channel": "phone", "locationKind": "place", "locationDetail": "",
+      "anonymous": false, "contact": "Phone: 506-555-0118", "wantsRetest": true, "area": "transportation",
+      "text": "Caller said the crew did not know how to strap down her scooter. She had to show them and do most of it herself while the train waited. She asked that staff be trained. She is Margaret Doyle, call back at 506-555-0118.",
+      "publicSummary": "Train crew did not know how to secure a scooter, and the passenger had to do it herself.",
+      "owner": "fleet", "steps": [[20, "fix"], [34, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P03", "source": "cta-29-at-r-2017", "theme": "A scooter was damaged in a narrow baggage passage",
+      "receivedOn": "2026-02-03", "channel": "web", "locationKind": "place", "locationDetail": "Baggage area between cars 2 and 3",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "transportation",
+      "text": "My scooter had to go in the baggage area. The passage to get there is very narrow and the staff scraped it along the wall. One tire was damaged and I could not use it for a week.",
+      "publicSummary": "A scooter was damaged while staff moved it through a narrow passage to the baggage area.",
+      "owner": "fleet", "steps": [[30, "fix"], [44, "partly"]], "duplicateOf": null
+    },
+    {
+      "id": "P04", "source": "statcan-travel-2025", "theme": "Ferry lounge armrests don't lift for a transfer",
+      "receivedOn": "2026-05-06", "channel": "web", "locationKind": "place", "locationDetail": "Upper passenger lounge on the larger ferry",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "transportation",
+      "text": "The seats in the ferry lounge have fixed armrests. I can't slide over from my wheelchair, so I sat in my chair for the whole 3 hour crossing.",
+      "publicSummary": "Lounge seats on a ferry have fixed armrests, so wheelchair users cannot transfer into them.",
+      "owner": "fleet", "steps": [[38, "fix"]], "duplicateOf": null
+    },
+    {
+      "id": "P05", "source": "ac-2025", "theme": "Help with boarding is different every trip",
+      "receivedOn": "2026-02-16", "channel": "email", "locationKind": "place", "locationDetail": "",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "transportation",
+      "text": "Emailed in: every time I take the ferry, the help to get on board is different. Once they had the ramp ready, once nobody knew I had asked for help, once I waited until the last car drove on.",
+      "publicSummary": "Boarding help for passengers who asked for it was not given the same way on every crossing.",
+      "owner": "customer", "steps": [[25, "fix"], [40, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P06", "source": "at-2025", "theme": "Long wait for the help a passenger asked for",
+      "receivedOn": "2026-03-09", "channel": "web", "locationKind": "place", "locationDetail": "Main terminal, check-in hall",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "transportation",
+      "text": "I booked help to get from check-in to the train because I can't walk far. I waited 45 minutes and almost missed the train. Nobody came until I asked twice.",
+      "publicSummary": "Passengers who booked help from check-in to the train waited too long for it.",
+      "owner": "stations", "steps": [[21, "fix"], [33, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P07", "source": "ac-2025", "theme": "No accessible washroom on the regional trains",
+      "receivedOn": "2026-04-14", "channel": "web", "locationKind": "place", "locationDetail": "Regional train, all cars",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "transportation",
+      "text": "The washroom on the small regional train is too narrow for my wheelchair. The trip is four hours. I have to not drink anything the day I travel.",
+      "publicSummary": "The washroom on regional trains is too narrow for a wheelchair on a four-hour trip.",
+      "owner": "fleet", "steps": [], "duplicateOf": null
+    },
+    {
+      "id": "P08", "source": "ac-2025", "theme": "Hard to get help when a mobility aid is damaged",
+      "receivedOn": "2026-09-22", "channel": "phone", "locationKind": "phone_or_service", "locationDetail": "",
+      "anonymous": false, "contact": "Phone: 902-555-0164", "wantsRetest": false, "area": "transportation",
+      "text": "Caller's walker was bent on the ferry. He called three numbers and nobody could tell him how to get it repaired or replaced. He wants one place to call.",
+      "publicSummary": "A passenger whose walker was damaged on board could not find out who would repair or replace it.",
+      "owner": null, "steps": [], "duplicateOf": null
+    },
+    {
+      "id": "P09", "source": "at-2025", "theme": "A weight limit on the ferry lift for heavy power chairs",
+      "receivedOn": "2026-03-23", "channel": "mail", "locationKind": "place", "locationDetail": "Car deck lift, smaller ferry",
+      "anonymous": false, "contact": "Mail: 12 Example Lane, Moncton, NB E1A 0A0", "wantsRetest": false, "area": "transportation",
+      "text": "Letter: the lift from the car deck on the smaller ferry has a weight limit. My power chair and I are over it, so I can't leave the car deck during the crossing.",
+      "publicSummary": "A power chair user could not use the car-deck lift on the smaller ferry because of its weight limit.",
+      "owner": null, "steps": [[30, "close_no_action"]], "duplicateOf": null
+    },
+    {
+      "id": "P10", "source": "cta-29-at-r-2017", "theme": "Two scooter users can't travel together on one train",
+      "receivedOn": "2026-01-27", "channel": "web", "locationKind": "place", "locationDetail": "",
+      "anonymous": true, "contact": null, "wantsRetest": false, "area": "transportation",
+      "text": "There is only one place for a scooter on the train. My friend and I both use scooters and could not get on the same train.",
+      "publicSummary": "Trains had space to secure only one scooter, so two scooter users could not travel together.",
+      "owner": null, "steps": [[3, "close_duplicate"]], "duplicateOf": "P01"
+    },
+    {
+      "id": "P11", "source": "statcan-travel-2025", "theme": "The ramp at a small station is not put out in time",
+      "receivedOn": "2026-06-02", "channel": "web", "locationKind": "place", "locationDetail": "Small stop between the two cities",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "transportation",
+      "text": "At the small stop the crew puts the ramp out late. Twice the train almost left before I could get off with my wheelchair.",
+      "publicSummary": "At a small station the ramp was put out late, and wheelchair users nearly could not get off.",
+      "owner": "fleet", "steps": [[19, "fix"]], "duplicateOf": null
+    },
+    {
+      "id": "P12", "source": "ac-2025", "theme": "No safe place to stow a folding wheelchair on board",
+      "receivedOn": "2026-08-18", "channel": "web", "locationKind": "place", "locationDetail": "",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "transportation",
+      "text": "I use a folding manual wheelchair. On the train there is nowhere to put it near my seat, so it goes to baggage and I can't get to it if I need it.",
+      "publicSummary": "Folding wheelchairs could not be stowed near the passenger's seat on trains.",
+      "owner": "fleet", "steps": [], "duplicateOf": null
+    },
+    {
+      "id": "P13", "source": "cta-29-at-r-2017", "theme": "Train staff did not know how to secure a scooter",
+      "receivedOn": "2026-10-19", "channel": "web", "locationKind": "place", "locationDetail": "",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "transportation",
+      "text": "The new crew on the evening train did not know how to tie down my scooter. It rolled when the train braked.",
+      "publicSummary": "",
+      "owner": null, "steps": [], "duplicateOf": null
+    },
+    {
+      "id": "P14", "source": "statcan-travel-2025", "theme": "On-board screens and Wi-Fi don't work with a screen reader",
+      "receivedOn": "2026-04-28", "channel": "web", "locationKind": "digital", "locationDetail": "On-board Wi-Fi sign-in page",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "ict",
+      "text": "I am blind and use a screen reader on my phone. The on-board Wi-Fi sign-in page has buttons with no labels, so I can't connect.",
+      "publicSummary": "The on-board Wi-Fi sign-in page has unlabelled buttons that a screen reader cannot use.",
+      "owner": "digital", "steps": [[16, "fix"], [24, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P15", "source": "statcan-travel-2025", "theme": "Self-serve ticket kiosks are hard to use",
+      "receivedOn": "2026-02-24", "channel": "web", "locationKind": "place", "locationDetail": "Ticket kiosks in the main station",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "ict",
+      "text": "The ticket machines have a touch screen only. There is no audio and no buttons I can feel, so I can't buy a ticket on my own.",
+      "publicSummary": "Station ticket kiosks have a touch screen only, with no audio or tactile option.",
+      "owner": "digital", "steps": [[35, "fix"], [49, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P16", "source": "ac-2025", "theme": "The booking website is hard to use with assistive technology",
+      "receivedOn": "2026-03-02", "channel": "web", "locationKind": "digital", "locationDetail": "Booking page, seat selection step",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "ict",
+      "text": "I use the keyboard only. On your booking site I can't get to the seat map, so I can't finish booking a trip online.",
+      "publicSummary": "The seat map on the booking website cannot be reached with a keyboard.",
+      "owner": "digital", "steps": [[14, "fix"], [21, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P17", "source": "vac-2025", "theme": "Emails from different departments are not accessible",
+      "receivedOn": "2026-05-19", "channel": "email", "locationKind": "document", "locationDetail": "Trip confirmation email",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "ict",
+      "text": "Emailed in: your trip confirmation email is one big picture. My screen reader can't read my departure time or my seat.",
+      "publicSummary": "Trip confirmation emails were sent as an image that screen readers cannot read.",
+      "owner": "digital", "steps": [[12, "fix"]], "duplicateOf": null
+    },
+    {
+      "id": "P18", "source": "ac-2025", "theme": "Gate screens have no captions or sign language",
+      "receivedOn": "2026-07-07", "channel": "web", "locationKind": "place", "locationDetail": "Ferry terminal waiting room",
+      "anonymous": true, "contact": null, "wantsRetest": false, "area": "ict",
+      "text": "I'm Deaf. Boarding calls in the ferry waiting room are only spoken. The screens don't show them, so I missed my boarding call.",
+      "publicSummary": "Boarding calls in a ferry waiting room were only announced aloud, not shown on screens.",
+      "owner": "digital", "steps": [[28, "fix"]], "duplicateOf": null
+    },
+    {
+      "id": "P19", "source": "hc-2024", "theme": "The app can't be used in dark mode",
+      "receivedOn": "2026-08-25", "channel": "web", "locationKind": "digital", "locationDetail": "Mobile app",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "ict",
+      "text": "Bright screens give me migraines. Your app has no dark mode and ignores my phone's setting.",
+      "publicSummary": "The mobile app has no dark mode and ignores the phone's display setting.",
+      "owner": "digital", "steps": [], "duplicateOf": null
+    },
+    {
+      "id": "P20", "source": "rogers-2024", "theme": "The internal careers site is hard to use with accessibility tools",
+      "receivedOn": "2026-04-06", "channel": "email", "locationKind": "digital", "locationDetail": "Internal job board",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "employment",
+      "text": "Employee feedback by email: I use a screen magnifier and the internal job board breaks when I zoom in. I could not apply for a posting before it closed.",
+      "publicSummary": "The internal job board breaks when zoomed in, so an employee could not apply for a posting.",
+      "owner": "people", "steps": [[30, "fix"], [44, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P21", "source": "hc-2024", "theme": "Apps and web pages employees must use are not accessible",
+      "receivedOn": "2026-10-06", "channel": "web", "locationKind": "digital", "locationDetail": "Crew scheduling tool",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "ict",
+      "text": "I work on the ferries. The crew scheduling tool can't be read with my screen reader, so I depend on a coworker to tell me my shifts.",
+      "publicSummary": "",
+      "owner": null, "steps": [], "duplicateOf": null
+    },
+    {
+      "id": "P22", "source": "pcf-2025", "theme": "The phone menu is hard to get through",
+      "receivedOn": "2026-03-16", "channel": "phone", "locationKind": "phone_or_service", "locationDetail": "",
+      "anonymous": false, "contact": "Phone: 506-555-0139", "wantsRetest": true, "area": "programs_services",
+      "text": "Caller has a speech disability. The phone menu wants spoken answers and keeps saying it did not understand. He could not reach a person to change his booking.",
+      "publicSummary": "The phone menu accepted only spoken answers, so a caller with a speech disability could not reach a person.",
+      "owner": "customer", "steps": [[24, "fix"], [36, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P23", "source": "cta-367-at-w-2000", "theme": "No text or TTY line to book a crossing",
+      "receivedOn": "2026-02-09", "channel": "email", "locationKind": "phone_or_service", "locationDetail": "",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "programs_services",
+      "text": "Emailed in: I am Deaf. Your ads only give a voice phone number for reservations. There is no text, TTY or relay option, so I can't book a crossing the way others do.",
+      "publicSummary": "Reservations could only be made by voice phone; there was no text, TTY or relay option.",
+      "owner": "customer", "steps": [[45, "fix"], [60, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P24", "source": "scotia-2025", "theme": "Staff need training to help travellers with disabilities",
+      "receivedOn": "2026-05-25", "channel": "in_person", "locationKind": "place", "locationDetail": "Ticket counter",
+      "anonymous": false, "contact": "Phone: 902-555-0190", "wantsRetest": true, "area": "programs_services",
+      "text": "Told to the station agent: the ticket clerk spoke to my support worker instead of me and would not let me sign my own form.",
+      "publicSummary": "A ticket clerk spoke to a support worker instead of the traveller and did not let them sign their own form.",
+      "owner": "customer", "steps": [[30, "fix"], [42, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P25", "source": "rogers-2024", "theme": "Discount rules are hard to understand",
+      "receivedOn": "2026-06-15", "channel": "web", "locationKind": "digital", "locationDetail": "Companion fare page",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "programs_services",
+      "text": "I read the companion fare page three times and still don't know if my attendant can travel for free. The rules are written in legal words.",
+      "publicSummary": "The rules for the free companion fare were too hard to understand.",
+      "owner": "customer", "steps": [[20, "fix"]], "duplicateOf": null
+    },
+    {
+      "id": "P26", "source": "pcf-2025", "theme": "Not enough time to type a card number by phone",
+      "receivedOn": "2026-04-20", "channel": "web", "locationKind": "phone_or_service", "locationDetail": "",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "programs_services",
+      "text": "When I pay for a ticket by phone, the system hangs up before I finish typing my card number. I need more time because of my hands.",
+      "publicSummary": "The phone payment line hung up before callers who need more time could enter a card number.",
+      "owner": "customer", "steps": [[18, "fix"], [26, "not_fixed"], [40, "fix"], [52, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P27", "source": "scotia-2025", "theme": "Waiting too long for help at the counter",
+      "receivedOn": "2026-07-13", "channel": "web", "locationKind": "place", "locationDetail": "Ferry terminal ticket counter",
+      "anonymous": true, "contact": null, "wantsRetest": false, "area": "programs_services",
+      "text": "There is no priority line at the ferry ticket counter. I can't stand for long and the line was 30 minutes.",
+      "publicSummary": "There was no way to skip a long line at the ferry ticket counter for people who can't stand for long.",
+      "owner": "customer", "steps": [], "duplicateOf": null
+    },
+    {
+      "id": "P28", "source": "at-2025", "theme": "Cabin crew service did not meet a passenger's needs",
+      "receivedOn": "2026-09-08", "channel": "email", "locationKind": "place", "locationDetail": "",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "programs_services",
+      "text": "Emailed in: I'm autistic. When I asked the onboard staff for a quieter place to sit, they laughed and said the ferry is not a library.",
+      "publicSummary": "Onboard staff dismissed an autistic passenger's request for a quieter place to sit.",
+      "owner": null, "steps": [], "duplicateOf": null
+    },
+    {
+      "id": "P29", "source": "pcf-2025", "theme": "An online form is hard to use with accessibility tools",
+      "receivedOn": "2026-10-13", "channel": "web", "locationKind": "digital", "locationDetail": "Assistance request form",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "programs_services",
+      "text": "Hi, I'm Kelsey Arsenault. The form to ask for boarding help times out before I can finish it with my switch device. Please call me at 506-555-0172.",
+      "publicSummary": "",
+      "owner": null, "steps": [], "duplicateOf": null
+    },
+    {
+      "id": "P30", "source": "hc-2024", "theme": "The building is not accessible",
+      "receivedOn": "2026-01-20", "channel": "web", "locationKind": "place", "locationDetail": "North entrance of the main station",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "built_environment",
+      "text": "The automatic door at the north entrance of the main station has been broken for weeks. I have to wait outside until someone opens it for me.",
+      "publicSummary": "The automatic door at a station entrance was broken for weeks.",
+      "owner": "stations", "steps": [[9, "fix"], [15, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P31", "source": "statcan-public-spaces-2022", "theme": "Icy walkways to the terminal",
+      "receivedOn": "2026-02-02", "channel": "phone", "locationKind": "place", "locationDetail": "Walkway from the parking lot to the ferry terminal",
+      "anonymous": false, "contact": "Phone: 506-555-0127", "wantsRetest": true, "area": "built_environment",
+      "text": "Caller uses a cane. The walkway from the parking lot to the ferry terminal was not cleared of ice for two days, and she fell. Her name is Ruth Ellsworth.",
+      "publicSummary": "The walkway from the parking lot to the ferry terminal was not cleared of ice.",
+      "owner": "stations", "steps": [[4, "fix"], [11, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P32", "source": "statcan-travel-2025", "theme": "The terminal floor plan is confusing",
+      "receivedOn": "2026-03-30", "channel": "web", "locationKind": "place", "locationDetail": "Ferry terminal",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "built_environment",
+      "text": "I have low vision. The ferry terminal has no clear path or tactile markings from the entrance to the boarding gate. I got lost and needed help every time.",
+      "publicSummary": "The ferry terminal has no clear or tactile path from the entrance to the boarding gate.",
+      "owner": "stations", "steps": [[40, "fix"], [58, "partly"]], "duplicateOf": null
+    },
+    {
+      "id": "P33", "source": "scotia-2025", "theme": "Not enough seating and accessible parking",
+      "receivedOn": "2026-04-07", "channel": "web", "locationKind": "place", "locationDetail": "Main station waiting area",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "built_environment",
+      "text": "There are almost no seats near the platform doors. I can't stand for the 20 minutes before boarding opens.",
+      "publicSummary": "There were too few seats near the platform doors for people who can't stand while waiting.",
+      "owner": "stations", "steps": [[26, "fix"], [37, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P34", "source": "vac-2025", "theme": "Spaces are not sensory-friendly",
+      "receivedOn": "2026-05-11", "channel": "web", "locationKind": "place", "locationDetail": "",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "built_environment",
+      "text": "The station is very loud and bright, with announcements every minute. My son is autistic and there is nowhere quiet to wait.",
+      "publicSummary": "The station has no quiet place to wait for people who find noise and bright light hard.",
+      "owner": "stations", "steps": [[45, "fix"]], "duplicateOf": null
+    },
+    {
+      "id": "P35", "source": "hc-2024", "theme": "Motion-sensor doors don't open reliably",
+      "receivedOn": "2026-06-22", "channel": "web", "locationKind": "place", "locationDetail": "Doors to the ferry boarding ramp",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "built_environment",
+      "text": "The motion doors to the boarding ramp often don't see me in my wheelchair. They close on me or don't open at all.",
+      "publicSummary": "Motion-sensor doors to the boarding ramp did not always detect wheelchair users.",
+      "owner": "stations", "steps": [[14, "fix"], [21, "cant_check"]], "duplicateOf": null
+    },
+    {
+      "id": "P36", "source": "ac-2025", "theme": "Elevators are too small or out of service",
+      "receivedOn": "2026-07-20", "channel": "web", "locationKind": "place", "locationDetail": "Platform 3 elevator",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "built_environment",
+      "text": "The elevator to platform 3 has been out of order since July. There's no sign saying where else to go, and I missed my train.",
+      "publicSummary": "The elevator to a platform was out of service, with no sign showing another way.",
+      "owner": "stations", "steps": [[6, "fix"], [13, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P37", "source": "ac-2025", "theme": "Elevators are too small or out of service",
+      "receivedOn": "2026-07-22", "channel": "phone", "locationKind": "place", "locationDetail": "Platform 3",
+      "anonymous": false, "contact": "Phone: 506-555-0155", "wantsRetest": false, "area": "built_environment",
+      "text": "Caller: the platform 3 elevator is broken and he had to be carried down the stairs by two staff. He found this unsafe.",
+      "publicSummary": "The elevator to a platform was out of service, with no sign showing another way.",
+      "owner": null, "steps": [[2, "close_duplicate"]], "duplicateOf": "P36"
+    },
+    {
+      "id": "P38", "source": "ac-2025", "theme": "No relief area for service dogs",
+      "receivedOn": "2026-08-31", "channel": "web", "locationKind": "place", "locationDetail": "Ferry terminal, after security",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "built_environment",
+      "text": "After security there is no place for my guide dog to relieve herself, and the crossing is long. I had to leave and go through security again.",
+      "publicSummary": "There was no relief area for service dogs after security at the ferry terminal.",
+      "owner": "stations", "steps": [], "duplicateOf": null
+    },
+    {
+      "id": "P39", "source": "hc-2024", "theme": "Not enough accessible parking near the entrance",
+      "receivedOn": "2026-09-29", "channel": "web", "locationKind": "place", "locationDetail": "Ferry terminal parking",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "built_environment",
+      "text": "The accessible parking at the ferry terminal is always full with cars waiting for the ferry. Nobody checks the permits.",
+      "publicSummary": "Accessible parking at the ferry terminal was often taken by vehicles without permits.",
+      "owner": null, "steps": [], "duplicateOf": null
+    },
+    {
+      "id": "P40", "source": "statcan-travel-2025", "theme": "Unclear instructions from staff",
+      "receivedOn": "2026-03-04", "channel": "web", "locationKind": "place", "locationDetail": "Car deck",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "communication_other",
+      "text": "I'm hard of hearing. The deck crew shouts directions over the engine noise and waves. I didn't know where to park or when to leave my car.",
+      "publicSummary": "Deck crew gave directions only by shouting, which passengers who are hard of hearing could not follow.",
+      "owner": "fleet", "steps": [[28, "fix"], [41, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P41", "source": "statcan-communication-2022", "theme": "Information is hard to understand",
+      "receivedOn": "2026-04-27", "channel": "mail", "locationKind": "document", "locationDetail": "Printed schedule",
+      "anonymous": false, "contact": "Mail: 45 Example Road, Saint John, NB E2K 0A0", "wantsRetest": false, "area": "communication_other",
+      "text": "Letter: the printed schedule uses codes and tiny print. My father has an intellectual disability and can't tell which ferry goes on Sundays.",
+      "publicSummary": "The printed schedule used codes and very small print that were hard to understand.",
+      "owner": "customer", "steps": [[35, "fix"]], "duplicateOf": null
+    },
+    {
+      "id": "P42", "source": "statcan-communication-2022", "theme": "Information is not in a format people can use",
+      "receivedOn": "2026-06-08", "channel": "email", "locationKind": "document", "locationDetail": "Accessibility plan",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "communication_other",
+      "text": "Emailed in: I asked for your accessibility plan in large print a month ago and nobody answered.",
+      "publicSummary": "A request for the accessibility plan in large print went unanswered for a month.",
+      "owner": "customer", "steps": [[10, "fix"], [18, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P43", "source": "ac-2025", "theme": "Announcements on board have no captions or sign language",
+      "receivedOn": "2026-08-04", "channel": "web", "locationKind": "place", "locationDetail": "",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "communication_other",
+      "text": "Les annonces à bord du traversier sont seulement orales. Je suis sourde et je n'ai pas compris qu'on changeait de quai à cause de la météo.",
+      "publicSummary": "On-board announcements were spoken only, so a Deaf passenger missed a change of dock.",
+      "owner": "fleet", "steps": [[30, "fix"]], "duplicateOf": null
+    },
+    {
+      "id": "P44", "source": "statcan-communication-2022", "theme": "Information is hard to understand",
+      "receivedOn": "2026-10-20", "channel": "web", "locationKind": "digital", "locationDetail": "",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "communication_other",
+      "text": "Le site parle de « titre de transport à tarif réduit pour accompagnateur » mais n'explique pas qui y a droit. C'est trop compliqué.",
+      "publicSummary": "",
+      "owner": null, "steps": [], "duplicateOf": null
+    },
+    {
+      "id": "P45", "source": "rogers-2024", "theme": "The accommodation process is not the same across teams",
+      "receivedOn": "2026-02-23", "channel": "email", "locationKind": "other", "locationDetail": "",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "employment",
+      "text": "Employee feedback by email: asking for a workplace accommodation works differently in the stations team and the ferry crews. I had to start over when I changed jobs.",
+      "publicSummary": "Employees had to restart their accommodation request when they moved between teams.",
+      "owner": "people", "steps": [[50, "fix"], [64, "fixed"]], "duplicateOf": null
+    },
+    {
+      "id": "P46", "source": "hc-2024", "theme": "Hiring is hard for people with a disability that can't be seen",
+      "receivedOn": "2026-05-04", "channel": "web", "locationKind": "other", "locationDetail": "",
+      "anonymous": true, "contact": null, "wantsRetest": false, "area": "employment",
+      "text": "I have ADHD. Your online hiring test is timed and I wasn't told I could ask for more time. I failed it and could not reapply for six months.",
+      "publicSummary": "Job applicants were not told they could ask for more time on the timed hiring test.",
+      "owner": "people", "steps": [[21, "fix"]], "duplicateOf": null
+    },
+    {
+      "id": "P47", "source": "ac-2025", "theme": "No accommodation support before the first day of work",
+      "receivedOn": "2026-07-27", "channel": "email", "locationKind": "other", "locationDetail": "",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "employment",
+      "text": "Emailed by a new hire: my screen reader was not installed until my third week, so I sat through training without being able to use the computer.",
+      "publicSummary": "A new employee's screen reader was not installed until their third week.",
+      "owner": "people", "steps": [], "duplicateOf": null
+    },
+    {
+      "id": "P48", "source": "statcan-travel-2025", "theme": "Self-serve ticket kiosks are hard to use",
+      "receivedOn": "2026-09-15", "channel": "web", "locationKind": "place", "locationDetail": "Kiosks at the ferry terminal",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "ict",
+      "text": "The ferry kiosks are too high to reach from my wheelchair, and the card reader is at the very top.",
+      "publicSummary": "Ferry terminal kiosks and their card readers were too high to reach from a wheelchair.",
+      "owner": null, "steps": [], "duplicateOf": null
+    },
+    {
+      "id": "P49", "source": "scotia-2025", "theme": "Hard to get a sign language interpreter",
+      "receivedOn": "2026-06-29", "channel": "in_person", "locationKind": "place", "locationDetail": "Customer service desk",
+      "anonymous": false, "contact": "Phone (text only): 506-555-0181", "wantsRetest": false, "area": "programs_services",
+      "text": "Written note at the service desk: I asked for an ASL interpreter to sort out a lost-ticket claim. I was told there is no way to book one.",
+      "publicSummary": "Passengers could not book a sign language interpreter for help at the service desk.",
+      "owner": null, "steps": [[25, "close_no_action"]], "duplicateOf": null
+    },
+    {
+      "id": "P50", "source": "statcan-public-spaces-2022", "theme": "Long wait lines",
+      "receivedOn": "2026-10-23", "channel": "web", "locationKind": "place", "locationDetail": "",
+      "anonymous": true, "contact": null, "wantsRetest": true, "area": "built_environment",
+      "text": "The line for the ferry on long weekends goes outside with no shelter or seats. I have a heart condition and had to leave the line.",
+      "publicSummary": "",
+      "owner": null, "steps": [], "duplicateOf": null
+    }
+  ]
+}

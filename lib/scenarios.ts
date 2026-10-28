@@ -15,7 +15,8 @@ import { PRIORITY_AREAS, type PriorityArea } from "@/lib/report/headings";
 const Day = z.string().regex(/^2026-\d{2}-\d{2}$/);
 const HttpsUrl = z.url({ protocol: /^https$/ });
 
-const SourceSchema = z.object({
+/** One public source a made-up case is based on (also used by data/pilot/submissions.json, lib/pilot.ts). */
+export const SourceSchema = z.object({
   id: z.string().regex(/^[a-z0-9-]{3,40}$/),
   /** The organization that published the report. It is only ever a SOURCE, never a tenant. */
   org: z.string().min(2).max(80),
