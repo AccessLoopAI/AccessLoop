@@ -208,12 +208,12 @@ Then:
   git ls-files | Select-String -Pattern "\.env|\.data/|\.vercel/"   # expect just .env.example
   git log --oneline     # read the history that will be public
   ```
-  Then create an empty **public** GitHub repo (no README or licence, so the push needs no merge), add it with `git remote add origin <the repo URL>` and, when the team says so, run `git push -u origin main`. The history shows the build commits, dated from Oct 19. Its oldest commit ("Baseline: Phases 1-2, size pass, Phase 3 AI module (green)") holds the work done before local git began, so the Devpost prior-work disclosure should say that the spec was written Oct 18, the build started Oct 19 and git began that day with that baseline commit; the dated checkpoint zips are your evidence for the time before it.
+  Then create an empty **public** GitHub repo (no README or licence, so the push needs no merge), add it with `git remote add origin <the repo URL>` and, when the team says so, run `git push -u origin main`. (Done on Oct 25: the public history was re-created that day before the first push, so its commit times are reconstructed; the dated checkpoint zips are the record. See "Prior work" in docs/overview.md.)
 - [ ] Record the 2-minute video (≤ 2:00, public, captioned) with the real tester. Also record a backup of the screen-reader segment with NVDA Speech Viewer captions.
 - [ ] Ask ultracode to write the README (problem, users, **how to run it locally in one command**, how to test, architecture diagram, eval table, privacy and limits) and the Devpost text from docs/domain.md. Humans edit it.
 - [ ] Devpost disclosures:
   - AI tools used: Claude Code / ultracode for spec and implementation; Claude models in the product (or "AI responses are simulated in this build" if you never added a key).
-  - Prior work: none.
+  - Prior work: none. The spec was written Oct 18–19, the build ran Oct 19–25, and the public git history was re-created on Oct 25 before the first push (commit times are reconstructed; the dated checkpoint zips are the record).
   - Sponsors: Clerk only if you did Going live.
 - [ ] Judge access: the deployed URL (if any) plus the one-command local run instructions.
 - [ ] Submit by 8 PM EDT, Oct 25.
