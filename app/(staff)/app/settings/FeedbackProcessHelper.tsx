@@ -1,4 +1,4 @@
-// Under the Settings form (docs/phase7-prompt.md T6 item 4): the ACR s.9 checklist for the organization's feedback
+// Under the Settings form (docs/archive/phase7-prompt.md T6 item 4): the ACR s.9 checklist for the organization's feedback
 // process, flagging what is missing, beside a preview of the description the public reads on /p/{org} (the SAME
 // component that page renders, so nothing is written twice). Server component: it reads the saved settings (the
 // page passes them) and this year's acknowledgements from lib/metrics (the dashboard's numbers), so a save, which

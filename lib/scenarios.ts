@@ -1,4 +1,4 @@
-// Scenario cases derived from published accessibility progress reports (docs/phase7-prompt.md T6 item 1;
+// Scenario cases derived from published accessibility progress reports (docs/archive/phase7-prompt.md T6 item 1;
 // docs/decisions.md 2026-10-20). The data is data/scenarios.json: one made-up organization (Kestrel Bay Group), the
 // reports we read, and 10-15 scenarios, each a barrier THEME from one report written again in our own words.
 //

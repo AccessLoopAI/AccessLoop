@@ -1,4 +1,4 @@
-// Phase 7 T2 items 5, 6 and 7 (docs/phase7-prompt.md): the staff queues.
+// Phase 7 T2 items 5, 6 and 7 (docs/archive/phase7-prompt.md): the staff queues.
 // 5. The inbox's native GET form: search (reference, public summary), selects for status, area, assigned to, channel
 //    and age, sort by received date, age or due date, 50 cases to a page; the dashboard's links keep working (a
 //    search narrows the cases a number opened); axe in both themes, keyboard alone, no sideways scroll at 320 px.

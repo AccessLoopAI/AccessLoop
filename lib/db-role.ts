@@ -1,5 +1,5 @@
 // Database security checks shared by the boot check, `npm run db:deploy` and `npm run db:smoke`
-// (docs/phase7-prompt.md T3 items 2 and 14; docs/domain.md §9). The app must connect as a role that row-level
+// (docs/archive/phase7-prompt.md T3 items 2 and 14; docs/domain.md §9). The app must connect as a role that row-level
 // security applies to: a superuser or a BYPASSRLS role reads every tenant's rows, so the fail-closed RLS of
 // db/sql/0100_security.sql would silently stop protecting anything. Used at boot (lib/boot-checks.ts, on the app's
 // own connection), by scripts/migrate.ts (owner connection, about accessloop_app) and scripts/db-smoke.ts.

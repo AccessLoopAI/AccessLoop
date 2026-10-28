@@ -1,4 +1,4 @@
-// The Feedback-section benchmark (docs/phase7-prompt.md T6 item 3; data/benchmark/README.md): the committed CSV
+// The Feedback-section benchmark (docs/archive/phase7-prompt.md T6 item 3; data/benchmark/README.md): the committed CSV
 // (every row unverified, seeded from the review's reading), the parser that refuses a half-checked file, the median
 // over VERIFIED rows only, what a draft built by AccessLoop covers, and the "How your Feedback section compares" card
 // rendered to static HTML (hidden with no verified row; "Your draft covers N of 7 elements; published median is M").

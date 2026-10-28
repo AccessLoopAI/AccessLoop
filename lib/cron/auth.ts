@@ -1,4 +1,4 @@
-// Who may run the daily job: a request with `Authorization: Bearer ${CRON_SECRET}` (docs/phase7-prompt.md T3 item 12).
+// Who may run the daily job: a request with `Authorization: Bearer ${CRON_SECRET}` (docs/archive/phase7-prompt.md T3 item 12).
 // Vercel Cron sends exactly that header when the project has CRON_SECRET set; a human can send it with curl.
 // CRON_SECRET comes from lib/env.ts secretFromEnv (derived from SESSION_SECRET in local mode, required elsewhere).
 // Server-only (node:crypto). The comparison is constant-time over fixed-length digests, so neither the secret nor its

@@ -1,4 +1,4 @@
-// Phase 7 T2 (docs/phase7-prompt.md items 1, 3, 4, 8 and 9; human decisions D1-D4): the case page's new and changed steps.
+// Phase 7 T2 (docs/archive/phase7-prompt.md items 1, 3, 4, 8 and 9; human decisions D1-D4): the case page's new and changed steps.
 // D1 the close reasons depend on the status; D2 "Correct the triage"; D3 "Stop waiting" 14 days after the request;
 // D4 reopening a verified or closed case; and the truthful "Log fix" answer (the reporter is never said to be asked
 // when nobody was); notes and interim accommodations (item 4), a duplicate's original with the link both ways

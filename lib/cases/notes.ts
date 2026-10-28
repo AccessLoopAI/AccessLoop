@@ -1,4 +1,4 @@
-// Staff notes on a case (docs/phase7-prompt.md T2 item 4; docs/domain.md §3 "note_added"). Pure and client-safe:
+// Staff notes on a case (docs/archive/phase7-prompt.md T2 item 4; docs/domain.md §3 "note_added"). Pure and client-safe:
 // the case page lists them and the server action (app/(staff)/app/cases/[ref]/actions.ts addNote) writes them.
 // A note is a `note_added` event written with appendCaseEvent (the log is append-only, so a note is never edited):
 // { kind: "internal" | "interim_accommodation", note } with the text layer-1 redacted first (CLAUDE.md "Security

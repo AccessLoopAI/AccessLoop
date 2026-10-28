@@ -1,5 +1,5 @@
 // The feedback-process description (ACA s.70(1), ACR s.9; docs/domain.md §1.3) and the lead's checklist for it on
-// /app/settings (docs/phase7-prompt.md T6 item 4). The public page /p/{org} renders the description from the org's
+// /app/settings (docs/archive/phase7-prompt.md T6 item 4). The public page /p/{org} renders the description from the org's
 // settings (components/feedback-process/FeedbackProcessDescription.tsx); Settings previews the same component and
 // lists, rule by rule, what is in place and what is missing. Pure and client-safe. Never says "compliant": each row
 // says what AccessLoop can see, and the rows it cannot see are marked for the lead to check.

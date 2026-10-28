@@ -17,7 +17,7 @@ import { readRetestLink, retestLinkExpired, retestLinkSecret } from "@/lib/retes
 import { RetestPanel } from "../../[code]/RetestPanel";
 import { answerRetestByLink } from "./actions";
 
-// The page a re-test email's link opens (docs/phase7-prompt.md T3 item 11; docs/domain.md §3, §4): the same view as
+// The page a re-test email's link opens (docs/archive/phase7-prompt.md T3 item 11; docs/domain.md §3, §4): the same view as
 // /r/[code], opened by a one-round token (lib/retest-link.ts) instead of the receipt code. It answers the question of
 // the round the email was about, and nothing else: no "Stop contact" form, no later round. GET only RENDERS (email
 // link scanners open links); the answer is a POST. A token this server did not make is a 404 before the database is

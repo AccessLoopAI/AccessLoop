@@ -1,4 +1,4 @@
-// CAN-ASC-5.2.1:2026 Accessible Service Delivery, clause 17 "Feedback" (docs/phase7-prompt.md T6 item 5): the four
+// CAN-ASC-5.2.1:2026 Accessible Service Delivery, clause 17 "Feedback" (docs/archive/phase7-prompt.md T6 item 5): the four
 // steps the clause names (receive, acknowledge, address, respond), each mapped to a count the dashboard already has
 // from lib/metrics, with the cases behind it. Pure and client-safe. No number is computed here: each step picks an
 // existing CaseSet or RoundSet of DashboardMetrics. The panel says what the records show for each step; it never

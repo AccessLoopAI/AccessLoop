@@ -4,7 +4,7 @@ import type { NextConfig } from "next";
 // with Cache Components on, the `dynamic` route segment config is removed and every uncached read
 // (cookies, DB) must sit under <Suspense>. AccessLoop pages are per-request (staff session, receipt
 // codes) and use `runtime = "nodejs"` + `dynamic = "force-dynamic"`. See docs/decisions.md.
-// ---------- Security headers (docs/phase7-prompt.md T3 item 6; docs/decisions.md 2026-10-20) ----------
+// ---------- Security headers (docs/archive/phase7-prompt.md T3 item 6; docs/decisions.md 2026-10-20) ----------
 // Every response: no MIME sniffing, never framed (X-Frame-Options and CSP frame-ancestors), no camera, microphone or
 // location (dictation is the device's own keyboard, never the page's), and a referrer policy. HSTS on Vercel builds.
 //

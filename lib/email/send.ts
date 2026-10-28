@@ -1,4 +1,4 @@
-// THE mailer (docs/decisions.md "Message model"; docs/phase7-prompt.md T3 item 8). Server-only (Node runtime).
+// THE mailer (docs/decisions.md "Message model"; docs/archive/phase7-prompt.md T3 item 8). Server-only (Node runtime).
 //   FAKE_EMAIL=1  -> nothing is sent; the attempt is logged to outbound_messages with status "skipped_fake".
 //   otherwise     -> Resend (RESEND_API_KEY, EMAIL_FROM): status "sent" with the provider's id, or "failed".
 // It never falls back from one to the other: with FAKE_EMAIL unset and no key, the status is "failed" and the server

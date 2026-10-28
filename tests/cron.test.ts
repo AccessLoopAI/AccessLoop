@@ -1,4 +1,4 @@
-// The daily job (app/api/cron/daily, lib/cron; docs/phase7-prompt.md T3 item 12; docs/domain.md §3, §10):
+// The daily job (app/api/cron/daily, lib/cron; docs/archive/phase7-prompt.md T3 item 12; docs/domain.md §3, §10):
 // - only `Authorization: Bearer ${CRON_SECRET}` runs it (constant-time, exact);
 // - the plan per case: the round's one reminder a week after the request, only to a reporter who gave an email and
 //   had no reminder this round; expire_retest at 60 days, only with CRON_EXPIRE_RETEST=1; one owner alert per

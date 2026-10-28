@@ -1,4 +1,4 @@
-// Local sign-in hardening (docs/phase7-prompt.md T3 item 4; docs/decisions.md 2026-10-20), without editing the
+// Local sign-in hardening (docs/archive/phase7-prompt.md T3 item 4; docs/decisions.md 2026-10-20), without editing the
 // frozen lib/auth/local-session.ts. Its localAuthAllowed(host) trusts the Host header alone, so a tunnel or reverse
 // proxy that rewrites Host to "localhost" (ngrok --host-header=rewrite, cloudflared, Caddy) would put "Sign in as
 // the lead", and every original report behind it, on the internet. A proxy that ADDS forwarding headers announces

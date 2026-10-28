@@ -1,4 +1,4 @@
-// Server-only. "Similar past barriers" on the staff case page (docs/domain.md §6.2; docs/phase7-prompt.md T2 item 10).
+// Server-only. "Similar past barriers" on the staff case page (docs/domain.md §6.2; docs/archive/phase7-prompt.md T2 item 10).
 // - Candidates (similarCandidates): the same org, the same priority area, the same kind of place, received in the last
 //   24 months, never this case, never a submission closed as spam (not accessibility feedback), only cases with a
 //   lead-approved public summary; the 40 newest. Inside the caller's withOrg() (RLS), and the org is in the WHERE too.

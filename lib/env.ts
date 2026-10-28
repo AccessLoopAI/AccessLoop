@@ -1,4 +1,4 @@
-// The server's environment, checked once at boot (docs/phase7-prompt.md T3 item 1; docs/decisions.md 2026-10-20).
+// The server's environment, checked once at boot (docs/archive/phase7-prompt.md T3 item 1; docs/decisions.md 2026-10-20).
 //
 // instrumentation.ts register() calls assertEnv() when a server instance starts (`next start`, `next dev`, each
 // Vercel cold start; Next never runs it during `next build`), so a missing or malformed setting stops the server with

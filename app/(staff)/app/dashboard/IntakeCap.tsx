@@ -1,7 +1,7 @@
 import { Notice } from "@/components/ui/Notice";
 import type { OrgCapToday } from "@/lib/rate-limit";
 
-// The org's daily cap on web reports (lib/rate-limit.ts, ORG_DAILY_SUBMISSION_LIMIT; docs/phase7-prompt.md T3 item
+// The org's daily cap on web reports (lib/rate-limit.ts, ORG_DAILY_SUBMISSION_LIMIT; docs/archive/phase7-prompt.md T3 item
 // 7): one quiet line while the form takes reports, a warning once it has taken the day's last one. Text only, no
 // live region (nothing on the dashboard updates while someone reads it).
 export function IntakeCap({ cap, className }: { cap: OrgCapToday; className?: string }) {

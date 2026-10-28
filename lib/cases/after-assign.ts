@@ -1,4 +1,4 @@
-// "A barrier was assigned to you" (docs/phase7-prompt.md T2 item 7): the email to the staff member a case is assigned
+// "A barrier was assigned to you" (docs/archive/phase7-prompt.md T2 item 7): the email to the staff member a case is assigned
 // to, sent by the "Assign" server action once its transaction has committed. Server-only.
 //
 // It is a separate step on purpose, like the re-test request after a fix (lib/cases/after-fix.ts): an email problem

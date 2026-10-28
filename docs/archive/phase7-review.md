@@ -1,3 +1,5 @@
+> **Archived (2026-10-28):** the Oct 20 review behind the Phase 7 prompt, kept as written; it is not current guidance (CLAUDE.md and docs/domain.md are).
+
 # AccessLoop: Ship-Readiness Review
 
 Oct 20, 2026 · @Yasin

@@ -1,3 +1,5 @@
+> **Archived (2026-10-28):** the Phase 7 agent prompt, kept as it was written and run; it is not current guidance (CLAUDE.md and docs/domain.md are).
+
 # Phase 7 for ultracode: from local prototype to a shippable AccessLoop
 
 ## How to use this file (humans, before pasting)

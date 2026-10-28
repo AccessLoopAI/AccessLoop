@@ -1,4 +1,4 @@
-// The silver-label eval set (docs/phase7-prompt.md T6 item 2; eval/README.md): one-line barrier statements written in
+// The silver-label eval set (docs/archive/phase7-prompt.md T6 item 2; eval/README.md): one-line barrier statements written in
 // our own words from published accessibility progress reports, each labelled with the priority area under which the
 // SOURCE ORGANIZATION placed the theme. "Silver": the labels are the organizations' own, not two annotators'.
 //
