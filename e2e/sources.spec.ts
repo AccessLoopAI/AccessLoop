@@ -1,10 +1,12 @@
 // The scenario cases (docs/phase7-prompt.md T6 item 1; data/scenarios.json through lib/scenarios.ts): the public
 // /sources page (axe in light and dark, forced colours, reflow at 320 px, one h1, the one status region and the one
 // "Get help", every scenario and its source), and the note on a scenario case's staff page, shown to the made-up
-// Kestrel Bay Group's lead and to no Maple Harbour case. Read-only: nothing here writes to the database.
+// Kestrel Bay Group's lead and to no Maple Harbour case; the pilot organization's table (data/pilot/submissions.json),
+// a real table with a row header per case. Read-only: nothing here writes to the database.
 import { test, expect, type Page } from "@playwright/test";
 import { expectReflow } from "./a11y-checks";
 import { expectNoAxeViolations, signInAs } from "./helpers";
+import { PILOT_ORG, PILOT_SUBMISSIONS, pilotRef, pilotSource } from "@/lib/pilot";
 import { SCENARIO_ORG, SCENARIOS, scenarioNote, scenarioSource } from "@/lib/scenarios";
 
 const LOCAL = process.env.AUTH_MODE === "local";
@@ -32,6 +34,13 @@ for (const scheme of ["light", "dark"] as const) {
       await expect(item.getByRole("heading", { level: 3, name: s.theme })).toBeVisible();
       await expect(item.getByText(scenarioNote(scenarioSource(s)), { exact: true })).toBeVisible();
       await expect(item.getByRole("link")).toHaveAttribute("href", scenarioSource(s).url);
+    }
+    const pilot = page.getByRole("table", { name: new RegExp(`^${PILOT_ORG.name}: the made-up reports`) });
+    await expect(pilot.getByRole("row")).toHaveCount(PILOT_SUBMISSIONS.length + 1);
+    for (const [i, s] of PILOT_SUBMISSIONS.entries()) {
+      const row = pilot.getByRole("row").nth(i + 1);
+      await expect(row.getByRole("rowheader")).toHaveText(pilotRef(i));
+      await expect(row.getByRole("link")).toHaveAttribute("href", pilotSource(s).url);
     }
     await settle(page);
     await expectNoAxeViolations(page, `/sources (${scheme})`);

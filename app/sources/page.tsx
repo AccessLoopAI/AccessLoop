@@ -3,11 +3,14 @@ import Link from "next/link";
 import { ReporterShell } from "@/components/layout/ReporterShell";
 import { BulletList } from "@/components/ui/BulletList";
 import { Card } from "@/components/ui/Card";
+import { Heading } from "@/components/ui/Heading";
 import { Notice } from "@/components/ui/Notice";
 import { OnThisPage, type OnThisPageItem } from "@/components/ui/OnThisPage";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ReadingSection } from "@/components/ui/ReadingSection";
+import { Table, TBody, Td, Th, THead, Tr } from "@/components/ui/Table";
 import { AREA_HEADINGS } from "@/lib/report/headings";
+import { PILOT_ORG, PILOT_SUBMISSIONS, pilotRef, pilotSource, pilotSourcesUsed, pilotStage } from "@/lib/pilot";
 import { SCENARIO_ORG, SCENARIO_SOURCES, SCENARIOS, scenarioNote, scenarioSource, scenarioStage } from "@/lib/scenarios";
 
 // Public: the scenario cases of the made-up organization Kestrel Bay Group and the published progress reports they
@@ -24,6 +27,7 @@ const SECTIONS: OnThisPageItem[] = [
   { href: "#how", label: "How we wrote them" },
   { href: "#scenarios", label: "The scenarios" },
   { href: "#reports", label: "The reports we read" },
+  { href: "#pilot", label: "The pilot organization" },
   { href: "#test-statements", label: "Draft test statements" },
   { href: "#benchmark", label: "How their Feedback sections compare" },
 ];
@@ -139,6 +143,74 @@ export default function SourcesPage() {
                 </div>
               </Card>
             ))}
+          </ul>
+        </ReadingSection>
+
+        <ReadingSection id="pilot" title="The pilot organization">
+          <p>{PILOT_ORG.about}</p>
+          <p>
+            {PILOT_ORG.name} is made up too. Its {PILOT_SUBMISSIONS.length} reports were written the same way: each takes
+            one barrier theme from a public source and says it again in our own words. Some sources are Canadian
+            Transportation Agency decisions about a real person&rsquo;s trip; we never name the people in them. Others
+            are Statistics Canada surveys that list the kinds of barriers people meet. Staff see the same note on each
+            of these case pages.
+          </p>
+          <p>
+            These cases exist only after someone runs the pilot import on their own computer. Where each one ends up is
+            planned in advance, so the list below shows that plan.
+          </p>
+          <Table
+            id="pilot-cases"
+            caption={`${PILOT_ORG.name}: the made-up reports and their sources`}
+            description={`${PILOT_SUBMISSIONS.length} reports, in the order they are imported`}
+            density="compact"
+          >
+            <THead>
+              <Tr>
+                <Th>Case</Th>
+                <Th>Theme</Th>
+                <Th>Area</Th>
+                <Th>Where it ends up</Th>
+                <Th>Based on</Th>
+              </Tr>
+            </THead>
+            <TBody>
+              {PILOT_SUBMISSIONS.map((s, i) => {
+                const src = pilotSource(s);
+                return (
+                  <Tr key={s.id}>
+                    <Th scope="row" className="font-mono">
+                      {pilotRef(i)}
+                    </Th>
+                    <Td>{s.theme}</Td>
+                    <Td>{AREA_HEADINGS[s.area].canonical}</Td>
+                    <Td>{pilotStage(s)}</Td>
+                    <Td className="wrap-anywhere">
+                      <a href={src.url} rel="noopener noreferrer" className="inline-flex min-h-11 items-center">
+                        {src.org} ({src.year})
+                      </a>
+                    </Td>
+                  </Tr>
+                );
+              })}
+            </TBody>
+          </Table>
+          <Heading level={3}>Sources only the pilot uses</Heading>
+          <ul className="m-0 grid list-none gap-4 p-0">
+            {pilotSourcesUsed()
+              .filter((src) => !SCENARIO_SOURCES.includes(src))
+              .map((src) => (
+                <Card key={src.id} as="li" id={`source-${src.id}`} title={`${src.org} (${src.year})`} titleLevel={4}>
+                  <div className="grid gap-2">
+                    <p className="wrap-anywhere">
+                      <a href={src.url} rel="noopener noreferrer" className="inline-flex min-h-11 items-center">
+                        {src.title}
+                      </a>
+                    </p>
+                    <p>{src.used}</p>
+                  </div>
+                </Card>
+              ))}
           </ul>
         </ReadingSection>
 
