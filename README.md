@@ -6,7 +6,7 @@
 
 AccessLoop is a feedback system for the Accessible Canada Act. Anyone can report an accessibility barrier, whether it's a website, a building, a phone line or a policy, without making an account. The case is closed only when that person confirms the fix works. AccessLoop then drafts the Feedback section of the organization's required progress report from those records, and links every sentence to its evidence.
 
-> **Status:** a local prototype built for Build North 2026. It runs on one computer with no accounts. The AI is simulated, email goes to an on-screen Outbox, and the organizations in the demo data are made up.
+> **Status:** a working prototype built for Build North 2026. It runs on your own computer with no accounts. The AI is simulated unless you switch it on, email goes to an on-screen Outbox, and the organizations in the demo data are made up. See [What's real today](#whats-real-today).
 
 ## Why it exists
 
@@ -83,11 +83,20 @@ CI runs all of these on every push to `main`. On pull requests the end-to-end su
 
 Next.js 16 (App Router, TypeScript) · Tailwind CSS · Postgres with row-level security per organization · Drizzle ORM · Anthropic Claude (simulated in this build) · Playwright + axe · Expo reporter app in [`mobile/`](mobile/README.md)
 
-## Limits
+## What's real today
 
-- **No real AI yet.** Every AI answer here is simulated, and the eval numbers only test the harness.
-- **Not hosted.** Staff sign-in is local-only, and Clerk, Vercel, Supabase and real email come at launch ([docs/handoff.md](docs/handoff.md)).
-- **No outside review yet.** There has been no testing with disabled users, no screen-reader sessions, no security review and no accessibility audit.
+| Part | Status | Details |
+|---|---|---|
+| Reporter form, receipt code and re-test | Real | The four-step form, the receipt, `/check` and "Yes, it works now" all run against a real Postgres database |
+| Staff workflow | Real | Inbox, redaction review, triage, assignment, fix and the dashboard, with row-level security per organization |
+| Evidence chain and report checks | Real | Hash-chained case histories, signed reports, `/verify` and the offline checker `tools/verify-bundle.mjs` |
+| AI (summary, name check, report wording, similar barriers) | Simulated | Ready-made answers by default. A developer can switch to their own signed-in Claude Code CLI ([how](docs/overview.md#real-ai-on-your-own-machine)); those results are internal and never published. The Anthropic API backend is built and tested with stubs but has not made a real call |
+| Eval numbers | Simulated | Every saved run in `eval/results/` uses the simulated AI, so it tests the harness, not a model |
+| Email | Simulated | Every message goes to the Outbox page (`/app/outbox`); nothing is sent |
+| Staff sign-in | Local only | A "Sign in as…" page that works only on localhost. Hosted sign-in is not built yet |
+| Reporter phone app (`mobile/`) | Real, local only | An Expo app that talks to the local API; not tested on a real phone yet |
+| Hosting | Not built yet | Nothing is deployed; there is no public URL |
+| Testing with people | Not done yet | No sessions with disabled testers, no screen-reader sessions, no security review and no accessibility audit |
 
 ## Learn more
 
@@ -108,4 +117,4 @@ Next.js 16 (App Router, TypeScript) · Tailwind CSS · Postgres with row-level s
 | Sepehr Ashrafzadeh ([@SepehrAsh](https://github.com/SepehrAsh)) | Reporter experience and reports |
 | Amirreza Radjou ([@amirradjou](https://github.com/amirradjou)) | Database operations and mobile UI |
 
-Built with help from Claude Code. The team made the product decisions ([disclosures](docs/overview.md#disclosures)). The code is under the [MIT License](LICENSE). Fonts are under the SIL Open Font License, in `app/fonts/`.
+Built with help from Claude Code. The team made the product decisions ([disclosures](docs/overview.md#disclosures)). The spec was written on October 18–19, 2026 and the build ran from October 19 to 25; the public git history was re-created on October 25 before the first push, so commit times are reconstructed. The code is under the [MIT License](LICENSE). Fonts are under the SIL Open Font License, in `app/fonts/`.
