@@ -8,7 +8,8 @@
 //   JSON Schema keywords strict tools reject (minLength, maxLength, minimum, maximum, maxItems, ...) moved into the
 //   description (strictToolSchema); zod stays the real validator. A plain-text answer with no tool call is an
 //   AiOutputError, as before.
-// - No temperature: Sonnet 5.5 and Opus 5.5 reject any non-default value, Haiku 5.5 accepts only 1.
+// - No sampling parameters: API version 2026-10-21, which @anthropic-ai/sdk 1.x sends, rejects temperature, top_p
+//   and top_k on every model with HTTP 400, even at their default values (issue #17).
 // - output_config.effort `low` for structure by default (classification and a two-sentence summary; it also keeps
 //   the preview inside its time budget); the other functions use the model's own default.
 // - What each known model accepts is in lib/ai/models.json "families". A knob a human sets that the model is known to
@@ -22,9 +23,10 @@
 //   defaults, the one config place outside env that names model IDs).
 // - ANTHROPIC_API_KEY is required; without it the call fails with a clear AiBackendUnavailableError. Never another
 //   backend instead.
-// - Knobs (.env.example): AI_API_TOOL_CHOICE=auto|tool, AI_API_TEMPERATURE=default|<0..1>,
-//   AI_API_EFFORT_STRUCTURE / AI_API_EFFORT_PII / AI_API_EFFORT_REPORT (and AI_API_EFFORT for all three)
-//   =low|medium|high|xhigh|max|default, AI_API_STRICT_TOOLS=1|0. They never change which backend answers.
+// - Knobs (.env.example): AI_API_TOOL_CHOICE=auto|tool, AI_API_EFFORT_STRUCTURE / AI_API_EFFORT_PII /
+//   AI_API_EFFORT_REPORT (and AI_API_EFFORT for all three) =low|medium|high|xhigh|max|default,
+//   AI_API_STRICT_TOOLS=1|0. They never change which backend answers. AI_API_TEMPERATURE is gone: a value other than
+//   "default" left in an old .env.local is an AiConfigError, so nobody believes it still applies.
 // - Errors are mapped to text-free AiErrors: no SDK message (it could echo request content) is ever passed on.
 import Anthropic from "@anthropic-ai/sdk";
 import modelDefaults from "../models.json";
@@ -81,7 +83,6 @@ interface FunctionDefault {
 export interface ModelFamily {
   name: string;
   forcedToolChoice: boolean;
-  sampling: boolean;
   effort: boolean;
   strictTools: boolean;
 }
@@ -122,8 +123,6 @@ export const DEFAULT_EFFORT: Readonly<Record<AiFunction, ApiEffort | undefined>>
 
 export interface ApiRequestShape {
   toolChoice: "auto" | "tool";
-  /** undefined = send no temperature (the model's own default). */
-  temperature: number | undefined;
   /** undefined = send no output_config (the model's own default effort). */
   effort: ApiEffort | undefined;
   /** strict: true on the tool, with strictToolSchema(). */
@@ -151,19 +150,13 @@ export function apiRequestShape(fn: AiFunction, model: string, env: Env = proces
     );
   }
 
-  const tempRaw = (env.AI_API_TEMPERATURE ?? "").trim() || "default";
-  let temperature: number | undefined;
-  if (tempRaw !== "default") {
-    const t = Number(tempRaw);
-    if (!/^\d+(\.\d+)?$/.test(tempRaw) || !(t >= 0 && t <= 1)) {
-      throw new AiConfigError(`AI_API_TEMPERATURE must be "default" (send none, the default) or a number from 0 to 1.`);
-    }
-    if (family && !family.sampling) {
-      throw new AiConfigError(
-        `AI_API_TEMPERATURE=${tempRaw}: ${named(model, family)} rejects a temperature (HTTP 400). Set AI_API_TEMPERATURE=default or remove it.`,
-      );
-    }
-    temperature = t;
+  // The removed sampling knob. "default" is what .env.example used to ship, so copies of it keep working.
+  const tempRaw = (env.AI_API_TEMPERATURE ?? "").trim();
+  if (tempRaw && tempRaw !== "default") {
+    throw new AiConfigError(
+      "AI_API_TEMPERATURE is no longer used: API version 2026-10-21 rejects a temperature on every model (HTTP 400). " +
+        "Remove it from .env.local.",
+    );
   }
 
   const ownKnob = EFFORT_ENV[fn];
@@ -193,7 +186,7 @@ export function apiRequestShape(fn: AiFunction, model: string, env: Env = proces
   }
   const strict = strictRaw === "" ? Boolean(family?.strictTools) : strictRaw === "1";
 
-  return { toolChoice: choice, temperature, effort, strict };
+  return { toolChoice: choice, effort, strict };
 }
 
 /** The key, or a clear error saying what to do. */
@@ -296,7 +289,6 @@ export function buildApiBody(req: ModelRequest, model: string, shape: ApiRequest
     messages: [{ role: "user", content: req.userTurn }],
     tools: [tool],
     tool_choice: shape.toolChoice === "tool" ? { type: "tool", name: req.toolName } : { type: "auto" },
-    ...(shape.temperature !== undefined ? { temperature: shape.temperature } : {}),
     ...(shape.effort ? { output_config: { effort: shape.effort } } : {}),
   };
 }
