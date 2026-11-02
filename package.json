@@ -30,7 +30,7 @@
     "load:check": "tsx --env-file-if-exists=.env.local scripts/load-check.ts"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.135.0",
+    "@anthropic-ai/sdk": "^1.1.0",
     "drizzle-orm": "^0.45.4",
     "lucide-react": "^1.59.0",
     "motion": "^14.3.0",

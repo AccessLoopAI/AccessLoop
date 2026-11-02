@@ -1,6 +1,7 @@
 // The api AI backend (lib/ai/backends/api.ts) per docs/domain.md §6 and §6.1, with a STUBBED Anthropic client: no
 // network and no real model ever. Tool-use JSON output (one tool, tool_choice auto, strict on the models known to
-// accept it, whose input_schema is the zod JSON schema), no temperature, effort low for structure, the request body
+// accept it, whose input_schema is the zod JSON schema), no sampling parameters (API version 2026-10-21 rejects
+// them), the retired AI_API_TEMPERATURE knob, effort low for structure, the request body
 // per model family (lib/ai/models.json "families"), the 10 s budget with one jittered retry on 429/529, the caller's
 // deadline, token usage, model IDs from env (defaults in lib/ai/models.json), the required key, error mapping that
 // never leaks the SDK's message, and no silent fallback (docs/decisions.md 2026-10-20 "api request shape").
@@ -241,7 +242,7 @@ describe("the request (one strict tool, tool_choice auto, no temperature, effort
   it(".env.example documents every request knob with the default the code uses", () => {
     const example = readFileSync(path.join(process.cwd(), ".env.example"), "utf8");
     expect(example).toMatch(/^AI_API_TOOL_CHOICE=auto\s/m);
-    expect(example).toMatch(/^AI_API_TEMPERATURE=default\s/m);
+    expect(example).not.toMatch(/^AI_API_TEMPERATURE=/m); // retired with SDK 1.x (issue #17)
     expect(example).toMatch(/^AI_API_EFFORT_STRUCTURE=low\s/m);
     for (const k of ["AI_API_EFFORT_PII", "AI_API_EFFORT_REPORT", "AI_API_EFFORT", "AI_API_STRICT_TOOLS"]) {
       expect(example).toMatch(new RegExp(`^${k}=\\s`, "m"));
@@ -271,7 +272,7 @@ describe("the request body per model family (lib/ai/models.json families)", () =
     expect("temperature" in body).toBe(false);
     expect(body.output_config).toEqual({ effort: "low" });
     // phraseClaims on the same family: the model's own default effort.
-    expect(apiRequestShape("phraseClaims", "claude-sonnet-5-5", {})).toEqual({ toolChoice: "auto", temperature: undefined, effort: undefined, strict: true });
+    expect(apiRequestShape("phraseClaims", "claude-sonnet-5-5", {})).toEqual({ toolChoice: "auto", effort: undefined, strict: true });
   });
 
   it("Claude Haiku 5.5 (flagPii): auto, strict, no temperature, the model's default effort", async () => {
@@ -293,16 +294,32 @@ describe("the request body per model family (lib/ai/models.json families)", () =
     expect(body.output_config).toEqual({ effort: "low" });
   });
 
-  it("Claude Haiku 4.5 (a dated ID): no default effort (it rejects effort), strict; a temperature knob is sent", async () => {
-    const body = await bodyFor("structure", "claude-haiku-4-5-20251001");
-    expect(apiModelFamily("claude-haiku-4-5-20251001")?.name).toBe("Claude Haiku 4.5");
-    expect(body.tool_choice).toEqual({ type: "auto" });
-    expect(tool0(body).strict).toBe(true);
-    expect("output_config" in body).toBe(false);
-    expect("temperature" in body).toBe(false);
-    const withTemp = await bodyFor("flagPii", "claude-haiku-4-5", { AI_API_TEMPERATURE: "0", AI_API_TOOL_CHOICE: "tool" });
-    expect(withTemp.temperature).toBe(0);
-    expect(withTemp.tool_choice).toEqual({ type: "tool", name: "record_personal_details" });
+  it("Claude Haiku 5.5 with AI_API_TOOL_CHOICE=tool: the forced tool_choice it accepts; a dated ID matches its family", async () => {
+    const forced = await bodyFor("flagPii", "claude-haiku-5-5", { AI_API_TOOL_CHOICE: "tool" });
+    expect(forced.tool_choice).toEqual({ type: "tool", name: "record_personal_details" });
+    expect(apiModelFamily("claude-haiku-5-5-20261001")?.name).toBe("Claude Haiku 5.5");
+  });
+
+  it("no body carries temperature, top_p or top_k, on any known family or an unknown model", async () => {
+    for (const model of ["claude-opus-5-5", "claude-sonnet-5-5", "claude-haiku-5-5", "claude-future-9"]) {
+      for (const fn of ["structure", "flagPii"] as const) {
+        for (const k of KNOBS) delete process.env[k];
+        const body = await bodyFor(fn, model);
+        for (const k of ["temperature", "top_p", "top_k"]) expect(body, `${fn} on ${model}`).not.toHaveProperty(k);
+      }
+    }
+  });
+
+  it("a family that rejects effort gets no default effort, and an effort knob for it is an AiConfigError", () => {
+    // No shipped family rejects effort since Claude Haiku 4.5 left the list (issue #17), so a test-only one keeps the rule checked.
+    const families = modelDefaults.families as Record<string, unknown>;
+    families["claude-test-noeffort"] = { name: "Test model", forcedToolChoice: true, effort: false, strictTools: false };
+    try {
+      expect(apiRequestShape("structure", "claude-test-noeffort", {}).effort).toBeUndefined();
+      expect(() => apiRequestShape("flagPii", "claude-test-noeffort", { AI_API_EFFORT: "low" })).toThrow(/AI_API_EFFORT_PII=default/);
+    } finally {
+      delete families["claude-test-noeffort"];
+    }
   });
 
   it("a model not in the families list gets the plain shape: auto, no strict, no temperature, no default effort", async () => {
@@ -326,8 +343,8 @@ describe("the request body per model family (lib/ai/models.json families)", () =
     const cases: [string, Record<string, string>, RegExp][] = [
       ["claude-sonnet-5-5", { AI_API_TOOL_CHOICE: "tool" }, /Claude Sonnet 5\.5 .* rejects a forced tool_choice/],
       ["claude-opus-5-5", { AI_API_TOOL_CHOICE: "tool" }, /Claude Opus 5\.5 .* rejects a forced tool_choice/],
-      ["claude-sonnet-5-5", { AI_API_TEMPERATURE: "0" }, /rejects a temperature/],
-      ["claude-sonnet-5-5", { AI_API_TEMPERATURE: "1" }, /rejects a temperature/],
+      ["claude-sonnet-5-5", { AI_API_TEMPERATURE: "0" }, /AI_API_TEMPERATURE is no longer used/],
+      ["claude-future-9", { AI_API_TEMPERATURE: "1" }, /AI_API_TEMPERATURE is no longer used/],
     ];
     for (const [model, knobs, msg] of cases) {
       for (const k of KNOBS) delete process.env[k];
@@ -339,10 +356,8 @@ describe("the request body per model family (lib/ai/models.json families)", () =
       expect((err as Error).message).toMatch(msg);
       expect(stub.create).not.toHaveBeenCalled();
     }
-    // Haiku 5.5 accepts a forced tool_choice, but not a temperature; Haiku 4.5 rejects effort.
+    // Haiku 5.5 accepts a forced tool_choice.
     expect(apiRequestShape("flagPii", "claude-haiku-5-5", { AI_API_TOOL_CHOICE: "tool" }).toolChoice).toBe("tool");
-    expect(() => apiRequestShape("flagPii", "claude-haiku-5-5", { AI_API_TEMPERATURE: "0" })).toThrow(AiConfigError);
-    expect(() => apiRequestShape("flagPii", "claude-haiku-4-5", { AI_API_EFFORT: "low" })).toThrow(/AI_API_EFFORT_PII=default/);
   });
 
   it("checkReady() checks the shape of every function on its model, without a network call", () => {
@@ -354,9 +369,20 @@ describe("the request body per model family (lib/ai/models.json families)", () =
 });
 
 describe("the knobs", () => {
-  it("defaults: auto, no temperature, effort low for structure only, strict on known families", () => {
-    expect(apiRequestShape("structure", "claude-sonnet-5-5", {})).toEqual({ toolChoice: "auto", temperature: undefined, effort: "low", strict: true });
-    expect(apiRequestShape("flagPii", "claude-haiku-5-5", {})).toEqual({ toolChoice: "auto", temperature: undefined, effort: undefined, strict: true });
+  it("defaults: auto, effort low for structure only, strict on known families", () => {
+    expect(apiRequestShape("structure", "claude-sonnet-5-5", {})).toEqual({ toolChoice: "auto", effort: "low", strict: true });
+    expect(apiRequestShape("flagPii", "claude-haiku-5-5", {})).toEqual({ toolChoice: "auto", effort: undefined, strict: true });
+  });
+
+  it("AI_API_TEMPERATURE is retired: empty or \"default\" is accepted, any other value is an AiConfigError on every model", () => {
+    for (const v of ["", " ", "default"]) {
+      expect(apiRequestShape("structure", "claude-sonnet-5-5", { AI_API_TEMPERATURE: v })).toEqual({ toolChoice: "auto", effort: "low", strict: true });
+    }
+    for (const model of ["claude-sonnet-5-5", "claude-haiku-5-5", "claude-future-9"]) {
+      for (const v of ["0", "1", "0.2", "2"]) {
+        expect(() => apiRequestShape("structure", model, { AI_API_TEMPERATURE: v })).toThrow(/AI_API_TEMPERATURE is no longer used/);
+      }
+    }
   });
 
   it("effort: the function's own knob, else AI_API_EFFORT, else the default; \"default\" sends none", () => {
@@ -375,11 +401,7 @@ describe("the knobs", () => {
   });
 
   it("unknown values are a config error, never a guess", () => {
-    expect(apiRequestShape("structure", "claude-future-9", { AI_API_TEMPERATURE: "0.2" }).temperature).toBe(0.2);
-    expect(apiRequestShape("structure", "claude-future-9", { AI_API_TEMPERATURE: "default" }).temperature).toBeUndefined();
     expect(() => apiRequestShape("structure", "claude-future-9", { AI_API_TOOL_CHOICE: "any" })).toThrow(AiConfigError);
-    expect(() => apiRequestShape("structure", "claude-future-9", { AI_API_TEMPERATURE: "2" })).toThrow(AiConfigError);
-    expect(() => apiRequestShape("structure", "claude-future-9", { AI_API_TEMPERATURE: "-1" })).toThrow(AiConfigError);
     expect(() => apiRequestShape("structure", "claude-future-9", { AI_API_EFFORT: "extreme" })).toThrow(AiConfigError);
     expect(() => apiRequestShape("structure", "claude-future-9", { AI_API_EFFORT_STRUCTURE: "minimal" })).toThrow(/AI_API_EFFORT_STRUCTURE/);
     expect(() => apiRequestShape("structure", "claude-future-9", { AI_API_STRICT_TOOLS: "yes" })).toThrow(AiConfigError);
