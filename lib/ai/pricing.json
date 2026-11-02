@@ -1,0 +1,22 @@
+{
+  "_doc": "What a real api call costs, for the spend ledger (lib/ai/budget.ts; improvement plan 'Money guardrails', layer 2; issue #19). US dollars per million tokens, copied from Anthropic's pricing page (https://platform.claude.com/docs/en/about-claude/pricing) on checkedOn, for global inference (no inference_geo: US-only inference costs 1.1x). Every rate needs at most 3 decimal places (budget.ts counts in billionths of a dollar per token). A model not listed here can't be budgeted, so a real call to it is refused; the same ID with an 8-digit date suffix (e.g. -20261001) matches its entry. longPrompt: a request whose prompt (input plus cache reads plus cache writes) is over overInputTokens pays that rate card for all of its tokens, output included. Update checkedOn whenever a rate changes.",
+  "checkedOn": "2026-10-27",
+  "models": {
+    "claude-opus-5-5": {
+      "name": "Claude Opus 5.5",
+      "rates": { "input": 4, "cacheWrite5m": 5, "cacheWrite1h": 8, "cacheRead": 0.2, "output": 20 }
+    },
+    "claude-sonnet-5-5": {
+      "name": "Claude Sonnet 5.5",
+      "rates": { "input": 2, "cacheWrite5m": 2.5, "cacheWrite1h": 4, "cacheRead": 0.1, "output": 10 }
+    },
+    "claude-haiku-5-5": {
+      "name": "Claude Haiku 5.5",
+      "rates": { "input": 0.1, "cacheWrite5m": 0.125, "cacheWrite1h": 0.2, "cacheRead": 0.01, "output": 0.5 },
+      "longPrompt": {
+        "overInputTokens": 100000,
+        "rates": { "input": 0.5, "cacheWrite5m": 0.625, "cacheWrite1h": 1, "cacheRead": 0.05, "output": 2.5 }
+      }
+    }
+  }
+}
