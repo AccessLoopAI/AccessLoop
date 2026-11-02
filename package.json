@@ -19,6 +19,7 @@
     "local:reset": "tsx scripts/local-run.ts reset",
     "e2e": "playwright test",
     "eval": "tsx --env-file-if-exists=.env.local eval/run.ts",
+    "eval:e1": "tsx eval/e1.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:security": "tsx --env-file-if-exists=.env.local scripts/apply-sql.ts db/sql/0100_security.sql",

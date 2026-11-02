@@ -105,11 +105,12 @@ afterEach(async () => {
 });
 
 describe("npm run eval -- --set silver", () => {
-  it("parses --set silver and --draft-check, and --draft-check goes with the silver set only", () => {
+  it("parses --set silver and --draft-check, and --draft-check goes with the silver or visible set only", () => {
     expect(parseEvalArgs(["--set", "silver"])).toEqual({ set: "silver", baseline: false, backend: null });
     expect(parseEvalArgs(["--set", "silver", "--draft-check"])).toEqual({ set: "silver", baseline: false, backend: null, draftCheck: true });
-    expect(() => parseEvalArgs(["--draft-check"])).toThrow(/only goes with --set silver/);
-    expect(() => parseEvalArgs(["--set", "holdout", "--draft-check"])).toThrow(/only goes with --set silver/);
+    expect(parseEvalArgs(["--draft-check"])).toEqual({ set: "visible", baseline: false, backend: null, draftCheck: true });
+    expect(() => parseEvalArgs(["--set", "holdout", "--draft-check"])).toThrow(/only goes with --set silver or --set visible/);
+    expect(() => parseEvalArgs(["--set", "injection", "--draft-check"])).toThrow(/only goes with --set silver or --set visible/);
   });
 
   it("refuses to run while the set is only a draft, says what a human must do, and saves nothing", async () => {

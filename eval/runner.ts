@@ -96,6 +96,7 @@ import { ratesSummary } from "@/lib/eval/intervals";
 import { summarizeCalls } from "@/lib/eval/usage";
 import { redactLayer1, redactWithItems } from "@/lib/intake/redact";
 import { SILVER_DRAFT_FILE, SILVER_FILE, SilverFileSchema, silverFixtures } from "@/lib/eval/silver";
+import { E1_CANDIDATES_FILE } from "./e1-labels";
 import { checkInjectionSuite, INJECTION_FILE, InjectionFileSchema, injectionFixtures, type InjectionFixture } from "./injection";
 import { LOCATION_KINDS } from "@/lib/intake/types";
 import { ABSTAIN_THRESHOLD, score, type Fixture, type Prediction } from "./score";
@@ -109,7 +110,8 @@ export const USAGE = [
   "  --set holdout   the humans-only set at HOLDOUT_PATH (a human runs this; agents never do)",
   "  --set silver    statements from published reports (eval/fixtures/public-silver.json, once a human reviewed it)",
   "  --set injection the prompt-injection suite in eval/fixtures/injection.json, with its own per-case checks",
-  "  --draft-check   with --set silver: run the unreviewed public-silver.draft.json through the harness; saves nothing",
+  "  --draft-check   a set's unlabelled or unreviewed draft through the harness, saving nothing: with --set silver",
+  "                  public-silver.draft.json, with --set visible the E1 candidates (eval/fixtures/e1-candidates.json)",
   "  --baseline      zero-shot baseline: the same backend and model WITHOUT AccessLoop's prompts (eval/baseline/)",
   "  --backend X     use backend X for this run (sets AI_BACKEND=X and FAKE_LLM=1 for fake, 0 otherwise)",
   `  --repeats N     run the whole set N times (1-${MAX_REPEATS}, default 1); rates are the mean, with the range across repeats`,
@@ -188,8 +190,8 @@ export function parseEvalArgs(argv: readonly string[]): EvalOptions | "help" {
       throw new EvalStop(`Unknown option "${arg.slice(0, 40)}".\n\n${USAGE}`, EXIT_USAGE);
     }
   }
-  if (opts.draftCheck && opts.set !== "silver") {
-    throw new EvalStop("--draft-check only goes with --set silver (it checks the draft silver set).", EXIT_USAGE);
+  if (opts.draftCheck && opts.set !== "silver" && opts.set !== "visible") {
+    throw new EvalStop("--draft-check only goes with --set silver or --set visible (it checks a draft of that set).", EXIT_USAGE);
   }
   return opts;
 }
@@ -240,8 +242,10 @@ export async function loadFixtures(
   let file: string;
   let shown: string;
   if (set === "visible") {
-    file = path.join(o.projectRoot, "eval", "fixtures", "reports.json");
-    shown = "eval/fixtures/reports.json";
+    // With --draft-check: the E1 candidates, new reports whose areas two people have not labelled yet (eval/README.md).
+    const name = o.draftCheck ? E1_CANDIDATES_FILE : "reports.json";
+    file = path.join(o.projectRoot, "eval", "fixtures", name);
+    shown = `eval/fixtures/${name}`;
   } else {
     const raw = o.env.HOLDOUT_PATH?.trim();
     if (!raw) {
@@ -521,7 +525,7 @@ export const CLAUDE_CLI_LABEL = "claude-cli: for the team's own development only
 export const BASELINE_LABEL = "Zero-shot baseline: the same model without AccessLoop's prompts";
 export const LAYER1_ONLY_LABEL = "layer 1 only: the AI personal-details pass was off";
 export const SILVER_LABEL = "silver set: statements from published reports, areas as their authors labelled them";
-export const DRAFT_CHECK_LABEL = "DRAFT check: unreviewed silver labels, a harness check only, not saved and never to be quoted";
+export const DRAFT_CHECK_LABEL = "DRAFT check: unreviewed or missing labels, a harness check only, not saved and never to be quoted";
 export const INJECTION_LABEL = "prompt-injection suite: attacks around real barriers, with per-case checks";
 
 export function resultLabel(backend: AiBackendName, set: EvalSet, baseline: boolean): string {

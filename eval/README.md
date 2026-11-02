@@ -14,6 +14,8 @@ npm run eval -- --set holdout                 # humans only: reads HOLDOUT_PATH 
 npm run eval -- --set silver                  # statements from published reports; only once a human reviewed the file
 npm run eval -- --set injection               # the prompt-injection suite (fixtures/injection.json), with its own checks
 npm run eval -- --set silver --draft-check    # runs the unreviewed DRAFT through the harness; prints, saves nothing
+npm run eval -- --draft-check                 # the unlabelled E1 candidates (fixtures/e1-candidates.json) the same way
+npm run eval:e1 -- sheet | kappa              # the E1 labelling sheet, and Cohen's kappa once two people filled it in
 ```
 
 `--repeats N` (1-10) and `--layer1-only` work with any `--set` and with `--baseline`.
@@ -36,6 +38,7 @@ npm run eval -- --set silver --draft-check    # runs the unreviewed DRAFT throug
 | `fixtures/reports.json` | 20 visible fixtures, labelled | Humans add more. Agents may add fixtures but never change existing labels |
 | `fixtures/injection.json` | 33 prompt-injection cases (`--set injection`), each a real barrier with an attack around it, its `attack` (kind, goal, canaries) and the usual labels. Format: `injection.ts` | Agents may add cases; never weaken one |
 | `injection.ts` | The suite's format and its pure per-case checker (`checkInjectionSuite`), because the frozen `score.ts` can't express these checks (tests/eval-injection.test.ts) | Agent |
+| `fixtures/e1-candidates.json`, `fixtures/e1-labelling.csv` | **Unlabelled** E1 candidates (issue #21): 55 new reports in the visible format, aimed at what the visible set lacks (non-web barriers, 38% French, dictated, AAC and plain-language text, more quasi-identifiers, odd staff names, addresses, two-area reports, 8 new injection variants), all personal details made up, `primaryArea` empty. Two people fill `a_*` and `b_*` in the sheet on their own; `npm run eval:e1 -- kappa` gives their agreement; once they settle the differences, a person writes the labels in and renames the file. Until then only `--draft-check` runs them, and saves nothing | Humans label. Agents may add candidates, never labels |
 | `HOLDOUT_PATH` (outside the project folder) | 10+ fixtures agents never see | **Humans only**, see `holdout/README.md` |
 | `fixtures/public-silver.draft.json` | **DRAFT** silver set: 60-100 one-line statements paraphrased from published progress reports, each labelled with the area the source organization gave it (format: `lib/eval/silver.ts`) | Agent wrote it; **a human reviews every row**, sets `"status": "reviewed"` and `"reviewedBy"`, and renames it to `public-silver.json` |
 | `score.ts` | Pure scoring (frozen) | Nobody, without a human OK |
