@@ -23,4 +23,4 @@ To run it (a human starts this):
 npm run eval -- --set holdout
 ```
 
-The project already uses local git, and nothing has been pushed. When you publish the GitHub repo in Phase 6, the holdout stays out of it because it lives outside the folder (`.gitignore` also ignores everything in `eval/holdout/` except this README). Publish just the scores.
+The repository is on GitHub; the holdout stays out of it because it lives outside the folder (`.gitignore` also ignores everything in `eval/holdout/` except this README). Publish just the scores. The step-by-step checklist, including how to compute the kappa without an agent, is [docs/dev/holdout-howto.md](../../docs/dev/holdout-howto.md).
