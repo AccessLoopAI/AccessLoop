@@ -11,7 +11,7 @@ import { AREA_HEADINGS } from "@/lib/report/headings";
 import { SCENARIO_ORG, SCENARIO_SOURCES, SCENARIOS, scenarioNote, scenarioSource, scenarioStage } from "@/lib/scenarios";
 
 // Public: the scenario cases of the made-up organization Kestrel Bay Group and the published progress reports they
-// come from (docs/phase7-prompt.md T6 item 1; data/scenarios.json through lib/scenarios.ts). Static: it reads no
+// come from (docs/archive/phase7-prompt.md T6 item 1; data/scenarios.json through lib/scenarios.ts). Static: it reads no
 // database and nothing about any real case. The reports belong to their publishers: we name and link them as
 // sources, never as tenants, and every scenario is in our own words. Never "compliant", "certified" or "guarantees".
 export const metadata: Metadata = {

@@ -1,4 +1,4 @@
-// Retention (lib/retention.ts, scripts/retention.ts; docs/phase7-prompt.md T3 item 13; ACR s.19), on a real Postgres
+// Retention (lib/retention.ts, scripts/retention.ts; docs/archive/phase7-prompt.md T3 item 13; ACR s.19), on a real Postgres
 // (PGlite with the real migrations): past the keep-until date the private copy is wiped (the original replaced by a
 // note that still decrypts, the email and contact details removed); 30 days after verified or closed the contact
 // details are removed; every change is a system note on the case's log; a dry run writes nothing; a second run finds

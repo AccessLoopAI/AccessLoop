@@ -191,7 +191,7 @@ describe("the CLI call (domain §6.1 Process, Input, Flags, Isolation)", () => {
       "--tools",
       "",
       "--disallowedTools",
-      "*",
+      "mcp__*",
     ]);
     expect(call.options.shell).toBe(false);
     expect(call.args).not.toContain("--bare");
@@ -226,7 +226,7 @@ describe("the CLI call (domain §6.1 Process, Input, Flags, Isolation)", () => {
       "--tools",
       "",
       "--disallowedTools",
-      "*",
+      "mcp__*",
     ]);
     expect(reply.cliVersion).toBe("2.1.211+system-prompt-file.max-turns.no-safe-mode");
   });
@@ -319,7 +319,7 @@ describe("the CLI call (domain §6.1 Process, Input, Flags, Isolation)", () => {
     const { transport, mainCalls } = makeCli({ help: withoutSafeMode });
     const reply = await transport.complete(structureRequest(), LOCAL);
     expect(mainCalls()[0].args).not.toContain("--safe-mode");
-    expect(mainCalls()[0].args.slice(-4)).toEqual(["--tools", "", "--disallowedTools", "*"]);
+    expect(mainCalls()[0].args.slice(-4)).toEqual(["--tools", "", "--disallowedTools", "mcp__*"]);
     expect(reply.cliVersion).toBe("2.1.299+system-prompt-inline.no-max-turns.no-safe-mode");
   });
 

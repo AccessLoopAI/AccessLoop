@@ -1,4 +1,4 @@
-// "How your Feedback section compares" (docs/phase7-prompt.md T6 item 3): on a progress report's page, beside
+// "How your Feedback section compares" (docs/archive/phase7-prompt.md T6 item 3): on a progress report's page, beside
 // "Report checks". "Your draft covers N of 7 elements; published median is M": N from the report's own stored
 // sentences (lib/benchmark draftCoverage), M ONLY from benchmark rows a person checked (verified_by_human = true in
 // data/benchmark/feedback-sections.csv). With no checked row the card is not rendered at all.

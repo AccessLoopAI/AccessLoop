@@ -1,4 +1,4 @@
-// "Similar past barriers" (docs/domain.md §6.2; docs/phase7-prompt.md T2 item 10): the AI function in
+// "Similar past barriers" (docs/domain.md §6.2; docs/archive/phase7-prompt.md T2 item 10): the AI function in
 // lib/ai/similar.ts with STUBBED transports (no real model, ever), its fake fixture, its prompt file, and the page's
 // shaping in lib/cases/similar.ts. The contract: public summaries only, layer-1 masked, inside <cases> in the user
 // turn; refs MUST be candidates or the whole answer is dropped; at most 5; the api lane takes MODEL_SIMILAR, else

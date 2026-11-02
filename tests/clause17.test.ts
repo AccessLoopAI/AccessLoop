@@ -1,4 +1,4 @@
-// The CAN-ASC-5.2.1 clause 17 panel on the dashboard (docs/phase7-prompt.md T6 item 5; lib/standards/clause17.ts):
+// The CAN-ASC-5.2.1 clause 17 panel on the dashboard (docs/archive/phase7-prompt.md T6 item 5; lib/standards/clause17.ts):
 // each step is a lib/metrics number the dashboard already has, linked to exactly its cases; one short quoted line,
 // cited; never "compliant". Rendered to static HTML for the page contract (unique link names, no chart captions).
 import { createElement } from "react";

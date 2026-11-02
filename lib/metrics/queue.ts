@@ -1,4 +1,4 @@
-// The staff work queues: the inbox and My work (docs/phase7-prompt.md T2 items 5 and 6; docs/domain.md §9
+// The staff work queues: the inbox and My work (docs/archive/phase7-prompt.md T2 items 5 and 6; docs/domain.md §9
 // "cases.due_at", decision D8). How old a case is, and when it is due or overdue: ONE definition for the inbox's
 // "Age" column and filter, My work's "Due" column, the case page and the inbox filters (lib/metrics/filters.ts).
 // Pure and client-safe.

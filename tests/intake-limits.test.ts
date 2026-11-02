@@ -1,4 +1,4 @@
-// The public report form's server actions and the Phase 7 limits (docs/phase7-prompt.md T3 items 7-8):
+// The public report form's server actions and the Phase 7 limits (docs/archive/phase7-prompt.md T3 items 7-8):
 // - the preview reserves its model calls from the hour's AI budget first; past it (or when the budget can't be
 //   checked) no AI runs and the review says why (aiPaused), the reporter's own AI choice untouched;
 // - "Send report" counts against the org's daily cap and, past it, says so in plain words with the org's phone and

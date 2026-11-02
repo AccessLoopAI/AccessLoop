@@ -125,7 +125,7 @@ test("/trust: the contents, the box about this copy, and the law quoted", async 
     "https://laws-lois.justice.gc.ca/eng/regulations/SOR-2021-241/FullText.html",
   );
 
-  // The planned services (docs/phase7-prompt.md Wave 4 item 1): one table, labelled as planned, the five companies as
+  // The planned services (docs/archive/phase7-prompt.md Wave 4 item 1): one table, labelled as planned, the five companies as
   // row headers; its scroll region is reachable by keyboard (Table's tabIndex 0) and named by the caption.
   const services = page.getByRole("region", { name: /^Planned when hosted/ });
   await expect(services).toHaveCount(1);

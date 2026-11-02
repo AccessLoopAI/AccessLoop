@@ -12,7 +12,11 @@
 //   positional prompt tells the model to process stdin as the system prompt says.
 // - Flags: -p --output-format json --no-session-persistence --model <CLAUDE_CLI_MODEL, default sonnet>
 //   <system prompt> --json-schema '<z.toJSONSchema(schema) without "$schema">' [--max-turns 1] [--safe-mode] --tools ""
-//   --disallowedTools "*". Which optional forms are used comes from `claude --help`, read ONCE at the startup check
+//   --disallowedTools "mcp__*". Not "*": CLI 2.1.312 (checked 2026-10-28) answers --json-schema through a built-in
+//   StructuredOutput tool, and "*" denies it too, so the model wrote prose around its JSON and every structure call
+//   failed. --tools "" already removes every other built-in tool; "mcp__*"
+//   keeps MCP tools out even when the CLI has no --safe-mode (without it, the user's own MCP servers load, e.g. mail
+//   and drive tools). Which optional forms are used comes from `claude --help`, read ONCE at the startup check
 //   (detectCliCapabilities): the system prompt goes as --system-prompt-file <lib/ai/prompts/X.md> when the help lists
 //   that flag, else as --system-prompt <the same file's text> (our own prompt in argv; reporter text still only ever
 //   goes on stdin); --max-turns 1 only when listed (with no tools at all there is one turn anyway); --safe-mode only
@@ -253,7 +257,7 @@ export function buildCliArgs(o: {
     "--tools",
     "",
     "--disallowedTools",
-    "*",
+    "mcp__*",
   ];
 }
 

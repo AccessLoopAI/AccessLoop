@@ -1,4 +1,4 @@
-// The Phase 7 T6 helpers (docs/phase7-prompt.md T6 items 3-5), on the live database and compared with the same pure
+// The Phase 7 T6 helpers (docs/archive/phase7-prompt.md T6 items 3-5), on the live database and compared with the same pure
 // functions the pages use: the ACR s.9 checklist and the preview of the public description on /app/settings (the
 // preview says exactly what /p/{org} says), the CAN-ASC-5.2.1 clause 17 panel on the dashboard (each step's number is
 // lib/metrics' and its link opens exactly those cases), and the "How your Feedback section compares" card, which stays

@@ -1,4 +1,4 @@
-// The "Notes" card of the staff case page (docs/phase7-prompt.md T2 item 4): the case's internal notes and interim
+// The "Notes" card of the staff case page (docs/archive/phase7-prompt.md T2 item 4): the case's internal notes and interim
 // accommodations, newest first, and "Add a note" for the lead and the owner the case is assigned to. Every note is
 // also a line in the History (lib/cases/history.ts), where it sits in the evidence chain. For staff only: the
 // reporter's page never reads notes. Server component; the form is the client NoteForm.

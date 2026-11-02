@@ -1,4 +1,4 @@
-// "Similar past barriers" on the staff case page (docs/domain.md §6.2; docs/phase7-prompt.md T2 item 10). Lead only,
+// "Similar past barriers" on the staff case page (docs/domain.md §6.2; docs/archive/phase7-prompt.md T2 item 10). Lead only,
 // once the case has an area and a public summary. The candidates are plain Postgres history (lib/cases/similar.ts:
 // same org, area and kind of place, last 24 months, the 40 newest, public summaries only), always readable in the
 // table below; the AI only points out which of them may be the same barrier, when the lead asks

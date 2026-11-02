@@ -1,4 +1,4 @@
-// The scenario cases' data (data/scenarios.json through lib/scenarios.ts; docs/phase7-prompt.md T6 item 1): 10-15
+// The scenario cases' data (data/scenarios.json through lib/scenarios.ts; docs/archive/phase7-prompt.md T6 item 1): 10-15
 // scenarios in a third made-up organization, each from a report we actually read, in our own words, with the note
 // the staff case page shows, and nothing in them that names a real organization or person or could identify anyone.
 import { readFileSync } from "node:fs";
@@ -20,7 +20,7 @@ import {
   type Scenario,
 } from "@/lib/scenarios";
 
-const PROMPT = readFileSync(path.join(process.cwd(), "docs", "phase7-prompt.md"), "utf8");
+const PROMPT = readFileSync(path.join(process.cwd(), "docs", "archive", "phase7-prompt.md"), "utf8");
 const BANNED = /\b(compliant|compliance|certified|guarantee[sd]?)\b/i;
 
 /** The status db/seed.ts gives the case (same rules as its steps). */

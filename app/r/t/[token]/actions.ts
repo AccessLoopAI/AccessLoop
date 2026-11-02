@@ -1,6 +1,6 @@
 "use server";
 
-// The re-test answer through a one-round link from a re-test email (/r/t/{token}; docs/phase7-prompt.md T3 item 11,
+// The re-test answer through a one-round link from a re-test email (/r/t/{token}; docs/archive/phase7-prompt.md T3 item 11,
 // docs/domain.md §3). The same five answers as /r/[code], with the same rules, but the capability is the signed
 // token (lib/retest-link.ts), re-checked here on every call: its MAC, its expiry, and that the case is still in the
 // round the token was made for. Nothing else the browser sends (no case id, no org) is trusted. The round check runs

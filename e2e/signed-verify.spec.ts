@@ -1,5 +1,5 @@
 // /verify's fifth check, the sign-off lock and the offline checker, against the local production build (docs/domain.md
-// §8 "Signed at sign-off"; docs/phase7-prompt.md T5 items 4-6). A published report: "Signed by AccessLoop at sign-off:
+// §8 "Signed at sign-off"; docs/archive/phase7-prompt.md T5 items 4-6). A published report: "Signed by AccessLoop at sign-off:
 // Passed", a "Signed at sign-off" column in "Records", and a "Check it yourself, offline" section whose three
 // downloads (the evidence bundle, the published keys, the checking script itself) pass when the script runs on them
 // with Node alone. Then the lead's text is changed through the owner connection: the sign-off lock trigger refuses

@@ -1,4 +1,4 @@
-// The daily job (docs/phase7-prompt.md T3 item 12; docs/decisions.md 2026-10-20): expire re-test rounds open for 60
+// The daily job (docs/archive/phase7-prompt.md T3 item 12; docs/decisions.md 2026-10-20): expire re-test rounds open for 60
 // days (only with CRON_EXPIRE_RETEST=1), send each round's one reminder a week after the request, and alert owners
 // about cases past due or with no fix for 30+ days (lib/cron/run.ts). vercel.json runs it once a day; Vercel Cron
 // calls it with GET and `Authorization: Bearer ${CRON_SECRET}`. Anyone else gets a 401 before anything is read.

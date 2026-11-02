@@ -1,4 +1,4 @@
-// The inbox's search, sort and pages (docs/phase7-prompt.md T2 item 5): the parts of the inbox's GET form that are
+// The inbox's search, sort and pages (docs/archive/phase7-prompt.md T2 item 5): the parts of the inbox's GET form that are
 // not a filter. The filters themselves (status, area, assigned to, channel, age, and every key a dashboard number
 // links with) are lib/metrics/filters.ts, the same predicates lib/metrics counts with. Query values are read
 // leniently: anything unknown or invalid falls back to the default, never an error. Pure and client-safe.

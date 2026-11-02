@@ -1,4 +1,4 @@
-// The one sentence the report form shows at the point of collection (docs/phase7-prompt.md Wave 4 item 1; docs/domain.md
+// The one sentence the report form shows at the point of collection (docs/archive/phase7-prompt.md Wave 4 item 1; docs/domain.md
 // §4): where the reporter's words go when the AI is on, true for THIS running copy. It sits in the AI notice on step 3
 // (the summary is made when the person presses Next there) and under "Don't use AI on my report" on the review.
 //

@@ -44,7 +44,7 @@ function withCurrent(options: SelectOption[], current: readonly string[] | undef
 }
 
 /**
- * The inbox's search and filters (docs/phase7-prompt.md T2 item 5): a native GET form (next/form: a client-side
+ * The inbox's search and filters (docs/archive/phase7-prompt.md T2 item 5): a native GET form (next/form: a client-side
  * navigation with JavaScript, a normal page load without it). Nothing happens until "Show cases" is pressed (WCAG
  * 3.2.2); RouteFocus then moves focus to the h1, and the filter summary says what the list is narrowed by. Filters
  * the form has no field for (a dashboard number's period, month, ...) travel in hidden fields, so a search narrows
