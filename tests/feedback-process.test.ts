@@ -1,4 +1,4 @@
-// The ACR s.9 feedback-process helper on /app/settings (docs/phase7-prompt.md T6 item 4; lib/feedback-process.ts):
+// The ACR s.9 feedback-process helper on /app/settings (docs/archive/phase7-prompt.md T6 item 4; lib/feedback-process.ts):
 // the checklist flags what is missing from the saved settings and this year's acknowledgements, marks what AccessLoop
 // cannot see, never says "compliant"; and the public description is ONE component, so the Settings preview and
 // /p/{org} say the same words (rendered to static HTML here; the pages' axe runs are e2e/feedback-helpers.spec.ts).

@@ -1,4 +1,4 @@
-// One-round re-test links (lib/retest-link.ts; docs/phase7-prompt.md T3 item 11): a token only this server can make,
+// One-round re-test links (lib/retest-link.ts; docs/archive/phase7-prompt.md T3 item 11): a token only this server can make,
 // that names one round of one case and an expiry, and opens nothing else: tampering with any byte, another secret,
 // another length, another version or a made-up token reads as nothing. The expiry is 30 days after the email or the
 // round's end (60 days after its request), whichever comes first; the secret is the shared lib/env.ts one.

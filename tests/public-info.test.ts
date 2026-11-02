@@ -108,7 +108,7 @@ describe("the /trust and /accessibility pages", () => {
   });
 
   it("/trust is truthful about IP addresses and host logs, and lists the planned services as planned", async () => {
-    // docs/phase7-prompt.md Wave 4 item 1 (drafted locally, docs/decisions.md 2026-10-20): the app keeps only a daily,
+    // docs/archive/phase7-prompt.md Wave 4 item 1 (drafted locally, docs/decisions.md 2026-10-20): the app keeps only a daily,
     // keyed hash of the address; a host keeps its own request logs (retention stated before launch, no number now).
     vi.stubEnv("FAKE_LLM", "1");
     vi.stubEnv("FAKE_EMAIL", "1");

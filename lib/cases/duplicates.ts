@@ -1,4 +1,4 @@
-// Server-only: the "duplicate of" links between cases (docs/phase7-prompt.md T2 item 8; docs/domain.md §3).
+// Server-only: the "duplicate of" links between cases (docs/archive/phase7-prompt.md T2 item 8; docs/domain.md §3).
 // Closing a case as a duplicate names the original, a case of the SAME org: the state machine looks it up inside
 // the org and records `duplicateOf: { caseId, ref }` in the `closed` event (lib/state-machine.ts). These helpers
 // read both directions of that link inside the caller's withOrg() transaction, so another org's case is never found.

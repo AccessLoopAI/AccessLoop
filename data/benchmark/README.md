@@ -1,7 +1,7 @@
 # Feedback-section benchmark (DRAFT until a person checks each row)
 
 `feedback-sections.csv` scores published accessibility progress reports on what their **Feedback** section covers
-(docs/phase7-prompt.md T6 item 3). It is read by `lib/benchmark/` and shown to a lead as the "How your Feedback
+(docs/archive/phase7-prompt.md T6 item 3). It is read by `lib/benchmark/` and shown to a lead as the "How your Feedback
 section compares" card on a progress report's page, **computed only from rows with `verified_by_human` = `true`**.
 While no row is checked, the card is hidden. Nothing else reads this file.
 
@@ -28,7 +28,7 @@ of the 7 it covers fully); `partly` is kept so a reader sees the nuance. `unknow
 
 - `source_id`, `organization`, `year`, `report_url`: the published report. The organization is only ever a source,
   never a tenant. The ids match `data/scenarios.json` where the same report was used.
-- `read_by`: `review` = the values come from the Oct 20 ship-readiness review (docs/phase7-review.md, "Using real
+- `read_by`: `review` = the values come from the Oct 20 ship-readiness review (docs/archive/phase7-review.md, "Using real
   feedback data"); `review+agent` = an agent also read the report's Feedback section on 2026-10-20 to fill the
   elements the review did not cover.
 - `notes`: what the section does, in our own words. No passages and no figures are copied from any report.

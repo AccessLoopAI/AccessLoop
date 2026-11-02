@@ -1,4 +1,4 @@
-// The scenario cases (docs/phase7-prompt.md T6 item 1; data/scenarios.json through lib/scenarios.ts): the public
+// The scenario cases (docs/archive/phase7-prompt.md T6 item 1; data/scenarios.json through lib/scenarios.ts): the public
 // /sources page (axe in light and dark, forced colours, reflow at 320 px, one h1, the one status region and the one
 // "Get help", every scenario and its source), and the note on a scenario case's staff page, shown to the made-up
 // Kestrel Bay Group's lead and to no Maple Harbour case. Read-only: nothing here writes to the database.

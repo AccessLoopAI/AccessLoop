@@ -1,4 +1,4 @@
-// `npm run db:deploy` (docs/phase7-prompt.md T3 item 14): brings a database up to date as its OWNER
+// `npm run db:deploy` (docs/archive/phase7-prompt.md T3 item 14): brings a database up to date as its OWNER
 // (MIGRATION_DATABASE_URL), for a hosted database such as Supabase at "Going live" or any copy you set up by hand.
 // The same two steps scripts/local.ts (frozen) runs for the local database, lifted here without editing it:
 //   1. the drizzle migrations in db/migrations (drizzle-orm's migrator: each one once, in order);

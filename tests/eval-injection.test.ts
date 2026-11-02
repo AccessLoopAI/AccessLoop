@@ -1,4 +1,4 @@
-// The prompt-injection suite (docs/phase7-prompt.md T1 item 5): the fixture file itself, the pure per-case checker
+// The prompt-injection suite (docs/archive/phase7-prompt.md T1 item 5): the fixture file itself, the pure per-case checker
 // (eval/injection.ts; eval/score.ts is frozen), and `npm run eval -- --set injection` through the real runner with the
 // FAKE backend only (never a real model). Results go to a temp folder, never eval/results.
 import { mkdtemp, readdir, readFile, rm } from "node:fs/promises";

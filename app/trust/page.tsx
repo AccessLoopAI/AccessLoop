@@ -65,7 +65,7 @@ const STORAGE_LINE: Record<ThisCopy["storage"], string | null> = {
   unknown: null,
 };
 
-// "Services we plan to use when it goes live" (docs/phase7-prompt.md Wave 4 item 1; docs/decisions.md 2026-10-20):
+// "Services we plan to use when it goes live" (docs/archive/phase7-prompt.md Wave 4 item 1; docs/decisions.md 2026-10-20):
 // the planned sub-processors, what OUR code would send each one, and where each company's own public page says it
 // stores or processes data, read on 2026-10-20. Anything those pages did not say is written as "we could not confirm
 // this yet". No retention numbers until the hosting step states them. Re-check every line before going live.

@@ -3,7 +3,7 @@ import { Notice } from "@/components/ui/Notice";
 import { SCENARIO_NOTE_END, SCENARIO_NOTE_START, scenarioForCase } from "@/lib/scenarios";
 
 /**
- * On the staff case page: the note a scenario case carries (docs/phase7-prompt.md T6 item 1), "Scenario derived from
+ * On the staff case page: the note a scenario case carries (docs/archive/phase7-prompt.md T6 item 1), "Scenario derived from
  * public report: {org}, {year}, {url}; wording ours; not a real submission", with the URL as a link. Nothing for any
  * other case. Server component: the lookup is data/scenarios.json by the signed-in org's slug and the case's ref.
  */

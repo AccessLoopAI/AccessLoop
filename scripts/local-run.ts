@@ -1,5 +1,5 @@
 // The npm scripts local:setup, local, local:serve, local:db and local:reset run scripts/local.ts (frozen) through
-// this wrapper (docs/phase7-prompt.md T3 item 16), so the two ways a minimal Linux machine fails get a plain fix:
+// this wrapper (docs/archive/phase7-prompt.md T3 item 16), so the two ways a minimal Linux machine fails get a plain fix:
 //   - as root: stopped before anything starts (Postgres refuses root anyway, after a long wait and a vague error);
 //   - initdb's "invalid locale name" (no en_US.UTF-8 locale): after local.ts fails, `locale -a` is checked and the
 //     install commands are printed (scripts/local-hints.ts).

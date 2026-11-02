@@ -1,4 +1,4 @@
-// GET /api/health (docs/phase7-prompt.md T3 item 3): is this instance up and can it reach its database as the app
+// GET /api/health (docs/archive/phase7-prompt.md T3 item 3): is this instance up and can it reach its database as the app
 // role? For uptime checks and for humans after a deploy. `select 1` runs on the app's own connection
 // (db/client.ts, role accessloop_app), so a wrong DATABASE_URL or a database that is down shows here.
 // The answer holds modes and a commit id only: no secrets, no URLs, no counts, nothing about any organization.

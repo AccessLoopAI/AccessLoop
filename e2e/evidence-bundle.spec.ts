@@ -1,4 +1,4 @@
-// The signed root and the evidence bundle (docs/domain.md §8 "Signed at sign-off"; docs/phase7-prompt.md T5 items
+// The signed root and the evidence bundle (docs/domain.md §8 "Signed at sign-off"; docs/archive/phase7-prompt.md T5 items
 // 1-3 and the footer half of item 5), against the local production build: the public key list at
 // /.well-known/accessloop-signing-keys.json (public values only); a published report's "Download evidence bundle"
 // (a JSON attachment; drafts and signed-off-but-unpublished reports 404) that a third party can check with nothing

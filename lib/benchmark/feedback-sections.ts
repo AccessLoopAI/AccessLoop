@@ -1,4 +1,4 @@
-// The Feedback-section benchmark (docs/phase7-prompt.md T6 item 3; data/benchmark/README.md): what published progress
+// The Feedback-section benchmark (docs/archive/phase7-prompt.md T6 item 3; data/benchmark/README.md): what published progress
 // reports' Feedback sections cover, scored on seven elements, and what a draft built by AccessLoop covers. Pure and
 // client-safe: the CSV text comes in as a string (lib/benchmark/load.ts reads the file on the server). Only rows a
 // person checked (`verified_by_human` = true) ever reach a number; with none, the card is hidden.

@@ -8,7 +8,7 @@ The detailed reference behind the [README](../README.md): the legal background, 
 
 AccessLoop helps you meet your obligations under the Accessible Canada Act. It does not fix anything by itself, and it is not an accessibility overlay. People fix the barriers. AccessLoop keeps the record.
 
-> **Status (October 21, 2026): a local prototype, built for Build North 2026.** It runs on one computer with no accounts. The AI is simulated (ready-made answers, `FAKE_LLM=1`). Email is written to an Outbox page, not sent. The three organizations in the demo data are made up. Nothing is hosted yet, and there are no real AI numbers yet: the team's own Claude Code CLI is found on the build machine but not signed in, and there is no API key. Phase 7 (from prototype to shippable product) has built everything that works without accounts; what is left needs accounts and people ([Going live](#going-live-not-done-yet)). See [Limits and roadmap](#limits-and-roadmap).
+> **Status (October 28, 2026): a local prototype, built for Build North 2026.** It runs on one computer with no accounts. The AI is simulated by default (ready-made answers, `FAKE_LLM=1`); a developer can switch to their own signed-in Claude Code CLI, whose results are internal only. Email is written to an Outbox page, not sent. The three organizations in the demo data are made up. Nothing is hosted yet, and there are no publishable AI numbers yet: there is no API key. Phase 7 (from prototype to shippable product) has built everything that works without accounts; what is left needs accounts and people ([Going live](#going-live-not-done-yet)). See [Limits and roadmap](#limits-and-roadmap).
 
 ## The problem
 
@@ -461,7 +461,7 @@ Automated tools find some accessibility problems, not all of them. That is why t
 
 ### Cut on purpose (roadmap)
 
-These were cut from the build on purpose (docs/phase7-prompt.md, "Scope cuts"), and are roadmap, not features:
+These were cut from the build on purpose (docs/archive/phase7-prompt.md, "Scope cuts"), and are roadmap, not features:
 
 - **Photo upload** (with EXIF stripping): the form takes words only, so no image is ever stored or sent to an AI.
 - **SMS or phone re-test:** the re-test is answered on the web (`/r/{code}`, `/check`, a one-round email link) or in the Expo app.
@@ -472,7 +472,7 @@ These were cut from the build on purpose (docs/phase7-prompt.md, "Scope cuts"), 
 
 Also out of scope (`docs/domain.md` §11): automated phone or mail intake (staff log it by hand today); grouping duplicate reports automatically (a lead can close a case as a duplicate of another); mapping to CAN-ASC-5.2.1 or EN 301 549 beyond the clause 17 panel on the dashboard; payments (the re-test offer is a line of text); BC and AODA rule sets; a full report editor (today: text boxes for plan areas and Consultations); sending the regulator notice (AccessLoop shows the 48-hour ACR s. 16 reminder and the signed fingerprint to include); a staff side in the Expo app; and the optional `/api/metrics` endpoint.
 
-**Proposed and not approved for now** (docs/phase7-prompt.md "Human decisions"): a verdict a lead records on the reporter's behalf after a phone call (D5); a key ID and case-bound associated data for the encryption key (D9); Sentry error tracking (N3); and an org-level "AI off" setting for organizations that need Canadian-only processing (it needs a schema change; today each reporter can opt out, and `AI_GLOBAL_HOURLY_LIMIT=0` turns the public form's AI off for a whole deployment).
+**Proposed and not approved for now** (docs/archive/phase7-prompt.md "Human decisions"): a verdict a lead records on the reporter's behalf after a phone call (D5); a key ID and case-bound associated data for the encryption key (D9); Sentry error tracking (N3); and an org-level "AI off" setting for organizations that need Canadian-only processing (it needs a schema change; today each reporter can opt out, and `AI_GLOBAL_HOURLY_LIMIT=0` turns the public form's AI off for a whole deployment).
 
 ### Going live (not done yet)
 
@@ -486,7 +486,7 @@ Most steps are configuration changes; the Clerk sign-in still needs code. Local 
 
 ### What has not been verified
 
-- **No real AI model has been called**, through the API or the CLI, so there is no real summary, name check, report wording or eval number. Every AI answer in this build is simulated.
+- **No real AI model has been called through the API**, so there is no publishable summary, name check, report wording or eval number. Every AI answer in this build is simulated by default. The team has run the CLI backend on its own machine for development; those results are internal and never published (docs/domain.md §6.1).
 - **Nothing has run on a hosted service:** no deployment, no Supabase, no Clerk, no real email, no load check against a public URL, no `db:remote-smoke` against a hosted database. GitHub Actions is the only thing that runs elsewhere: the CI workflow (`.github/workflows/ci.yml`) runs typecheck, lint, unit tests, `db:smoke`, the build and the full e2e suite on Ubuntu 24.04 (239 e2e tests passed on October 25, 2026). CodeQL and dependency review are set up but skip while the repository is private, because the organization's plan has no GitHub Advanced Security.
 - **No people have tested it:** no sessions with disabled testers; no NVDA, JAWS, VoiceOver or TalkBack; no Safari or Firefox (WebKit and Chromium only, in Playwright); no real phone; the Expo app only as its web build.
 - **Data from published reports:** the 11 benchmark rows (`data/benchmark/feedback-sections.csv`) and the 68 silver-label statements are drafts no person has verified yet, so the benchmark card stays hidden and the silver set does not run.
@@ -536,8 +536,8 @@ Most steps are configuration changes; the Clerk sign-in still needs code. Local 
 ## Disclosures
 
 - **AI tools used to build it:** Claude Code with Claude Opus 5.5 (the multi-agent mode our handoff docs call "ultracode") helped write the spec package and implemented the app, its tests and its docs, phase by phase, gated by tests. The team made the product decisions and approved every change to a frozen file (docs/decisions.md). [Team: confirm the wording.]
-- **AI in the product:** AI responses are simulated in this build. The three AI functions and "Similar past barriers" answer from ready-made test answers (`lib/ai/fakes/*.json`); the app says so on `/trust` and on the report form, and every saved eval run is labelled simulated. Code for Claude models through the Anthropic API, and the team's own Claude Code CLI for development, is built and tested with stubs; no real model has been called.
-- **Prior work:** none. The spec (`docs/domain.md`, `CLAUDE.md`, `docs/handoff.md` and the frozen core) was written on October 18–19, 2026, and the build started on October 19, 2026. The local git history starts that day at 11:55 EDT with a baseline commit of Phases 1–2 and the Phase 3 AI module, built earlier that day before git was started and covered by the team's dated checkpoint zips. Third-party code is limited to the open-source packages in `package.json` and `mobile/package.json`, the Expo template the app was scaffolded from (`mobile/LICENSE`) and the fonts below.
+- **AI in the product:** AI responses are simulated in this build. The three AI functions and "Similar past barriers" answer from ready-made test answers (`lib/ai/fakes/*.json`); the app says so on `/trust` and on the report form, and every saved eval run is labelled simulated. The code for Claude models through the Anthropic API is built and tested with stubs and has not made a real call yet. The team has run the Claude Code CLI backend on its own machine for development; those results are internal and never published (docs/domain.md §6.1).
+- **Prior work:** none. The spec (`docs/domain.md`, `CLAUDE.md`, `docs/handoff.md` and the frozen core) was written on October 18–19, 2026, and the build ran from October 19 to October 25, 2026. The public git history was re-created on October 25, before the first push, so its commit times are reconstructed; the team's dated checkpoint zips are the record of when the work was done. Third-party code is limited to the open-source packages in `package.json` and `mobile/package.json`, the Expo template the app was scaffolded from (`mobile/LICENSE`) and the fonts below.
 - **Sponsors:** none in this build. Clerk is not integrated yet (it comes at hosting).
 
 ## License and credits

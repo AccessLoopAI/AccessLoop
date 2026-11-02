@@ -1,4 +1,4 @@
-// The daily job (app/api/cron/daily; docs/phase7-prompt.md T3 item 12; docs/decisions.md 2026-10-20). Server-only.
+// The daily job (app/api/cron/daily; docs/archive/phase7-prompt.md T3 item 12; docs/decisions.md 2026-10-20). Server-only.
 //
 // For every org: read the cases waiting on someone (retest_open, assigned) with their events, plan each one
 // (lib/cron/daily.ts), then do each part in its OWN short transaction, with the case row locked (FOR UPDATE) and the

@@ -1,4 +1,4 @@
-// One-round re-test links /r/t/{token} (docs/phase7-prompt.md T3 item 11; docs/domain.md §3, §4; docs/decisions.md
+// One-round re-test links /r/t/{token} (docs/archive/phase7-prompt.md T3 item 11; docs/domain.md §3, §4; docs/decisions.md
 // 2026-10-20). The re-test request and reminder emails carry a link that answers THAT round's question only, so the
 // receipt code never has to be typed (or put in a URL) to answer a re-test, and a link that leaks (a forwarded email,
 // a host's request log) opens one question for a limited time instead of the whole report for as long as it exists.
